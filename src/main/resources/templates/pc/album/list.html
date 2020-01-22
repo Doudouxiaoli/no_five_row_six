@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+#@pc_layout()
+#define title()
+<title>专辑</title>
+#end
+#define css()
+#end
+#define js()
+#end
+#define main()
+<div class="indexBox">
+    #include("../include/header.html",navId="album")
+    <div class="scrollCon">
+        <div class="comm clear">
+            <div class="informationTop">
+                <div class="lf informationLf">
+                    <div class="informationTitle">歌曲中心</div>
+                </div>
+                <div class="rt informationRt">
+                    <input type="text" id="keyword" name="keyword" value="#(keyword??)" class="searchIpt"
+                           placeholder="请输入搜索词">
+                    <i class="searchIcon" onclick="search()"></i>
+                </div>
+            </div>
+            <div class="informationWrapper flex">
+                #if(page.records?? != null && page.records.size() > 0)
+                #for(album:page.records)
+                <a href="/album/albumDetail?albumId=#(album.faId)" class="itemBgBox">
+                    <div class="item-img">
+                        <img src="#(album.faImg??)" alt="" class="albumImg">
+                        <img src="res/pc/images/stick.png" alt="" class="stickImg">
+                    </div>
+                    <div class="item-dec marginLeft">
+                        <div class="itemInf-name">#(album.faName??)</div>
+                        <div class="itemInf-time">#(longToString(album.faTime??,"yyyy-MM-dd"))</div>
+                    </div>
+                </a>
+                #end
+                #else if (page.records == null || page.records.size() <= 0)
+                暂无数据！
+                #end
+            </div>
+        </div>
+    </div>
+    #include("../include/footer.html")
+</div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        //点击回车
+        $("#keyword").keydown(function (e) {
+            if (e.keyCode == 13) {
+                search()
+            }
+        });
+    })
+
+    function search() {
+        window.location.href = "/album/list?keyword=" + $("#keyword").val();
+    }
+</script>
+#end

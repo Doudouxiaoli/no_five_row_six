@@ -1,0 +1,126 @@
+<input type="hidden" name="fmId" id="fmId" value="#(molivideo.fmId??)"/>
+<input type="hidden" id="fmType" name="fmType" value="#(type)"/>
+<input type="hidden" id="fmTypeName" name="fmTypeName" value="#(typeName)"/>
+<div class="box-body">
+
+    <div class="form-group">
+        <label for="fmSort" class="col-sm-3 control-label">置顶排序值</label>
+        <div class="col-sm-5">
+            <input type="number" class="form-control" id="fmSort" name="fmSort" value="#(molivideo.fmSort??)"/>
+            <p style="color:red;">由大到小排序</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="fmName" class="col-sm-3 control-label"><span style="color:red;">*</span>作品名称</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="fmName" name="fmName" value="#(molivideo.fmName??)"/>
+        </div>
+        <div class="col-sm-2">
+            <p id="fmNamep" style="color:red;"></p>
+        </div>
+    </div>
+
+    <input type="hidden" id="type" value="#(com.wx.no_five_row_six.common.Const::PIC_variety_TYPE)"/>
+    <div class="form-group">
+        <label for="wpeThumbnailPath" class="col-sm-3 control-label">海报</label>
+        <div class="col-sm-5">
+            <img id="picShow" src="#(molivideo.fmImg??)" alt="" style="width:100px;"/>
+            <input type="hidden" id="wpeThumbnailPath" name="fmImg" value="#(molivideo.fmImg??)"/>
+            <button id="uploadBtn" type="button" class="btn btn-default">上传图片</button>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="fmDirector" class="col-sm-3 control-label">导演</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="fmDirector" name="fmDirector" value="#(molivideo.fmDirector??)"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="fmActors" class="col-sm-3 control-label"><span style="color:red;">*</span>主要演员</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="fmActors" name="fmActors" value="#(molivideo.fmActors??)"/>
+        </div>
+        <div class="col-sm-2">
+            <p id="fmActorsp" style="color:red;"></p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="fmIsValid" class="col-sm-3 control-label">视频id</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="fmIsValid" name="fmIsValid" value="#(song.fmIsValid??)"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="fmTimeStr" class="col-sm-3 control-label"><span style="color:red;">*</span>发布时间</label>
+        <div class="col-sm-5">
+            <div class="input-group date">
+                <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </div>
+                <input type="text" class="form-control searchDate" id="fmTimeStr" name="fmTimeStr"
+                       value="#(longToString(molivideo.fmTime??,'yyyy-MM-dd'))"/>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <p id="fmTimeStrp" style="color:red;"></p>
+        </div>
+    </div>
+</div>
+<div class="box-footer">
+    <div class="col-xs-push-2 col-xs-2">
+        <a class="btn btn-default" href="/admin/molivideo/list?type=1" role="button">取消</a>
+    </div>
+    <div class="col-xs-push-4 col-xs-2">
+        <button type="submit" class="btn btn-info pull-right" id="saveBtn">保存</button>
+    </div>
+</div>
+#include("../../uploadPic.html")
+
+<script type="text/javascript">
+
+    function checkFmName() {
+        if ($("#fmName").val() != undefined && $("#fmName").val() != "") {
+            $("#fmNamep").text("");
+            return true;
+        } else {
+            $("#fmNamep").text("请输入作品名称");
+            return false;
+        }
+    }
+
+    function checkFmTimeStr() {
+        if ($("#fmTimeStr").val() != undefined && $("#fmTimeStr").val() != "") {
+            $("#fmTimeStrp").text("");
+            return true;
+        } else {
+            $("#fmTimeStrp").text("请输入时间");
+            return false;
+        }
+    }
+
+    function checkFmActors() {
+        if ($("#fmActors").val() != undefined && $("#fmActors").val() != "") {
+            $("#fmActorsp").text("");
+            return true;
+        } else {
+            $("#fmActorsp").text("请输入主要演员");
+            return false;
+        }
+    }
+
+    function beforeSubmit() {
+        if (checkFmName && checkFmTimeStr() && checkFmActors()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+</script>

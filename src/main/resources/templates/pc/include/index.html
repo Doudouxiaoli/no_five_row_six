@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+#@pc_layout()
+#define title()
+<title>首页</title>
+#end
+#define css()
+#end
+#define js()
+#end
+#define main()
+<body>
+
+
+<div class="indexBox">
+    #include("disclaimer.html")
+    #include("header.html",navId="index")
+    <div class="scrollCon">
+        <div class="comm">
+            <div class="indexSwiper swiper-container">
+                <div class="swiper-wrapper">
+                    #if(kvList??&&kvList.size()>0)
+                    #for(kv:kvList)
+                    <div class="swiper-slide"><a href="#(kv.gkUrl??)"><img src="#(kv.gkImg??)" alt="" class="swiperImg"></a></div>
+                    #end
+                    #end
+                </div>
+                <div class="pagination"></div>
+            </div>
+            <div class="indexList">
+                <span class="comm-title">最新吉讯<i class="commTitle-border"></i></span>
+                #for(article:HomeArticleList)
+                #if(article.ghaModelId??==0)
+                <a href="/information/detail?id=#(article.ghaArticleId)" class="indexList-line clear">
+                    #else if(article.ghaModelId??==1)
+                    <a href="/authority/detail?id=#(article.ghaArticleId)" class="indexList-line clear">
+                        #else if(article.ghaModelId??==2)
+                        <a href="/case/detail?id=#(article.ghaArticleId)" class="indexList-line clear">
+                            #else if(article.ghaModelId??==3)
+                            <a href="/resources/detail?id=#(article.ghaArticleId)" class="indexList-line clear">
+                                #end
+                    <div  class="lf indexList-line-lf">
+                        <img src="#(article.ghaImg??)" alt="" class="indexList-img">
+                    </div>
+                    <div class="lf indexList-line-rt">
+                        <div  class="indexList-line-title overflow-two"> #(article.ghaTitle??)</div>
+                        <div class="clear width100">
+                            <div class="lf indexList-line-time">#(longToString(article.ghaCreateTime??,"yyyy-MM-dd"))</div>
+                            <div class="rt indexList-line-eye">#(article.ghaViewNum??)</div>
+                        </div>
+                    </div>
+                </a>#end
+            </div>
+        </div>
+        #include("footer.html")
+    </div>
+</div>
+
+</body>
+<script>
+    var mySwiper = new Swiper('.indexSwiper', {
+        pagination: '.pagination',
+        loop: true,
+        autoplay: 3000,
+        paginationClickable: true,
+        onSlideChangeStart: function () {}
+    });
+</script>
+#end

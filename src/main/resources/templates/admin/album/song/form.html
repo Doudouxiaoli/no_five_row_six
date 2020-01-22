@@ -1,0 +1,90 @@
+<input type="hidden" name="fsId" id="fsId" value="#(song.fsId??)"/>
+<input type="hidden" name="fsFaId" id="fsFaId" value="#(fs_fa_id??)"/>
+
+
+<div class="box-body">
+
+    <div class="form-group">
+        <label for="fsSort" class="col-sm-3 control-label">排序值</label>
+        <div class="col-sm-5">
+            <input type="number" class="form-control" id="fsSort" name="fsSort" value="#(song.fsSort??)"/>
+            <p style="color:grey;">由大到小排序</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="fsFaName" class="col-sm-3 control-label">专辑名称</label>
+        <div class="col-sm-5">
+            <input readonly type="text" class="form-control" id="fsFaName" name="fsFaName" value="#(fs_fa_name??)"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="fsName" class="col-sm-3 control-label"><span style="color:red;">*</span>歌曲名称</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="fsName" name="fsName" value="#(song.fsName??)"/>
+        </div>
+        <div class="col-sm-2">
+            <p id="fsNamep" style="color:red;"></p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="fsSinger" class="col-sm-3 control-label">歌手</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="fsSinger" name="fsSinger" value="#(song.fsSinger??)"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="fsLength" class="col-sm-3 control-label">时长</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="fsLength" name="fsLength" value="#(song.fsLength??)"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="fsLink" class="col-sm-3 control-label">歌曲链接</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="fsLink" name="fsLink" value="#(song.fsLink??)"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="fsVid" class="col-sm-3 control-label">MV地址</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="fsVid" name="fsVid" value="#(song.fsVid??)"/>
+        </div>
+    </div>
+
+</div>
+
+<div class="box-footer">
+    <div class="col-xs-push-2 col-xs-2">
+        <a class="btn btn-default" href="/admin/album/song/list?albumId=#(fs_fa_id??)" role="button">取消</a>
+    </div>
+    <div class="col-xs-push-4 col-xs-2">
+        <button type="submit" class="btn btn-info pull-right" id="saveBtn">保存</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function checkFsName() {
+        if ($("#fsName").val() != undefined && $("#fsName").val() != "") {
+            $("#fsNamep").text("");
+            return true;
+        } else {
+            $("#fsNamep").text("请输入歌曲名称");
+            return false;
+        }
+    }
+
+    function beforeSubmit() {
+        if (checkFsName()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>

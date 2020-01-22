@@ -1,0 +1,124 @@
+#define admin_layout()
+<html lang="en">
+<head>
+    <base href="/">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="shortcut icon" href="static/images/favicon.ico?v=2"/>
+    #@title?()
+    <!-- jQuery 2.2.3 -->
+    <script src="lib/adminlte-2.3.7/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <!-- Bootstrap 3.3.6 -->
+    <script src="lib/adminlte-2.3.7/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="lib/adminlte-2.3.7/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/adminlte-2.3.7/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="lib/adminlte-2.3.7/dist/css/skins/skin-blue.min.css">
+    <!-- 日期控件 -->
+    <link rel="stylesheet" href="lib/adminlte-2.3.7/plugins/datepicker/datepicker3.css">
+    <script src="lib/adminlte-2.3.7/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <link rel="stylesheet" href="lib/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css">
+    <script src="lib/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="lib/bootstrap-datetimepicker/bootstrap-datetimepicker.zh-CN.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!-- form表单验证 -->
+    <link href="lib/jQuery-validationEngine/validationEngine.jquery.css" rel="stylesheet">
+    <script type="text/javascript" src="lib/jQuery-validationEngine/jquery.validationEngine.js"></script>
+    <script type="text/javascript" src="lib/jQuery-validationEngine/jquery.validationEngine-zh-CN.js"></script>
+    <!-- UEditor -->
+    <style>
+        .edui-button.edui-for-135editor .edui-button-wrap .edui-button-body .edui-icon {
+            background-image: url("http://static.135editor.com/img/icons/editor-135-icon.png") !important;
+            background-size: 85%;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .edui-button.edui-for-xiumi-connect .edui-button-wrap .edui-button-body .edui-icon {
+            background-image: url("http://xiumi.us/connect/ue/xiumi-connect-icon.png") !important;
+            background-size: contain;
+        }
+    </style>
+    <!-- 配置文件 -->
+    <script type="text/javascript" src="lib/ueditor/ueditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="lib/ueditor/ueditor.all.js"></script>
+    <script type="text/javascript" src="lib/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <script type="text/javascript" src="lib/ueditor/plugins/135editor.js"></script>
+    <script type="text/javascript" src="lib/ueditor/plugins/xiumi-ue-dialog-v5.js"></script>
+    <!--文件上传-->
+    <script src="lib/jQuery-File-Upload-9.10.4/js/vendor/jquery.ui.widget.js"></script>
+    <script src="lib/jQuery-File-Upload-9.10.4/js/jquery.iframe-transport.js"></script>
+    <script src="lib/jQuery-File-Upload-9.10.4/js/jquery.fileupload.js"></script>
+    #@css?()
+    #@js?()
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //日期控件
+            $(".searchDate").datepicker({
+                format: 'yyyy-mm-dd',
+                language: 'cn',
+                orientation: "top left",
+                autoclose: true,
+                todayHighlight: true
+            });
+            $(".searchDateTime").datetimepicker({
+                format: 'yyyy-mm-dd hh:ii',
+                locale: 'zh-cn',
+                sideBySide: true,
+                tooltips: {
+                    incrementHour: '增加小时',
+                    decrementHour: '减少小时',
+                    incrementMinute: '增加分钟',
+                    decrementMinute: '减少分钟',
+                    pickHour: '选择小时',
+                    pickMinute: '选择分钟'
+                }
+            });
+            //绑定 日期时间 输入框
+            $('.form_datetime').datetimepicker({
+                format: 'yyyy-mm-dd hh:ii',
+                language: 'zh-CN',
+                weekStart: 1,
+                autoclose: 1,
+                todayBtn: 1,
+                todayHighlight: 1,
+                startView: 2,
+                forceParse: 0
+            });
+        });
+    </script>
+    <script src="lib/adminlte-2.3.7/dist/js/app.min.js"></script>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<!--body包进main里面-->
+#@main?()
+</body>
+</html>
+#end
+
+#define pc_layout()
+<html lang="en">
+<head>
+    #set(environment = com.wx.no_five_row_six.common.Const::SYS_ENVIRONMENT)
+    <base href="/"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    #@title?()
+    <link rel="stylesheet" href="res/pc/css/reset.css?dt=20200117">
+    <link rel="stylesheet" href="res/pc/css/swiper.css?dt=20200117">
+    <link rel="stylesheet" href="res/pc/css/index.css?dt=202001201157">
+    <script src="res/pc/js/jquery-1.8.2.min.js"></script>
+    <script src="res/pc/js/swiper-2.1.min.js"></script>
+    <script src="res/pc/js/index.js?dt=20200117"></script>
+    #@css?()
+    #@js?()
+</head>
+<!--body包进main里面-->
+#@main?()
+</html>
+#end

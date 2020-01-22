@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+#@pc_layout()
+#define title()
+<title>歌曲详情</title>
+#end
+#define css()
+<style>
+    img {
+        width: 100%;
+    }
+</style>
+#end
+#define js()
+#end
+#define main()
+<body>
+<div class="indexBox">
+    #include("../include/header.html",navId="album")
+    <div class="scrollCon">
+        <div class="comm">
+            <div class="informationDet-box">
+                #if(stage?? == 1)
+                播放音乐
+                #else if(stage?? == 2)
+                播放mv
+                #if(song.fsVid != null && song.fsVid != "")
+                <div id="player" class="playerClass"></div>
+                #end
+                #else
+                暂无版权
+                #end
+            </div>
+        </div>
+        #include("../include/footer.html")
+    </div>
+</div>
+<script src="https://player.polyv.net/script/player.js"></script>
+<script>
+    $(function () {
+        // 判断#player是否存在
+        var player = polyvPlayer({
+            wrap: '#player',
+            width: '100%',
+            height: "100%",
+            vid: '#(song.fsVid??)'
+        })
+    })
+
+</script>
+</body>
+#end

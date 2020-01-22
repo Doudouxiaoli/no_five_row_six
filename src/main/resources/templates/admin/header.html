@@ -1,0 +1,142 @@
+<!-- Main Header -->
+<header class="main-header"> <!-- Logo -->
+    <a href="javascript:void(0);" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini" style="margin-top:75%;"><i class="fa fa-cog"></i></span>
+        <span class="logo-lg"><b>五排六号</b></span>
+    </a>
+    <nav class="navbar navbar-static-top" role="navigation">
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+
+        <div class="navbar-custom-menu" style="border:0px solid red;">
+            <ul class="nav navbar-nav">
+                <li class="dropdown user user-menu">
+                    <a href="javascript:void(0)" style="color:#CFCFCF;">
+                        <span class="glyphicon glyphicon-user"></span>
+                        #(com.wx.no_five_row_six.common.security.AdminUserUtil::getShowName())
+                    </a>
+                </li>
+                <li class="dropdown user user-menu">
+                    <a href="admin/logout">
+                        <span class="hidden-xs">退出</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<aside class="main-sidebar">
+    <section class="sidebar">
+        <ul class="sidebar-menu tree" data-widget="tree">
+            <li id="nav_admin_user" class="treeview">
+                <a href="/admin/adminUser/list">
+                    <i class="fa fa-user"></i> <span>后台管理员</span>
+                </a>
+            </li>
+
+            <li id="nav_user" class="treeview">
+                <a href="/admin/user/list">
+                    <i class="fa fa-user-o"></i> <span>用户</span>
+                </a>
+            </li>
+
+            <li id="nav_album" class="treeview">
+                <a href="/admin/album/list">
+                    <i class="fa fa-music"></i> <span>专辑</span>
+                </a>
+            </li>
+
+            <li id="nav_concert" class="treeview">
+                <a href="/admin/concert/list">
+                    <i class="fa fa-bullhorn"></i> <span>演唱会</span>
+                </a>
+            </li>
+
+            <li id="nav_dance" class="treeview">
+                <a href="/admin/dance/projectIntroduction">
+                    <i class="fa fa-female"></i> <span>舞蹈</span>
+                </a>
+            </li>
+
+            <li id="nav_molivideo" class="treeview">
+                <a href="#"><i class="fa fa-bars"></i> 影视作品
+                    <span></span>
+                    <span class="pull-right-container">
+				        <i class="fa fa-angle-left pull-right"></i>
+		            </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li id="nav_movie" class="treeview">
+                        <a href="/admin/molivideo/list?type=1">
+                            <i class="fa fa-film"></i> <span>电影</span>
+                        </a>
+                    </li>
+                    <li id="nav_tv" class="treeview">
+                        <a href="/admin/molivideo/list?type=2">
+                            <i class="fa fa-television"></i> <span>电视剧</span>
+                        </a>
+                    </li>
+
+                    <li id="nav_variety" class="treeview">
+                        <a href="/admin/molivideo/list?type=3">
+                            <i class="fa fa-youtube-square"></i><span>综艺</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li id="nav_endorsement" class="treeview">
+                <a href="#"><i class="fa fa-bars"></i> 代言
+                    <span></span>
+                    <span class="pull-right-container">
+				        <i class="fa fa-angle-left pull-right"></i>
+		            </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li id="nav_foot" class="treeview">
+                        <a href="/admin/endorsement/footList">
+                            <i class="fa fa-cutlery"></i> <span>食物</span>
+                        </a>
+                    </li>
+                    <li id="nav_game" class="treeview">
+                        <a href="/admin/endorsement/gameList">
+                            <i class="fa fa-steam"></i> <span>游戏</span>
+                        </a>
+                    </li>
+
+                    <li id="nav_makeup" class="treeview">
+                        <a href="/admin/endorsement/makeupList">
+                            <i class="fa fa-cc"></i><span>美妆</span>
+                        </a>
+                    </li>
+
+                    <li id="nav_luxury" class="treeview">
+                        <a href="/admin/endorsement/luxuryList">
+                            <i class="fa fa-diamond"></i><span>轻奢品</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </section>
+</aside>
+#set(navId = navId??"")
+#set(subNavId = subNavId??"")
+<script>
+    //设置选中状态
+    var navId = "#(navId)";
+    var subNavId = "#(subNavId)";
+
+    //选中状态
+    if (navId) {
+        $("#" + navId).addClass("active");
+        $("#" + navId).parent().siblings().children().removeClass("active");
+    }
+    if (subNavId) {
+        $("#" + subNavId).addClass("active");
+    }
+
+</script>

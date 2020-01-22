@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+#@admin_layout()
+
+#define title()
+<title>五排六号-专辑>列表</title>
+#end
+#define css()
+<style>
+    .cus_table th, .cus_table td {
+        text-align: center;
+    }
+
+    table td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+</style>
+#end
+
+#define main()
+<div class="wrapper">
+    #include("../header.html", navId="nav_album", subNavId="nav_song")
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>专辑列表</h1>
+        </section>
+        <section class="content">
+            <div class="col-xs-12">
+                <div class="box" style="border-top: 0px">
+                    <div class="box-body">
+                        <div class="box-header">
+                            <div class="col-sm-1 col-md-1">
+                                <a class="btn btn-success" href="admin/album/addUI">新增</a>
+                            </div>
+                            <div class="col-sm-10 col-md-10" style="margin-left:10px">
+                                <form class="form-inline" name="searchForm" id="searchForm" style="margin-bottom: 15px;"
+                                      method="post">
+                                    <input type="hidden" id="current" name="current" value="#(page.getCurrent())"/>
+                                    <input type="hidden" id="size" name="size" value="#(page.getSize())"/>
+                                    <div class="form-group" style="margin-right: 50px">
+                                        <input type="text" class="form-control" id="keyword" name="keyword"
+                                               placeholder="专辑id/专辑名" value="#(keyword)"/>
+                                    </div>
+                                    <input type="radio" name="state" value="1"
+                                           #if(state== 1)
+                                           checked
+                                           #end
+                                    />激活态
+                                    <input style="margin-left: 10px;" type="radio" name="state" value="0"
+                                           #if(state== 0)
+                                           checked
+                                           #end
+                                    />已删除
+                                    <div class="form-group" style="margin-left: 30px">
+                                        <label>创建时间:</label>
+                                        <div class="input-group date" style="width:40%;">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control pull-right searchDate"
+                                                   id="datepicker"
+                                                   name="startDate" value="#(startDate)" readonly="true"/>
+                                        </div>
+                                        &nbsp;~&nbsp;
+                                        <div class="input-group date" style="width:40%;">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control pull-right searchDate"
+                                                   id="datepicker1"
+                                                   name="endDate" value="#(endDate)" readonly="true"/>
+                                        </div>
+                                    </div>
+                                    <button style="margin-left: 10px;" type="button" class="btn btn-success"
+                                            id="searchBtn">搜索
+                                    </button>
+                                    <a class="btn btn-success" href="admin/album/list">重置搜索</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        #if(page.records?? != null && page.total > 0)
+                        <table class="table table-bordered table-hover table-condensed cus_table"
+                               style="table-layout: auto;">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>排序值</th>
+                                <th>专辑名</th>
+<!--                                <th>专辑封面</th>-->
+                                <th>发布日期</th>
+                                <th>创建时间</th>
+                                <th>更新时间</th>
+                                <th><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            #for(album : page.records)
+                            <tr>
+                                <td>#((page.size * (page.current -1)) + (for.index +1))</td>
+                                <td>#(album.faSort??)</td>
+                                <td>
+                                    #(album.faName??)
+                                </td>
+<!--                                <td>-->
+<!--                                    <img src="#(album.faImg??)" style="width:100px;"/>-->
+<!--                                </td>-->
+                                <td>
+                                    #(longToString(album.faTime??))
+                                </td>
+                                <td>
+                                    #(longToString(album.faCreateTime??,"yyyy-MM-dd HH:mm"))
+                                </td>
+                                <td>
+                                    #(longToString(album.faUpdateTime??,"yyyy-MM-dd HH:mm"))
+                                </td>
+                                <td>
+                                    #if(album.faIsValid?? == 1)
+                                    <a type="button" class="btn btn-primary"
+                                       href="admin/album/song/list?albumId=#(album.faId)">歌曲</a>
+                                    <a type="button" class="btn btn-primary"
+                                       href="admin/album/editUI?id=#(album.faId)">修改</a>
+                                    <a type="button" class="btn btn-primary"
+                                       href="admin/album/del?id=#(album.faId)">删除</a>
+                                    #else if(album.faIsValid == 0)
+                                    <a type="button" class="btn btn-primary"
+                                       href="/admin/album/reBack?id=#(album.faId)"></a>
+                                    #end
+                                </td>
+                            </tr>
+                            #end
+                            </tbody>
+                        </table>
+                        #include("../pojoPageInfo.html", act="admin/album/list", formName="searchForm")
+                        #else if (page.records == null || page.total <= 0)
+                        暂无数据！
+                        #end
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //检索
+        $("#searchBtn").bind("click", function () {
+            var form = document.forms[0];
+            form.action = "admin/album/list";
+            $("#current").val(1);
+            form.submit();
+        });
+
+        //回车提交表单
+        $("#keyword").keydown(function (event) {
+            if (event.keyCode == 13) {
+                $("#searchBtn").click();
+            }
+        });
+
+    });
+</script>
+#end
