@@ -42,15 +42,42 @@ public class UploadController {
     public JsonNode uploadPic(String base64img, MultipartFile file, String type) {
         String path = null;
         String folderPath = null;
-        if (type != null && type.equals(Const.PIC_ALBUM_TYPE)) {
+        if (type != null && type.equals(Const.PIC_TYPE_ALBUM)) {
             // 专辑图片存储路径
             folderPath = Const.PIC_PATH_ALBUM;
-        } else if (type != null && type.equals(Const.PIC_CONCERT_TYPE)) {
-            //演唱会海报存储路径
+        } else if (type != null && type.equals(Const.PIC_TYPE_CONCERT)) {
+            //演唱会图片存储路径
             folderPath = Const.PIC_PATH_CONCERT;
-        } else if(type!=null&&type.equals(Const.PIC_MOVIE_TYPE)){
-            //电影海报存储路径
-            folderPath = Const.PIC_PATH_MOVIE;
+        }else if(type!=null&&type.equals(Const.PIC_TYPE_DANCE)){
+            //舞蹈图片存储路径
+            folderPath = Const.PIC_PATH_DANCE;
+        } else if (type != null && type.equals(Const.PIC_TYPE_MOLIVIDEO_MOVIE)) {
+            //作品->电影图片存储路径
+            folderPath = Const.PIC_PATH_MOLIVIDEO_MOVIE;
+        }else if (type != null && type.equals(Const.PIC_TYPE_MOLIVIDEO_TV)) {
+            //作品->电视剧图片存储路径
+            folderPath = Const.PIC_PATH_MOLIVIDEO_TV;
+        }else if (type != null && type.equals(Const.PIC_TYPE_MOLIVIDEO_VARIETY)) {
+            //作品->综艺图片存储路径
+            folderPath = Const.PIC_PATH_MOLIVIDEO_VARIETY;
+        }else if (type != null && type.equals(Const.PIC_TYPE_ENDORSEMENT_FOOD)) {
+            //代言->食物图片存储路径
+            folderPath = Const.PIC_PATH_ENDORSEMENT_FOOD;
+        } else if (type != null && type.equals(Const.PIC_TYPE_ENDORSEMENT_FOOD)) {
+            //代言->食物图片存储路径
+            folderPath = Const.PIC_PATH_ENDORSEMENT_FOOD;
+        }else if (type != null && type.equals(Const.PIC_TYPE_ENDORSEMENT_MAKEUP)) {
+            //代言->美妆图片存储路径
+            folderPath = Const.PIC_PATH_ENDORSEMENT_MAKEUP;
+        }else if (type != null && type.equals(Const.PIC_TYPE_ENDORSEMENT_CLOTHES)) {
+            //代言->服饰图片存储路径
+            folderPath = Const.PIC_PATH_ENDORSEMENT_CLOTHES;
+        }else if (type != null && type.equals(Const.PIC_TYPE_ENDORSEMENT_LUXURY)) {
+            //代言->轻奢品图片存储路径
+            folderPath = Const.PIC_PATH_ENDORSEMENT_LUXURY;
+        }else if (type != null && type.equals(Const.PIC_TYPE_ENDORSEMENT_GAME)) {
+            //代言->游戏图片存储路径
+            folderPath = Const.PIC_PATH_ENDORSEMENT_GAME;
         } else{
             // 默认类型：文章缩略图存储路径
             folderPath = Const.PIC_PATH_DEFAULT;

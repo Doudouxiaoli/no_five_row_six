@@ -67,10 +67,18 @@ public class Const {
      * web图片存储本地路径 start
      */
     public static String PIC_PATH_ALBUM = "up/album/pic/";//专辑封面
-    public static String PIC_PATH_CONCERT = "up/concert/pic/";//演唱会海报
-    public static String PIC_PATH_MOVIE = "up/molivideo/movie/pic/";//影视作品中电影海报
-    public static String PIC_PATH_TV = "up/molivideo/tv/pic/";//影视作品中电视剧海报
-    public static String PIC_PATH_VARIETY = "up/molivideo/variety/pic/";//影视作品中综艺海报
+    public static String PIC_PATH_CONCERT = "up/concert/pic/";//演唱会封面
+    public static String PIC_PATH_DANCE = "up/dance/pic/";//舞蹈封面
+
+    public static String PIC_PATH_MOLIVIDEO_MOVIE = "up/molivideo/movie/pic/";//影视作品中电影海报
+    public static String PIC_PATH_MOLIVIDEO_TV = "up/molivideo/tv/pic/";//影视作品中电视剧海报
+    public static String PIC_PATH_MOLIVIDEO_VARIETY = "up/molivideo/variety/pic/";//影视作品中综艺海报
+
+    public static String PIC_PATH_ENDORSEMENT_FOOD="up/endorsement/food/pic/";//代言食物宣传照
+    public static String PIC_PATH_ENDORSEMENT_MAKEUP="up/endorsement/makeup/pic/";//代言美妆宣传照
+    public static String PIC_PATH_ENDORSEMENT_CLOTHES="up/endorsement/clothes/pic/";//代言服饰宣传照
+    public static String PIC_PATH_ENDORSEMENT_LUXURY="up/endorsement/luxury/pic/";//代言轻奢品宣传照
+    public static String PIC_PATH_ENDORSEMENT_GAME="up/endorsement/game/pic";//代言游戏宣传照
 
     public static String PIC_PATH_SHARECODE = "up/shareCode/pic/";// 小程序分享二维码存储路径
 
@@ -81,12 +89,17 @@ public class Const {
     /**
      * web图片存储类型 start
      */
-    public static String PIC_ALBUM_TYPE = "album";// 专辑
-    public static String PIC_CONCERT_TYPE = "concert";//演唱会
-    public static String PIC_MOVIE_TYPE = "movie";//电影
-    public static String PIC_TV_TYPE = "tv";//电视剧
-    public static String PIC_VARIETY_TYPE = "variety";//综艺
-
+    public static String PIC_TYPE_ALBUM = "album";// 专辑
+    public static String PIC_TYPE_CONCERT = "concert";//演唱会
+    public static String PIC_TYPE_DANCE="dance";//舞蹈
+    public static String PIC_TYPE_MOLIVIDEO_MOVIE = "movie";//电影
+    public static String PIC_TYPE_MOLIVIDEO_TV = "tv";//电视剧
+    public static String PIC_TYPE_MOLIVIDEO_VARIETY = "variety";//综艺
+    public static String PIC_TYPE_ENDORSEMENT_FOOD="food";//食物
+    public static String PIC_TYPE_ENDORSEMENT_MAKEUP="makeup";//美妆
+    public static String PIC_TYPE_ENDORSEMENT_CLOTHES="clothes";//服饰
+    public static String PIC_TYPE_ENDORSEMENT_LUXURY="luxury";//轻奢品
+    public static String PIC_TYPE_ENDORSEMENT_GAME="game";//游戏
     /**
      * web图片存储类型 end
      */
@@ -99,14 +112,16 @@ public class Const {
     /**
      * 代言常量
      */
-    public static Long ENDORSEMENT_FOOT_ID = 1L;
+    public static Integer ENDORSEMENT_FOOT_ID = 0;
     public static String ENDORSEMENT_FOOT_TYPE = "食物";
-    public static Long ENDORSEMENT_GAME_ID = 2L;
-    public static String ENDORSEMENT_GAME_TYPE = "游戏";
-    public static Long ENDORSEMENT_MAKEUP_ID = 3L;
+    public static Integer ENDORSEMENT_MAKEUP_ID = 1;
     public static String ENDORSEMENT_MAKEUP_TYPE = "美妆";
-    public static Long ENDORSEMENT_LUXURY_ID = 4L;
+    public static Integer ENDORSEMENT_CLOTHES_ID = 2;
+    public static String ENDORSEMENT_CLOTHES_TYPE = "美妆";
+    public static Integer ENDORSEMENT_LUXURY_ID = 3;
     public static String ENDORSEMENT_LUXURY_TYPE = "轻奢品";
+    public static Integer ENDORSEMENT_GAME_ID = 4;
+    public static String ENDORSEMENT_GAME_TYPE = "游戏";
     /**
      * 影视作品常量
      */
