@@ -33,7 +33,7 @@
                     <div class="box-body">
                         <div class="box-header">
                             <div class="col-sm-1 col-md-1">
-                                <a class="btn btn-success" href="admin/molivideo/addUI?type=1">新增</a>
+                                <a class="btn btn-success" href="admin/molivideo/addUI?type=#(type)">新增</a>
                             </div>
                             <div class="col-sm-10 col-md-10" style="margin-left:10px">
                                 <form class="form-inline" name="searchForm" id="searchForm"
@@ -55,26 +55,6 @@
                                            checked
                                            #end
                                     />已删除
-                                    <div class="form-group" style="margin-left: 30px">
-                                        <label>&nbsp;创建时间:</label>
-                                        <div class="input-group date" style="width:40%;">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </div>
-                                            <input type="text" class="form-control pull-right searchDate"
-                                                   id="datepicker"
-                                                   name="startDate" value="#(startDate)" readonly="true"/>
-                                        </div>
-                                        &nbsp;~&nbsp;
-                                        <div class="input-group date" style="width:40%;">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </div>
-                                            <input type="text" class="form-control pull-right searchDate"
-                                                   id="datepicker1"
-                                                   name="endDate" value="#(endDate)" readonly="true"/>
-                                        </div>
-                                    </div>
                                     <button style="margin-left: 10px;" type="button" class="btn btn-success"
                                             id="searchBtn">搜索
                                     </button>
@@ -95,8 +75,7 @@
                                 <th>电影名称</th>
                                 <th>导演</th>
                                 <th>主要出演人员</th>
-<!--                                <th>宣传海报</th>-->
-                                <th>上映时间</th>
+                                <th>宣传海报</th>
                                 <th>创建时间</th>
                                 <th>修改时间</th>
                                 <th><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>操作</th>
@@ -106,25 +85,26 @@
                             #for(movie:page.records)
                             <tr>
                                 <td>#((page.size * (page.current -1)) + (for.index +1))</td>
-                                <td>#(movie.fmSort??)</td>
-                                <td>#(movie.fmName??)</td>
-                                <td>#(movie.fmDirector??)</td>
-                                <td>#(movie.fmActors??)</td>
-<!--                                <td>-->
-<!--                                    <img src="#(movie.fmImg??)" style="width:100px;"/>-->
-<!--                                </td>-->
-                                <td>#(longToString(movie.fmTime??,"yyyy-MM-dd"))</td>
-                                <td>#(longToString(movie.fmCreateTime??,"yyyy-MM-dd HH:mm"))</td>
-                                <td>#(longToString(movie.fmUpdateTime??,"yyyy-MM-dd HH:mm"))</td>
+                                <td>#(movie.fmvSort??)</td>
+                                <td>#(movie.fmvName??)</td>
+                                <td>#(movie.fmvDirector??)</td>
+                                <td>#(movie.fmvActors??)</td>
                                 <td>
-                                    #if(movie.fmIsValid?? == 1)
+                                    <img src="#(movie.fmvImg??)" style="width:100px;"/>
+                                </td>
+                                <td>#(longToString(movie.fmvCreateTime??,"yyyy-MM-dd HH:mm"))</td>
+                                <td>#(longToString(movie.fmvUpdateTime??,"yyyy-MM-dd HH:mm"))</td>
+                                <td>
+                                    #if(movie.fmvIsValid?? == 1)
                                     <a type="button" class="btn btn-primary"
-                                       href="/admin/molivideo/editUI?id=#(movie.fmId)">修改</a>
+                                       href="/admin/molivideo/movie/list?workId=#(movie.fmvId)">详情</a>
                                     <a type="button" class="btn btn-primary"
-                                       href="/admin/molivideo/del?id=#(movie.fmId)">删除</a>
-                                    #else if(movie.fmIsValid == 0)
+                                       href="/admin/molivideo/editUI?id=#(movie.fmvId)">修改</a>
                                     <a type="button" class="btn btn-primary"
-                                       href="/admin/molivideo/reBack?id=#(movie.fmId)">恢复</a>
+                                       href="/admin/molivideo/del?id=#(movie.fmvId)">删除</a>
+                                    #else if(movie.fmvIsValid == 0)
+                                    <a type="button" class="btn btn-primary"
+                                       href="/admin/molivideo/reBack?id=#(movie.fmvId)">恢复</a>
                                     #end
                                 </td>
                             </tr>

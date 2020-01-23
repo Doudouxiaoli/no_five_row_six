@@ -2,7 +2,7 @@
 #@admin_layout()
 
 #define title()
-<title>五排六号-影视作品>综艺列表</title>
+<title>五排六号-电视剧>列表</title>
 #end
 
 #define css()
@@ -22,10 +22,10 @@
 
 #define main()
 <div class="wrapper">
-    #include("../../header.html", navId="nav_molivideo",subNavId="nav_variety")
+    #include("../../../header.html", navId="nav_molivideo",subNavId="nav_tv")
     <div class="content-wrapper">
         <section class="content-header">
-            <h1>综艺列表</h1>
+            <h1>电视剧列表</h1>
         </section>
         <section class="content">
             <div class="col-xs-12">
@@ -33,16 +33,17 @@
                     <div class="box-body">
                         <div class="box-header">
                             <div class="col-sm-1 col-md-1">
-                                <a class="btn btn-success" href="admin/molivideo/addUI?type=#(type)">新增</a>
+                                <a class="btn btn-success" href="admin/molivideo/tv/addUI?workId=#(workId)">新增</a>
                             </div>
                             <div class="col-sm-10 col-md-10" style="margin-left:10px">
                                 <form class="form-inline" name="searchForm" id="searchForm"
                                       style="margin-bottom: 15px;">
+                                    <input type="hidden" id="workId" name="workId" value="#(workId)">
                                     <input type="hidden" id="current" name="current" value="#(page.getCurrent())"/>
                                     <input type="hidden" id="size" name="size" value="#(page.getSize())"/>
                                     <div class="form-group" style="margin-right: 50px">
                                         <input type="text" class="form-control" id="keyword" name="keyword"
-                                               placeholder=作品名称/演出人员
+                                               placeholder=作品名称
                                                value="#(keyword)"/>
                                     </div>
                                     <input type="radio" name="state" value="1"
@@ -55,10 +56,32 @@
                                            checked
                                            #end
                                     />已删除
+                                    <div class="form-group" style="margin-left: 30px">
+                                        <label>播出日期:</label>
+                                        <div class="input-group date" style="width:40%;">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control pull-right searchDate"
+                                                   id="datepicker"
+                                                   name="startDate" value="#(startDate)" readonly="true"/>
+                                        </div>
+                                        &nbsp;~&nbsp;
+                                        <div class="input-group date" style="width:40%;">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control pull-right searchDate"
+                                                   id="datepicker1"
+                                                   name="endDate" value="#(endDate)" readonly="true"/>
+                                        </div>
+                                    </div>
                                     <button style="margin-left: 10px;" type="button" class="btn btn-success"
                                             id="searchBtn">搜索
                                     </button>
-                                    <a class="btn btn-success" href="admin/molivideo/list?type=#(type)">重置搜索</a>
+                                    <a class="btn btn-success"
+                                       href="admin/molivideo/tv/list?workId=#(workId)">重置搜索</a>
+                                    <a class="btn btn-linkedin" href="admin/molivideo/list?type=#(type)">返回至电视剧列表</a>
                                 </form>
                             </div>
 
@@ -71,45 +94,43 @@
                             <thead>
                             <tr>
                                 <th>序号</th>
-                                <th>综艺名称</th>
-                                <th>导演</th>
-                                <th>主要出演人员</th>
-                                <th>宣传海报</th>
+                                <th>总集数</th>
+                                <th>当前集数</th>
+                                <th>电视剧名称</th>
+                                <th>视频id</th>
+                                <th>上映日期</th>
                                 <th>创建时间</th>
                                 <th>修改时间</th>
                                 <th><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            #for(variety:page.records)
+                            #for(tv:page.records)
                             <tr>
                                 <td>#((page.size * (page.current -1)) + (for.index +1))</td>
-                                <td>#(variety.fmvName??)</td>
-                                <td>#(variety.fmvDirector??)</td>
-                                <td>#(variety.fmvActors??)</td>
+                                <td>#(tv.ftIndex??)</td>
+                                <td>#(tv.ftSort??)</td>
+                                <td>#(tv.ftName??)</td>
+                                <td>#(tv.ftVid??)</td>
+                                <td>#(longToString(tv.ftTime??,"yyyy-MM-dd"))</td>
+                                <td>#(longToString(tv.ftCreateTime??,"yyyy-MM-dd HH:mm"))</td>
+                                <td>#(longToString(tv.ftUpdateTime??,"yyyy-MM-dd HH:mm"))</td>
                                 <td>
-                                    <img src="#(variety.fmvImg??)" style="width:100px;"/>
-                                </td>
-                                <td>#(longToString(variety.fmvCreateTime??,"yyyy-MM-dd HH:mm"))</td>
-                                <td>#(longToString(variety.fmvUpdateTime??,"yyyy-MM-dd HH:mm"))</td>
-                                <td>
-                                    #if(variety.fmvIsValid?? == 1)
+                                    #if(tv.ftIsValid?? == 1)
                                     <a type="button" class="btn btn-primary"
-                                       href="/admin/molivideo/variety/list?workId=#(variety.fmvId)">详情</a>
+                                       href="/admin/molivideo/tv/editUI?id=#(tv.ftId)">修改</a>
                                     <a type="button" class="btn btn-primary"
-                                       href="/admin/molivideo/editUI?id=#(variety.fmvId)">修改</a>
+                                       href="/admin/molivideo/tv/del?id=#(tv.ftId)">删除</a>
+                                    #else if(tv.ftIsValid == 0)
                                     <a type="button" class="btn btn-primary"
-                                       href="/admin/molivideo/del?id=#(variety.fmvId)">删除</a>
-                                    #else if(variety.fmvIsValid == 0)
-                                    <a type="button" class="btn btn-primary"
-                                       href="/admin/molivideo/reBack?id=#(variety.fmvId)">恢复</a>
+                                       href="/admin/molivideo/tv/reBack?id=#(tv.ftId)">恢复</a>
                                     #end
                                 </td>
                             </tr>
                             #end
                             </tbody>
                         </table>
-                        #include("../../pojoPageInfo.html", act="admin/molivideo/list?type=1",
+                        #include("../../../pojoPageInfo.html", act="admin/molivideo/tv/list?workId=#(workId)",
                         formName="searchForm")
                         #else if (page.records == null || page.total <= 0)
                         暂无数据！
@@ -127,7 +148,8 @@
         //检索
         $("#searchBtn").bind("click", function () {
             var form = document.forms[0];
-            form.action = "admin/molivideo/list?type="+$("#type").val();
+            var workId = $("#workId").val();
+            form.action = "admin/molivideo/tv/list?workId=" + workId;
             $("#page").val(1);
             form.submit();
         });

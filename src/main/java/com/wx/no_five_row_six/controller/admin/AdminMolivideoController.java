@@ -52,13 +52,11 @@ public class AdminMolivideoController {
         IPage<FrsMolivideo> page = new Page<>(current, size);
         try {
             // 查询条件
-            queryWrapper = new QueryWrapper<FrsMolivideo>().like(StringUtils.isNotEmpty(keyword), "fm_name", keyword)
-                    .or().like(StringUtils.isNotEmpty(keyword), "fm_actors", keyword)
-                    .ge(StringUtils.isNotEmpty(startDate), "fm_time", TimeUtil.stringToLong(startDate, TimeUtil.FORMAT_DATE))
-                    .le(StringUtils.isNotEmpty(endDate), "fm_time", TimeUtil.stringToLong(endDate, TimeUtil.FORMAT_DATE))
-                    .eq("fm_is_valid", state)
-                    .eq("fm_type", type)
-                    .orderByDesc("fm_sort","fm_time");
+            queryWrapper = new QueryWrapper<FrsMolivideo>().like(StringUtils.isNotEmpty(keyword), "fmv_name", keyword)
+                    .or().like(StringUtils.isNotEmpty(keyword), "fmv_actors", keyword)
+                    .eq("fmv_is_valid", state)
+                    .eq("fmv_type", type)
+                    .orderByDesc("fmv_sort");
             page = molivideoService.page(page, queryWrapper);
         } catch (Exception e) {
             e.printStackTrace();
@@ -116,8 +114,8 @@ public class AdminMolivideoController {
     public String editUI(ModelMap mm, Long id) {
         try {
             FrsMolivideo molivideo = molivideoService.getById(id);
-            Integer type = molivideo.getFmType();
-            String typeName = molivideo.getFmTypeName();
+            Integer type = molivideo.getFmvType();
+            String typeName = molivideo.getFmvTypeName();
             mm.addAttribute("molivideo", molivideo);
             mm.addAttribute("type", type);
             mm.addAttribute("typeName", typeName);
@@ -148,17 +146,15 @@ public class AdminMolivideoController {
     @RequestMapping("saveOrUpdate")
     public String saveOrUpdate(ModelMap mm, FrsMolivideo molivideo) {
         try {
-            if (molivideo.getFmId() == null) {
-                molivideo.setFmTime(TimeUtil.stringToLong(molivideo.getFmTimeStr(), "yyyy-MM-dd"));
-                molivideo.setFmCreateTime(TimeUtil.dateToLong());
-                molivideo.setFmIsValid(1);
+            if (molivideo.getFmvId() == null) {
+                molivideo.setFmvCreateTime(TimeUtil.dateToLong());
+                molivideo.setFmvIsValid(1);
                 molivideoService.save(molivideo);
             } else {
-                molivideo.setFmTime(TimeUtil.stringToLong(molivideo.getFmTimeStr(), "yyyy-MM-dd"));
-                molivideo.setFmUpdateTime(TimeUtil.dateTolong());
+                molivideo.setFmvUpdateTime(TimeUtil.dateTolong());
                 molivideoService.updateById(molivideo);
             }
-            return "redirect:list?type=" + molivideo.getFmType();
+            return "redirect:list?type=" + molivideo.getFmvType();
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.error("后台管理-保存或修改影视作品异常。", e);
@@ -177,9 +173,9 @@ public class AdminMolivideoController {
     public String del(ModelMap mm, Long id) {
         try {
             FrsMolivideo molivideo = molivideoService.getById(id);
-            molivideo.setFmIsValid(0);
+            molivideo.setFmvIsValid(0);
             molivideoService.updateById(molivideo);
-            return "redirect:list?type=" + molivideo.getFmType();
+            return "redirect:list?type=" + molivideo.getFmvType();
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.error("后台管理-删除影视作品异常。", e);
@@ -198,9 +194,9 @@ public class AdminMolivideoController {
     public String reBack(ModelMap mm, Long id) {
         try {
             FrsMolivideo molivideo = molivideoService.getById(id);
-            molivideo.setFmIsValid(1);
+            molivideo.setFmvIsValid(1);
             molivideoService.updateById(molivideo);
-            return "redirect:list?type=" + molivideo.getFmType();
+            return "redirect:list?type=" + molivideo.getFmvType();
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.error("后台管理-恢复影视作品异常。", e);
@@ -208,4 +204,5 @@ public class AdminMolivideoController {
             return "error/error";
         }
     }
+
 }

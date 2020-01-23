@@ -1,9 +1,7 @@
 package com.wx.no_five_row_six.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-
 import java.io.Serializable;
 
 /**
@@ -12,230 +10,196 @@ import java.io.Serializable;
  * </p>
  *
  * @author dxl
- * @since 2020-01-14
+ * @since 2020-01-23
  */
 public class FrsMolivideo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID=1L;
 
-    @TableId(value = "fm_id", type = IdType.AUTO)
-    private Long fmId;
+    @TableId(value = "fmv_id", type = IdType.AUTO)
+    private Long fmvId;
 
     /**
      * 排序值
      */
-    private Integer fmSort;
+    private Integer fmvSort;
 
     /**
      * 类型 0:电影 1:电视剧 2:综艺
      */
-    private Integer fmType;
+    private Integer fmvType;
+
     /**
      * 类型名称
      */
-    private String fmTypeName;
+    private String fmvTypeName;
 
     /**
-     * 宣传剧照
+     * 作品名称
      */
-    private String fmImg;
+    private String fmvName;
 
     /**
-     * 视频id
+     * 演员表
      */
-    private String fmVid;
+    private String fmvActors;
+
+    /**
+     * 导演姓名
+     */
+    private String fmvDirector;
+
+    /**
+     * 宣传照
+     */
+    private String fmvImg;
 
     /**
      * 点赞数
      */
-    private Integer fmLikedNum;
+    private Integer fmvLikedNum;
 
     /**
      * 收藏数
      */
-    private Integer fmCollectionNum;
-
-    /**
-     * 播出时间
-     */
-    private Long fmTime;
-    @TableField(exist = false)
-    private String fmTimeStr;
+    private Integer fmvCollectionNum;
 
     /**
      * 创建时间
      */
-    private Long fmCreateTime;
+    private Long fmvCreateTime;
 
     /**
      * 修改时间
      */
-    private Long fmUpdateTime;
+    private Long fmvUpdateTime;
 
     /**
      * 状态 0:删除 1:显示
      */
-    private Integer fmIsValid;
-    /**
-     * 演员
-     */
-    private String fmActors;
-    /**
-     * 导演
-     */
-    private String fmDirector;
-    /**
-     * 作品名称
-     */
-    private String fmName;
+    private Integer fmvIsValid;
 
-    public Long getFmId() {
-        return fmId;
+
+    public Long getFmvId() {
+        return fmvId;
     }
 
-    public void setFmId(Long fmId) {
-        this.fmId = fmId;
+    public void setFmvId(Long fmvId) {
+        this.fmvId = fmvId;
     }
 
-    public Integer getFmSort() {
-        return fmSort;
+    public Integer getFmvSort() {
+        return fmvSort;
     }
 
-    public void setFmSort(Integer fmSort) {
-        this.fmSort = fmSort;
+    public void setFmvSort(Integer fmvSort) {
+        this.fmvSort = fmvSort;
     }
 
-    public Integer getFmType() {
-        return fmType;
+    public Integer getFmvType() {
+        return fmvType;
     }
 
-    public void setFmType(Integer fmType) {
-        this.fmType = fmType;
+    public void setFmvType(Integer fmvType) {
+        this.fmvType = fmvType;
     }
 
-    public String getFmImg() {
-        return fmImg;
+    public String getFmvTypeName() {
+        return fmvTypeName;
     }
 
-    public void setFmImg(String fmImg) {
-        this.fmImg = fmImg;
+    public void setFmvTypeName(String fmvTypeName) {
+        this.fmvTypeName = fmvTypeName;
     }
 
-    public String getFmVid() {
-        return fmVid;
+    public String getFmvName() {
+        return fmvName;
     }
 
-    public void setFmVid(String fmVid) {
-        this.fmVid = fmVid;
+    public void setFmvName(String fmvName) {
+        this.fmvName = fmvName;
     }
 
-    public Integer getFmLikedNum() {
-        return fmLikedNum;
+    public String getFmvActors() {
+        return fmvActors;
     }
 
-    public void setFmLikedNum(Integer fmLikedNum) {
-        this.fmLikedNum = fmLikedNum;
+    public void setFmvActors(String fmvActors) {
+        this.fmvActors = fmvActors;
     }
 
-    public Integer getFmCollectionNum() {
-        return fmCollectionNum;
+    public String getFmvDirector() {
+        return fmvDirector;
     }
 
-    public void setFmCollectionNum(Integer fmCollectionNum) {
-        this.fmCollectionNum = fmCollectionNum;
+    public void setFmvDirector(String fmvDirector) {
+        this.fmvDirector = fmvDirector;
     }
 
-    public Long getFmTime() {
-        return fmTime;
+    public String getFmvImg() {
+        return fmvImg;
     }
 
-    public void setFmTime(Long fmTime) {
-        this.fmTime = fmTime;
+    public void setFmvImg(String fmvImg) {
+        this.fmvImg = fmvImg;
     }
 
-    public Long getFmCreateTime() {
-        return fmCreateTime;
+    public Integer getFmvLikedNum() {
+        return fmvLikedNum;
     }
 
-    public void setFmCreateTime(Long fmCreateTime) {
-        this.fmCreateTime = fmCreateTime;
+    public void setFmvLikedNum(Integer fmvLikedNum) {
+        this.fmvLikedNum = fmvLikedNum;
     }
 
-    public Long getFmUpdateTime() {
-        return fmUpdateTime;
+    public Integer getFmvCollectionNum() {
+        return fmvCollectionNum;
     }
 
-    public void setFmUpdateTime(Long fmUpdateTime) {
-        this.fmUpdateTime = fmUpdateTime;
+    public void setFmvCollectionNum(Integer fmvCollectionNum) {
+        this.fmvCollectionNum = fmvCollectionNum;
     }
 
-    public Integer getFmIsValid() {
-        return fmIsValid;
+    public Long getFmvCreateTime() {
+        return fmvCreateTime;
     }
 
-    public void setFmIsValid(Integer fmIsValid) {
-        this.fmIsValid = fmIsValid;
+    public void setFmvCreateTime(Long fmvCreateTime) {
+        this.fmvCreateTime = fmvCreateTime;
     }
 
-    public String getFmActors() {
-        return fmActors;
+    public Long getFmvUpdateTime() {
+        return fmvUpdateTime;
     }
 
-    public void setFmActors(String fmActors) {
-        this.fmActors = fmActors;
+    public void setFmvUpdateTime(Long fmvUpdateTime) {
+        this.fmvUpdateTime = fmvUpdateTime;
     }
 
-    public String getFmDirector() {
-        return fmDirector;
+    public Integer getFmvIsValid() {
+        return fmvIsValid;
     }
 
-    public void setFmDirector(String fmDirector) {
-        this.fmDirector = fmDirector;
-    }
-
-    public String getFmTypeName() {
-        return fmTypeName;
-    }
-
-    public void setFmTypeName(String fmTypeName) {
-        this.fmTypeName = fmTypeName;
-    }
-
-    public String getFmTimeStr() {
-        return fmTimeStr;
-    }
-
-    public void setFmTimeStr(String fmTimeStr) {
-        this.fmTimeStr = fmTimeStr;
-    }
-
-    public String getFmName() {
-        return fmName;
-    }
-
-    public void setFmName(String fmName) {
-        this.fmName = fmName;
+    public void setFmvIsValid(Integer fmvIsValid) {
+        this.fmvIsValid = fmvIsValid;
     }
 
     @Override
     public String toString() {
         return "FrsMolivideo{" +
-                "fmId=" + fmId +
-                ", fmSort=" + fmSort +
-                ", fmType=" + fmType +
-                ", fmTypeName='" + fmTypeName + '\'' +
-                ", fmImg='" + fmImg + '\'' +
-                ", fmVid='" + fmVid + '\'' +
-                ", fmLikedNum=" + fmLikedNum +
-                ", fmCollectionNum=" + fmCollectionNum +
-                ", fmTime=" + fmTime +
-                ", fmTimeStr='" + fmTimeStr + '\'' +
-                ", fmCreateTime=" + fmCreateTime +
-                ", fmUpdateTime=" + fmUpdateTime +
-                ", fmIsValid=" + fmIsValid +
-                ", fmActors='" + fmActors + '\'' +
-                ", fmDirector='" + fmDirector + '\'' +
-                ", fmName='" + fmName + '\'' +
-                '}';
+        "fmvId=" + fmvId +
+        ", fmvSort=" + fmvSort +
+        ", fmvType=" + fmvType +
+        ", fmvTypeName=" + fmvTypeName +
+        ", fmvName=" + fmvName +
+        ", fmvActors=" + fmvActors +
+        ", fmvDirector=" + fmvDirector +
+        ", fmvImg=" + fmvImg +
+        ", fmvLikedNum=" + fmvLikedNum +
+        ", fmvCollectionNum=" + fmvCollectionNum +
+        ", fmvCreateTime=" + fmvCreateTime +
+        ", fmvUpdateTime=" + fmvUpdateTime +
+        ", fmvIsValid=" + fmvIsValid +
+        "}";
     }
 }

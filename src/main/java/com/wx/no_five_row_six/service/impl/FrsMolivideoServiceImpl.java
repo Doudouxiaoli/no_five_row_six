@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author dxl
- * @since 2020-01-14
+ * @since 2020-01-23
  */
 @Service
 public class FrsMolivideoServiceImpl extends ServiceImpl<FrsMolivideoMapper, FrsMolivideo> implements IFrsMolivideoService {

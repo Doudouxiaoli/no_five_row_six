@@ -2,22 +2,19 @@
 #@admin_layout()
 
 #define title()
-<title>五排六号-影视作品>电视剧添加</title>
-#end
-#define js()
-<script type="text/javascript" src="lib/uploadPic.js"></script>
+<title>五排六号-电视剧>编辑</title>
 #end
 #define main()
 <div class="wrapper">
-    #include("../../header.html", navId="nav_molivideo",subNavId="nav_tv")
+    #include("../../../header.html", navId="nav_molivideo",subNavId="nav_tv")
     <div class="content-wrapper">
         <section class="content-header">
             <h1>
-                新增电视剧
+                编辑电视剧
             </h1>
             <ol class="breadcrumb">
-                <li><a href="admin/molivideo/list?type=#(type)"><i class="fa fa-music"></i>电视剧列表</a></li>
-                <li class="active">新增电视剧</li>
+                <li><a href="admin/molivideo/tv/list?workId=#(workId)"><i class="fa fa-music"></i>电视剧列表</a></li>
+                <li class="active">编辑电视剧</li>
             </ol>
         </section>
 
@@ -28,9 +25,7 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">电视剧内容</h3>
                         </div>
-                        <form class="form-horizontal" role="form" id="searchForm" name="searchForm"
-                              action="/admin/molivideo/saveOrUpdate"
-                              method="post"  onsubmit="return beforeSubmit();">
+                        <form class="form-horizontal" role="form" id="molivideoForm" name="molivideoForm" method="post" action="/admin/molivideo/tv/saveOrUpdate">
                             #include("form.html")
                         </form>
                     </div>
