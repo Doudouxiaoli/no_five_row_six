@@ -1,6 +1,7 @@
 package com.wx.no_five_row_six.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 
@@ -74,7 +75,8 @@ public class FrsEndorsement implements Serializable {
      */
     private Integer feIsValid;
 
-
+    @TableField(exist = false)
+    private String feTimeStr;
     public Long getFeId() {
         return feId;
     }
@@ -171,21 +173,30 @@ public class FrsEndorsement implements Serializable {
         this.feIsValid = feIsValid;
     }
 
+    public String getFeTimeStr() {
+        return feTimeStr;
+    }
+
+    public void setFeTimeStr(String feTimeStr) {
+        this.feTimeStr = feTimeStr;
+    }
+
     @Override
     public String toString() {
         return "FrsEndorsement{" +
-        "feId=" + feId +
-        ", feSort=" + feSort +
-        ", feType=" + feType +
-        ", feImg=" + feImg +
-        ", feVid=" + feVid +
-        ", feLikedNum=" + feLikedNum +
-        ", feCollectionNum=" + feCollectionNum +
-        ", feStartTime=" + feStartTime +
-        ", feEndTime=" + feEndTime +
-        ", feCreateTime=" + feCreateTime +
-        ", feUpdateTime=" + feUpdateTime +
-        ", feIsValid=" + feIsValid +
-        "}";
+                "feId=" + feId +
+                ", feSort=" + feSort +
+                ", feType=" + feType +
+                ", feImg='" + feImg + '\'' +
+                ", feVid='" + feVid + '\'' +
+                ", feLikedNum=" + feLikedNum +
+                ", feCollectionNum=" + feCollectionNum +
+                ", feStartTime=" + feStartTime +
+                ", feEndTime=" + feEndTime +
+                ", feCreateTime=" + feCreateTime +
+                ", feUpdateTime=" + feUpdateTime +
+                ", feIsValid=" + feIsValid +
+                ", feTimeStr='" + feTimeStr + '\'' +
+                '}';
     }
 }

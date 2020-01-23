@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+#@admin_layout()
+
+#define title()
+<title>五排六号-舞蹈>编辑</title>
+#end
+#define js()
+<script type="text/javascript" src="lib/uploadPic.js"></script>
+#end
+#define main()
+    <div class="wrapper">
+        #include("../header.html", navId="nav_dance", subNavId="")
+        <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                编辑舞蹈
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="admin/dance/list"><i class="fa fa-music"></i>舞蹈列表</a></li>
+                <li class="active">编辑舞蹈</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">舞蹈内容</h3>
+                        </div>
+                        <form class="form-horizontal" role="form" id="danceForm" name="danceForm" method="post" action="/admin/dance/saveOrUpdate">
+                            #include("form.html")
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    </div>
+#end
+

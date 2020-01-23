@@ -78,7 +78,7 @@ public class Const {
     public static String PIC_PATH_ENDORSEMENT_MAKEUP="up/endorsement/makeup/pic/";//代言美妆宣传照
     public static String PIC_PATH_ENDORSEMENT_CLOTHES="up/endorsement/clothes/pic/";//代言服饰宣传照
     public static String PIC_PATH_ENDORSEMENT_LUXURY="up/endorsement/luxury/pic/";//代言轻奢品宣传照
-    public static String PIC_PATH_ENDORSEMENT_GAME="up/endorsement/game/pic";//代言游戏宣传照
+    public static String PIC_PATH_ENDORSEMENT_GAME="up/endorsement/game/pic/";//代言游戏宣传照
 
     public static String PIC_PATH_SHARECODE = "up/shareCode/pic/";// 小程序分享二维码存储路径
 

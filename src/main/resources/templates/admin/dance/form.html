@@ -1,0 +1,97 @@
+<input type="hidden" name="fdId" id="fdId" value="#(dance.fdId??)"/>
+<div class="box-body">
+
+    <div class="form-group">
+        <label for="fdSort" class="col-sm-3 control-label">置顶排序值</label>
+        <div class="col-sm-5">
+            <input type="number" class="form-control" id="fdSort" name="fdSort" value="#(dance.fdSort??)"/>
+            <p style="color:red;">由大到小排序</p>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="fdTvName" class="col-sm-3 control-label"><span style="color:red;">*</span>节目名称</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="fdTvName" name="fdTvName" value="#(dance.fdTvName??)"/>
+        </div>
+        <div class="col-sm-2">
+            <p id="fdTvNamep" style="color:red;"></p>
+        </div>
+    </div>
+
+
+    <input type="hidden" id="type" value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_DANCE)"/>
+    <div class="form-group">
+        <label for="wpeThumbnailPath" class="col-sm-3 control-label">封面</label>
+        <div class="col-sm-5">
+            <img id="picShow" src="#(dance.fdImg??)" alt="" style="width:100px;"/>
+            <input type="hidden" id="wpeThumbnailPath" name="fdImg" value="#(dance.fdImg??)"/>
+            <button id="uploadBtn" type="button" class="btn btn-defdult">上传图片</button>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="fdTimeStr" class="col-sm-3 control-label"><span style="color:red;">*</span>发布日期</label>
+        <div class="col-sm-5">
+            <div class="input-group date">
+                <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </div>
+                <input type="text" class="form-control searchDate" id="fdTimeStr" name="fdTimeStr"
+                       value="#(longToString(dance.fdTime??,'yyyy-MM-dd'))"/>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <p id="fdTimeStrp" style="color:red;"></p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="fdVid" class="col-sm-3 control-label">舞蹈视频id</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="fdVid" name="fdVid" value="#(dance.fdVid??)"/>
+        </div>
+    </div>
+</div>
+<div class="box-footer">
+    <div class="col-xs-push-2 col-xs-2">
+        <a class="btn btn-default" href="/admin/album/list" role="button">取消</a>
+    </div>
+    <div class="col-xs-push-4 col-xs-2">
+        <button type="submit" class="btn btn-info pull-right" id="saveBtn">保存</button>
+    </div>
+</div>
+#include("../uploadPic.html")
+
+<script type="text/javascript">
+
+    function checkFdTvName() {
+        if ($("#fdTvName").val() != undefined && $("#fdTvName").val() != "") {
+            $("#fdTvNamep").text("");
+            return true;
+        } else {
+            $("#fdTvNamep").text("请输入节目名称");
+            return false;
+        }
+    }
+
+    function checkFdTimeStr() {
+        if ($("#fdTimeStr").val() != undefined && $("#fdTimeStr").val() != "") {
+            $("#fdTimeStrp").text("");
+            return true;
+        } else {
+            $("#fdTimeStrp").text("请输入播出日期");
+            return false;
+        }
+    }
+
+    function beforeSubmit() {
+        if (checkFdTimeStr && checkFdTvName() ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+</script>
