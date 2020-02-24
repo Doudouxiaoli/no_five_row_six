@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author dxl
- * @since 2020-01-14
+ * @since 2020-02-24
  */
 public interface FrsEndorsementMapper extends BaseMapper<FrsEndorsement> {
 

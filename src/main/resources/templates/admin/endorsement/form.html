@@ -1,0 +1,121 @@
+<input type="hidden" name="feId" id="feId" value="#(goods.feId??)"/>
+<input type="hidden" id="feType" name="feType" value="#(type)"/>
+<div class="box-body">
+
+    <div class="form-group">
+        <label for="feSort" class="col-sm-3 control-label"><span style="color:red;">*</span>置顶排序值</label>
+        <div class="col-sm-5">
+            <input type="number" class="form-control" id="feSort" name="feSort" value="#(goods.feSort??)"/>
+            <p style="color:red;">由大到小排序</p>
+        </div>
+        <div class="col-sm-2">
+            <p id="feSortp" style="color:red;"></p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="feName" class="col-sm-3 control-label"><span style="color:red;">*</span>作品名称</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="feName" name="feName" value="#(goods.feName??)"/>
+        </div>
+        <div class="col-sm-2">
+            <p id="feNamep" style="color:red;"></p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="feVid" class="col-sm-3 control-label">宣传视频id</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="feVid" name="fdVid" value="#(goods.feVid??)"/>
+        </div>
+    </div>
+    <input type="hidden" id="type"
+           #if(type==0)
+           value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_ENDORSEMENT_FOOD)"/>
+            #else if(type==1)
+            value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_ENDORSEMENT_MAKEUP)"/>
+            #else if(type==2)
+            value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_ENDORSEMENT_CLOTHES)"/>
+            #else if(type==3)
+            value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_ENDORSEMENT_LUXURY)"/>
+            #else
+            value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_ENDORSEMENT_GAME)"/>
+            #end
+    <div class="form-group">
+        <label for="wpeThumbnailPath" class="col-sm-3 control-label">宣传海报</label>
+        <div class="col-sm-5">
+            <img id="picShow" src="#(goods.feImg??)" alt="" style="width:100px;"/>
+            <input type="hidden" id="wpeThumbnailPath" name="feImg" value="#(goods.feImg??)"/>
+            <button id="uploadBtn" type="button" class="btn btn-default">上传图片</button>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="feStartTimeStr" class="col-sm-3 control-label">开始代言时间</label>
+        <div class="col-sm-5">
+            <div class="input-group date">
+                <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </div>
+                <input type="text" class="form-control searchDate" id="feStartTimeStr" name="feStartTimeStr"
+                       value="#(longToString(goods.feStartTime??,'yyyy-MM-dd'))"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="feEndTimeStr" class="col-sm-3 control-label">结束代言时间</label>
+        <div class="col-sm-5">
+            <div class="input-group date">
+                <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </div>
+                <input type="text" class="form-control searchDate" id="feEndTimeStr" name="feEndTimeStr"
+                       value="#(longToString(goods.feEndTime??,'yyyy-MM-dd'))"/>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box-footer">
+    <div class="col-xs-push-2 col-xs-2">
+        <a class="btn btn-default" href="/admin/endorsement/list?type=#(type)" role="button">取消</a>
+    </div>
+    <div class="col-xs-push-4 col-xs-2">
+        <button type="submit" class="btn btn-info pull-right" id="saveBtn">保存</button>
+    </div>
+</div>
+#include("../uploadPic.html")
+
+<script type="text/javascript">
+
+    function checkfeName() {
+        if ($("#feName").val() != undefined && $("#feName").val() != "") {
+            $("#feNamep").text("");
+            return true;
+        } else {
+            $("#feNamep").text("请输入代言商品名称");
+            return false;
+        }
+    }
+
+    function checkfeSort() {
+        if ($("#feSort").val() != undefined && $("#feSort").val() != "") {
+            $("#feSortp").text("");
+            return true;
+        } else {
+            $("#feSortp").text("请输入排序值");
+            return false;
+        }
+    }
+
+
+    function beforeSubmit() {
+        if (checkfeName && checkfeSort()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+</script>

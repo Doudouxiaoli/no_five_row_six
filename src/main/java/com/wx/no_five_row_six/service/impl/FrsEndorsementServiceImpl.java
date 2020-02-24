@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author dxl
- * @since 2020-01-14
+ * @since 2020-02-24
  */
 @Service
 public class FrsEndorsementServiceImpl extends ServiceImpl<FrsEndorsementMapper, FrsEndorsement> implements IFrsEndorsementService {

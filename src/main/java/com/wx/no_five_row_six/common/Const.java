@@ -117,7 +117,7 @@ public class Const {
     public static Integer ENDORSEMENT_MAKEUP_ID = 1;
     public static String ENDORSEMENT_MAKEUP_TYPE = "美妆";
     public static Integer ENDORSEMENT_CLOTHES_ID = 2;
-    public static String ENDORSEMENT_CLOTHES_TYPE = "美妆";
+    public static String ENDORSEMENT_CLOTHES_TYPE = "服饰";
     public static Integer ENDORSEMENT_LUXURY_ID = 3;
     public static String ENDORSEMENT_LUXURY_TYPE = "轻奢品";
     public static Integer ENDORSEMENT_GAME_ID = 4;

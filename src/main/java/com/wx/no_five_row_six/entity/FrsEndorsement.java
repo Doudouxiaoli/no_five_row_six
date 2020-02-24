@@ -11,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author dxl
- * @since 2020-01-14
+ * @since 2020-02-24
  */
 public class FrsEndorsement implements Serializable {
 
@@ -31,12 +31,17 @@ public class FrsEndorsement implements Serializable {
     private Integer feType;
 
     /**
+     * 商品名称
+     */
+    private String feName;
+
+    /**
      * 定妆图
      */
     private String feImg;
 
     /**
-     * 宣传视频id
+     * 宣传视频
      */
     private String feVid;
 
@@ -76,7 +81,26 @@ public class FrsEndorsement implements Serializable {
     private Integer feIsValid;
 
     @TableField(exist = false)
-    private String feTimeStr;
+    private String feStartTimeStr;
+    @TableField(exist = false)
+    private String feEndTimeStr;
+
+    public String getFeStartTimeStr() {
+        return feStartTimeStr;
+    }
+
+    public void setFeStartTimeStr(String feStartTimeStr) {
+        this.feStartTimeStr = feStartTimeStr;
+    }
+
+    public String getFeEndTimeStr() {
+        return feEndTimeStr;
+    }
+
+    public void setFeEndTimeStr(String feEndTimeStr) {
+        this.feEndTimeStr = feEndTimeStr;
+    }
+
     public Long getFeId() {
         return feId;
     }
@@ -99,6 +123,14 @@ public class FrsEndorsement implements Serializable {
 
     public void setFeType(Integer feType) {
         this.feType = feType;
+    }
+
+    public String getFeName() {
+        return feName;
+    }
+
+    public void setFeName(String feName) {
+        this.feName = feName;
     }
 
     public String getFeImg() {
@@ -173,20 +205,13 @@ public class FrsEndorsement implements Serializable {
         this.feIsValid = feIsValid;
     }
 
-    public String getFeTimeStr() {
-        return feTimeStr;
-    }
-
-    public void setFeTimeStr(String feTimeStr) {
-        this.feTimeStr = feTimeStr;
-    }
-
     @Override
     public String toString() {
         return "FrsEndorsement{" +
                 "feId=" + feId +
                 ", feSort=" + feSort +
                 ", feType=" + feType +
+                ", feName='" + feName + '\'' +
                 ", feImg='" + feImg + '\'' +
                 ", feVid='" + feVid + '\'' +
                 ", feLikedNum=" + feLikedNum +
@@ -196,7 +221,8 @@ public class FrsEndorsement implements Serializable {
                 ", feCreateTime=" + feCreateTime +
                 ", feUpdateTime=" + feUpdateTime +
                 ", feIsValid=" + feIsValid +
-                ", feTimeStr='" + feTimeStr + '\'' +
+                ", feStartTimeStr='" + feStartTimeStr + '\'' +
+                ", feEndTimeStr='" + feEndTimeStr + '\'' +
                 '}';
     }
 }
