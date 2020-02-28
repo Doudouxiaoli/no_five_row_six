@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-@RequestMapping("/album")
+@RequestMapping("api/album")
 public class AlbumController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AlbumController.class);
 
@@ -135,10 +135,10 @@ public class AlbumController {
     }
 
     @RequestMapping("/songDetail")
-    public String songDetail(ModelMap mm, Long id,Integer stage) {
+    public String songDetail(ModelMap mm, Long id) {
         try {
             mm.addAttribute("song", songService.getById(id));
-            mm.addAttribute("stage",stage);
+//            mm.addAttribute("stage",stage);
             return "pc/album/songDetail";
         } catch (Exception e) {
             e.printStackTrace();

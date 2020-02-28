@@ -316,11 +316,4 @@ public class QRCodeUtil {
         }
         return image;
     }
-
-
-    public static void main(String[] args) throws Exception {
-//        createPng("test", "D:/erweima.png", "top1", "top2", "bottom");
-//        createQRImage("测试一下hello哈哈", "D:/", "erweima.png");
-        createQRImageWithLogo("测试一下hello哈哈", "C:\\zone\\work\\workspace\\2017\\wc_iem\\target\\wc_iem\\up\\headimg\\olmZ8uJxPElPvL2nnu6qj04n8HbU.jpeg", "D:/", "erweima.png");
-    }
 }

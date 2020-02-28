@@ -25,7 +25,7 @@
             <div class="informationWrapper flex">
                 #if(page.records?? != null && page.records.size() > 0)
                 #for(album:page.records)
-                <a href="/album/albumDetail?albumId=#(album.faId)" class="itemBgBox">
+                <a href="/api/album/albumDetail?albumId=#(album.faId)" class="itemBgBox">
                     <div class="item-img">
                         <img src="#(album.faImg??)" alt="" class="albumImg">
                         <img src="res/pc/images/stick.png" alt="" class="stickImg">
