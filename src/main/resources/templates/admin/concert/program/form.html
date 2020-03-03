@@ -1,0 +1,96 @@
+<input type="hidden" name="fcpId" id="fcpId" value="#(program.fcpId??)"/>
+<input type="hidden" id="fcpFcId" name="fcpFcId" value="#(concertId)"/>
+<div class="box-body">
+    <div class="form-group">
+        <label for="fcpSort" class="col-sm-3 control-label"><span style="color:red;">*</span>置顶排序值</label>
+        <div class="col-sm-5">
+            <input type="number" class="form-control" id="fcpSort" name="fcpSort" value="#(program.fcpSort??)"/>
+            <p style="color:red;">由大到小排序</p>
+        </div>
+        <div class="col-sm-2">
+            <p id="fcpSortp" style="color:red;"></p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="fcpName" class="col-sm-3 control-label"><span style="color:red;">*</span>名称</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="fcpName" name="fcpName" value="#(program.fcpName??)"/>
+        </div>
+        <div class="col-sm-2">
+            <p id="fcpNamep" style="color:red;"></p>
+        </div>
+    </div>
+
+    <input type="hidden" id="type" value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_CONCERT_PROGRAM)"/>
+    <div class="form-group">
+        <label for="wpeThumbnailPath" class="col-sm-3 control-label">视频封面</label>
+        <div class="col-sm-5">
+            <img id="picShow" src="#(program.fcpImg??)" alt="" style="width:100px;"/>
+            <input type="hidden" id="wpeThumbnailPath" name="fcpImg" value="#(program.fcpImg??)"/>
+            <button id="uploadBtn" type="button" class="btn btn-default">上传图片</button>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="fcpVid" class="col-sm-3 control-label"><span style="color:red;">*</span>视频地址</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="fcpVid" name="fcpVid" value="#(program.fcpVid??)"/>
+        </div>
+        <div class="col-sm-2">
+            <p id="fcpVidp" style="color:red;"></p>
+        </div>
+    </div>
+
+</div>
+<div class="box-footer">
+    <div class="col-xs-push-2 col-xs-2">
+        <a class="btn btn-default" href="/admin/concertProgram/list?concertId=#(concertId)" role="button">取消</a>
+    </div>
+    <div class="col-xs-push-4 col-xs-2">
+        <button type="submit" class="btn btn-info pull-right" id="saveBtn">保存</button>
+    </div>
+</div>
+#include("../../uploadPic.html")
+
+<script type="text/javascript">
+
+    function checkfcpName() {
+        if ($("#fcpName").val() != undefined && $("#fcpName").val() != "") {
+            $("#fcpNamep").text("");
+            return true;
+        } else {
+            $("#fcpNamep").text("请输入名称");
+            return false;
+        }
+    }
+
+    function checkfcpSort() {
+        if ($("#fcpSort").val() != undefined && $("#fcpSort").val() != "") {
+            $("#fcpSortp").text("");
+            return true;
+        } else {
+            $("#fcpSortp").text("请输入排序值");
+            return false;
+        }
+    }
+
+    function checkfcpVid() {
+        if ($("#fcpVid").val() != undefined && $("#fcpVid").val() != "") {
+            $("#fcpVidp").text("");
+            return true;
+        } else {
+            $("#fcpVidp").text("请输入视频地址");
+            return false;
+        }
+    }
+    function beforeSubmit() {
+        if (checkfcpName && checkfcpSort()&&checkfcpVid()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+</script>

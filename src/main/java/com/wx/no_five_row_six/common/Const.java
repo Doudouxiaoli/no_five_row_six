@@ -67,8 +67,9 @@ public class Const {
      * web图片存储本地路径 start
      */
     public static String PIC_PATH_ALBUM = "up/album/pic/";//专辑封面
-    public static String PIC_PATH_CONCERT = "up/concert/pic/";//演唱会封面
     public static String PIC_PATH_DANCE = "up/dance/pic/";//舞蹈封面
+    public static String PIC_PATH_CONCERT = "up/concert/pic/";//演唱会封面
+    public static String PIC_PATH_CONCERT_PROGRAM = "up/concert/program/pic/";//演唱会节目封面
 
     public static String PIC_PATH_MOLIVIDEO_MOVIE = "up/molivideo/movie/pic/";//影视作品中电影海报
     public static String PIC_PATH_MOLIVIDEO_TV = "up/molivideo/tv/pic/";//影视作品中电视剧海报
@@ -90,8 +91,9 @@ public class Const {
      * web图片存储类型 start
      */
     public static String PIC_TYPE_ALBUM = "album";// 专辑
-    public static String PIC_TYPE_CONCERT = "concert";//演唱会
     public static String PIC_TYPE_DANCE="dance";//舞蹈
+    public static String PIC_TYPE_CONCERT = "concert";//演唱会
+    public static String PIC_TYPE_CONCERT_PROGRAM = "program";//演唱会节目
     public static String PIC_TYPE_MOLIVIDEO_MOVIE = "movie";//电影
     public static String PIC_TYPE_MOLIVIDEO_TV = "tv";//电视剧
     public static String PIC_TYPE_MOLIVIDEO_VARIETY = "variety";//综艺

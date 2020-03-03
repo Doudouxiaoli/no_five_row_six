@@ -2,7 +2,7 @@
 #@admin_layout()
 
 #define title()
-<title>五排六号-演唱会>列表</title>
+<title>五排六号-演唱会>节目列表</title>
 #end
 
 #define css()
@@ -22,53 +22,45 @@
 
 #define main()
 <div class="wrapper">
-    #include("/admin/header.html", navId="nav_concert",subNavId="")
+    #include("../../header.html", navId="nav_concert",subNavId="nav_program")
     <div class="content-wrapper">
         <section class="content-header">
-            <h1>演唱会列表</h1>
+            <h1>节目列表</h1>
         </section>
         <section class="content">
             <div class="col-xs-12">
-                <div class="box" style="border-top: 0px">
-
+                <div class="box">
                     <div class="box-body">
                         <div class="box-header">
                             <div class="col-sm-1 col-md-1">
-                                <a class="btn btn-success" href="admin/concert/addUI">新增</a>
+                                <a class="btn btn-success" href="admin/concertProgram/addUI?concertId=#(concertId)">新增</a>
                             </div>
                             <div class="col-sm-10 col-md-10">
                                 <form class="form-inline" name="searchForm" id="searchForm">
                                     <input type="hidden" id="current" name="current" value="#(page.getCurrent())"/>
                                     <input type="hidden" id="size" name="size" value="#(page.getSize())"/>
-                                    <div class="form-group" style="margin-left:-20px">
-                                        <input type="text" class="form-control" id="keyword" name="keyword" placeholder=主题/地点 value="#(keyword)"/>
+                                    <input type="hidden" id="concertId" name="concertId" value="#(concertId)"/>
+                                    <div class="form-group" style="margin-left: -20px">
+                                        <input type="text" class="form-control" id="keyword" name="keyword"
+                                               placeholder=歌曲名称
+                                               value="#(keyword)"/>
                                     </div>
                                     <input type="radio" name="state" value="1"
                                            #if(state== 1)
                                            checked
                                            #end
-                                    />全部
+                                    />激活态
                                     <input type="radio" name="state" value="0"
                                            #if(state== 0)
                                            checked
                                            #end
                                     />已删除
-                                    <div class="form-group">
-                                        <label>时间:</label>
-                                        <div class="input-group date">
-                                            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                            <input type="text" class="form-control pull-right searchDate" id="datepicker" name="startDate" value="#(startDate)" readonly="true"/>
-                                        </div>
-                                        &nbsp;~&nbsp;
-                                        <div class="input-group date">
-                                            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                            <input type="text" class="form-control pull-right searchDate" id="datepicker1" name="endDate" value="#(endDate)" readonly="true"/>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn btn-success" id="searchBtn">搜索</button>
-                                    <a class="btn btn-success" href="admin/concert/list">重置搜索</a>
+                                    <button type="button" class="btn btn-success" id="searchBtn">搜索
+                                    </button>
+                                    <a class="btn btn-success" href="/admin/concertProgram/list?concertId=#(concertId)">重置搜索</a>
                                 </form>
                             </div>
+
                         </div>
                     </div>
                     <div class="box-body">
@@ -79,45 +71,45 @@
                             <tr>
                                 <th>序号</th>
                                 <th>排序值</th>
-                                <th>主题</th>
-                                <th>地点信息</th>
-                                <th>时间</th>
+                                <th>名称</th>
+                                <th>来源id</th>
                                 <th>创建时间</th>
                                 <th>修改时间</th>
                                 <th><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            #for(concert:page.records)
+                            #for(program:page.records)
                             <tr>
                                 <td>#((page.size * (page.current -1)) + (for.index +1))</td>
-                                <td>#(concert.fcSort??)</td>
-                                <td>#(concert.fcTitle??)</td>
-                                <td>#(concert.fcAddress??):#(concert.fcVenue??)</td>
-                                <td>#(longToString(concert.fcTime??,"yyyy-MM-dd HH:mm"))</td>
-                                <td>#(longToString(concert.fcCreateTime??,"yyyy-MM-dd"))</td>
-                                <td>#(longToString(concert.fcUpdateTime??,"yyyy-MM-dd"))</td>
+                                <td>#(program.fcpSort??)</td>
+                                <td>#(program.fcpName??)</td>
+                                <td>#(program.fcpFcId??)</td>
+                                <td>#(longToString(program.fcpCreateTime??,"yyyy-MM-dd HH:mm"))</td>
+                                <td>#(longToString(program.fcpUpdateTime??,"yyyy-MM-dd HH:mm"))</td>
                                 <td>
-                                    #if(concert.fcIsValid == 1)
-                                    <a type="button" class="btn btn-primary" href="admin/concertProgram/list?concertId=#(concert.fcId)">节目单</a>
-                                    <a type="button" class="btn btn-primary" href="admin/concert/editUI?id=#(concert.fcId)">编辑</a>
-                                    <a type="button" class="btn btn-primary" href="admin/concert/del?id=#(concert.fcId)">删除</a>
-                                    #else if(concert.fcIsValid == 0)
-                                    <a type="button" class="btn btn-primary" href="admin/concert/reBack?id=#(concert.fcId)">恢复</a>
+                                    #if(program.fcpIsValid?? == 1)
+                                    <a type="button" class="btn btn-primary"
+                                       href="/admin/concertProgram/editUI?id=#(program.fcpId)">修改</a>
+                                    <a type="button" class="btn btn-primary"
+                                       href="/admin/concertProgram/del?id=#(program.fcpId)">删除</a>
+                                    #else if(program.fcpIsValid == 0)
+                                    <a type="button" class="btn btn-primary"
+                                       href="/admin/concertProgram/reBack?id=#(program.fcpId)">恢复</a>
                                     #end
                                 </td>
                             </tr>
                             #end
                             </tbody>
                         </table>
-                        #include("/admin/pojoPageInfo.html", act="admin/concert/list", formName="searchForm")
+                        #include("../../pojoPageInfo.html", act="admin/concertProgram/list?concertId=#(concertId)",
+                        formName="searchForm")
                         #else if (page.records == null || page.total <= 0)
                         暂无数据！
                         #end
                     </div>
                 </div>
             </div>
-
         </section>
     </div>
 </div>
@@ -128,8 +120,8 @@
         //检索
         $("#searchBtn").bind("click", function () {
             var form = document.forms[0];
-            form.action = "admin/concert/list";
-            $("#current").val(1);
+            form.action = "admin/concertProgram/list?concertId="+$("#concertId").val();
+            $("#page").val(1);
             form.submit();
         });
 

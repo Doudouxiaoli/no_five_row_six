@@ -42,11 +42,6 @@ public class FrsConcert implements Serializable {
     private String fcImg;
 
     /**
-     * 视频id
-     */
-    private String fcVid;
-
-    /**
      * 介绍内容
      */
     private String fcContent;
@@ -137,13 +132,6 @@ public class FrsConcert implements Serializable {
         this.fcImg = fcImg;
     }
 
-    public String getFcVid() {
-        return fcVid;
-    }
-
-    public void setFcVid(String fcVid) {
-        this.fcVid = fcVid;
-    }
 
     public String getFcContent() {
         return fcContent;
@@ -241,7 +229,6 @@ public class FrsConcert implements Serializable {
                 ", fcTitle='" + fcTitle + '\'' +
                 ", fcAddress='" + fcAddress + '\'' +
                 ", fcImg='" + fcImg + '\'' +
-                ", fcVid='" + fcVid + '\'' +
                 ", fcContent='" + fcContent + '\'' +
                 ", fcLikedNum=" + fcLikedNum +
                 ", fcCollectionNum=" + fcCollectionNum +

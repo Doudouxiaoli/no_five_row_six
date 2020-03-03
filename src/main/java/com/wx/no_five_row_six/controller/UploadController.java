@@ -45,12 +45,15 @@ public class UploadController {
         if (type != null && type.equals(Const.PIC_TYPE_ALBUM)) {
             // 专辑图片存储路径
             folderPath = Const.PIC_PATH_ALBUM;
-        } else if (type != null && type.equals(Const.PIC_TYPE_CONCERT)) {
-            //演唱会图片存储路径
-            folderPath = Const.PIC_PATH_CONCERT;
-        }else if(type!=null&&type.equals(Const.PIC_TYPE_DANCE)){
+        } else if(type!=null&&type.equals(Const.PIC_TYPE_DANCE)){
             //舞蹈图片存储路径
             folderPath = Const.PIC_PATH_DANCE;
+        }else if (type != null && type.equals(Const.PIC_TYPE_CONCERT)) {
+            //演唱会图片存储路径
+            folderPath = Const.PIC_PATH_CONCERT;
+        }else if (type != null && type.equals(Const.PIC_TYPE_CONCERT_PROGRAM)) {
+            //演唱会节目图片存储路径
+            folderPath = Const.PIC_PATH_CONCERT_PROGRAM;
         } else if (type != null && type.equals(Const.PIC_TYPE_MOLIVIDEO_MOVIE)) {
             //作品->电影图片存储路径
             folderPath = Const.PIC_PATH_MOLIVIDEO_MOVIE;
