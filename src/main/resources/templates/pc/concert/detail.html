@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+#@pc_layout()
+#define title()
+<title>播放视频</title>
+#end
+#define css()
+<style>
+    .program-content {
+        background-color: #f3f0fd;
+    }
+
+    .programBgBox {
+        display: block;
+        height: 80px;
+        padding-bottom: 10px;
+        cursor: pointer;
+    }
+
+    .concertMvImg {
+        width: 100px;
+        height: 80px;
+    }
+
+    .mvBox {
+        width: 800px;
+    }
+
+    .mv-text {
+        font-size: 25px;
+        color: #4b565e;
+        line-height: 50px;
+        width: 700px;
+    }
+
+    .recommendedBox {
+        vertical-align: top;
+        width: 250px;
+        padding-left: 10px;
+    }
+
+    .recommended-txt {
+        width: 140px;
+        font-size: 14px;
+        line-height: 27px;
+
+    }
+.hidden-word{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+    .inline-block {
+        display: inline-block;
+    }
+</style>
+#end
+#define js()
+<script src="//player.polyv.net/script/player.js"></script>
+#end
+#define main()
+<body>
+<div class="indexBox">
+    #include("../include/header.html",navId="album")
+    <div class="scrollCon">
+        <div class="comm">
+            <div class="informationWrapper open">
+                <div class="mvBox inline-block">
+                    <div class="mv-text hidden-word">
+                        #(runningMv.fcpName??)
+                    </div>
+                    <div id="player"></div>
+                    <div class="program-content itemInf-txt">
+                        #(concert.fcContent??)
+                    </div>
+                </div>
+                <div class="recommendedBox inline-block">
+                    <div class="informationTitle">推荐视频:</div>
+                    #if(programList?? != null && programList.size() > 0)
+                    #for(item:programList)
+                    <a href="/api/concert/concertDetail?concertId=#(concert.fcId)&runningId=#(item.fcpId)"
+                       class="programBgBox">
+                        <img src="#(item.fcpImg??)" alt="" class="concertMvImg inline-block">
+                        <div class="recommended-txt hidden-word inline-block ">#(item.fcpName??)</div>
+                    </a>
+                    #end
+                    #else if (page.records == null || page.records.size() <= 0)
+                    暂无数据！
+                    #end
+                </div>
+            </div>
+        </div>
+        #include("../include/footer.html")
+    </div>
+</div>
+<script>
+    var player = polyvPlayer({
+        wrap: '#player',
+        width: '800px',
+        height: "450px",
+        vid: '#(runningMv.fcpVid??)'
+    });
+
+</script>
+
+</body>
+#end
+
+

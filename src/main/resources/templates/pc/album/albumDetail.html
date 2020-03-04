@@ -5,69 +5,7 @@
 #end
 #define css()
 <style>
-    img {
-        width: 100%;
-    }
 
-    /*无版权歌曲*/
-    .noCopyright {
-        color: red;
-    }
-
-    .songMvIcon {
-        padding-bottom: 0px;
-        cursor: pointer;
-    }
-
-    /*弹窗*/
-    .maskBox{
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        top: 0;
-        background: rgba(0, 0, 0, 0.7);
-        /*filter:alpha(opacity=0.7);*/
-        filter: progid:DXImageTransform.Microsoft.gradient(startcolorstr=#b2000000, endcolorstr=#b2000000);
-        /*display: none;*/
-        z-index: 10;
-    }
-
-    .mask-cover {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-    }
-
-    .mask-cover {
-        width: 500px;
-        height: 300px;
-        margin-top: -110px;
-        margin-left: -250px;
-        -webkit-border-radius: 10px;
-        -moz-border-radius: 10px;
-        border-radius: 10px;
-        overflow: hidden;
-        background-color: #ffffff;
-        background-image: url("../../../static/res/pc/images/mask-bg1.png");
-        background-repeat: no-repeat;
-        background-size: 100%;
-    }
-
-    .mask-close {
-        cursor: pointer;
-    }
-
-    .close1 {
-        width: 16px;
-        height: 16px;
-        background: url("../../../static/res/pc/images/close.png") center no-repeat;
-        background-size: 100% 100%;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-    }
 </style>
 #end
 #define js()
@@ -105,18 +43,15 @@
                             <img src="res/pc/images/downInActive.png" alt="" class="inline-block img-small">
                         </td>
                         <td>
-                            #if(song.fsLink!=null && song.fsLink != ""&&song.fsVid != null && song.fsVid != "")
+                            #if(song.fsLink!=null && song.fsLink != "")
                             <a href="/api/album/songDetail?id=#(song.fsId)"> #(song.fsName??)</a>
-                            <img src="res/pc/images/downInActive.png" alt="" class="inline-block img-small songMvIcon">
-                            <input type="text" value="#(song.fsVid??)" hidden class="mvId">
-                            #else if(song.fsLink!=null && song.fsLink != "")
-                            <a href="/api/album/songDetail?id=#(song.fsId)">#(song.fsName??)</a>
-                            #else if(song.fsVid != null && song.fsVid != "")
-                            <a href="/api/album/songDetail?id=#(song.fsId)" class="noCopyright"> #(song.fsName??)</a>
-                            <img src="res/pc/images/mvPlay.png" alt="" class="inline-block img-small songMvIcon">
-                            <input type="text" value="#(song.fsVid??)"  class="mvId" hidden>
                             #else
                             <a href="/api/album/songDetail?id=#(song.fsId)" class="noCopyright"> #(song.fsName??)</a>
+                            #end
+
+                            #if(song.fsVid != null && song.fsVid != "")
+                            <img src="res/pc/images/mvPlay.png" alt="" class="inline-block img-small songMvIcon"
+                                 onclick="playMv('#(song.fsVid)')"/>
                             #end
                         </td>
                         <td>#(song.fsSinger)</td>
@@ -132,32 +67,33 @@
         </div>
         #include("../include/footer.html")
     </div>
-</div>
-<div class="maskBox">
-    <div class="mask-cover">
-        <div class="mask-close close1">
-            <div id="player" hidden></div>
+    <div class="maskBox">
+        <div class="mask-cover">
+            <div class="mask-close close1"></div>
+            <div id="player"></div>
         </div>
     </div>
 </div>
 <script>
-    $(function () {
+    function playMv(t) {
+        // alert(t)
         var player = polyvPlayer({
-            wrap: '#player',
+            wrap:'#player',
             width: '450px',
             height: "300px",
-            vid: $(".mvId").val()
-        })
-    })
-    $(".songMvIcon").on("click",function () {
-        alert("111")
-        // $(".maskBox").removeAttr("display");
-        // $(this).parents(".maskBox").show();
+            autoplay: true,
+            vid: t
+        });
         $("#player").show();
-    })
+        $(".maskBox").show();
+    }
 
+    // $(".songMvIcon").on("click", function () {});
     $(".mask-close").off().on("click", function () {
-        $(this).parents(".maskBox").hide();
+        //页面刷新,解决保利威视不能关闭视频的问题
+        window.location.reload();
+        $("#player").hide();
+        $(".maskBox").hide();
     });
 
 </script>

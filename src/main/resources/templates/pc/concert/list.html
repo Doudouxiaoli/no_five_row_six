@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+#@pc_layout()
+#define title()
+<title>演唱会</title>
+#end
+#define css()
+<style type="text/css">
+    .concertBgBox {
+        width: 100%;
+        height: 260px;
+        margin: 5px 0px;
+        background-color: #f4f2fe;
+    }
+
+    .concertImg {
+        width: 450px;
+        height: 260px;
+        position: absolute;
+        float: left;
+    }
+
+    .padding-top-10 {
+        padding-top: 10px;
+    }
+
+    .padding-top-140 {
+        padding-top: 140px;
+    }
+
+    .concert-margin {
+        margin-top: 0px;
+        margin-left: -35px;
+    }
+
+    .concert-dec {
+        margin-left: 470px;
+        position: absolute;
+        float: left;
+        height: 260px;
+    }
+</style>
+#end
+#define js()
+#end
+#define main()
+<div class="indexBox">
+    #include("../include/header.html",navId="concert")
+    <div class="scrollCon">
+        <div class="comm clear">
+            <div class="informationTop">
+                <div class="lf informationLf">
+                    <div class="informationTitle">演唱会中心</div>
+                </div>
+                <div class="rt informationRt">
+                    <input type="text" id="keyword" name="keyword" value="#(keyword??)" class="searchIpt"
+                           placeholder="请输入地点或主题">
+                    <i class="searchIcon" onclick="search()"></i>
+                </div>
+            </div>
+            <div class="informationWrapper flex padding-top-10">
+                #if(page.records?? != null && page.records.size() > 0)
+                #for(concert:page.records)
+                <a href="/api/concert/detail?concertId=#(concert.fcId)" class="concertBgBox">
+                    <img src="#(concert.fcImg??)" alt="" class="concertImg">
+                    <div class="concert-dec">
+                        <div class="itemInf-name padding-top-140">#(concert.fcTitle??)</div>
+                        <div class="itemInf-txt concert-margin">#(concert.fcAddress??)-#(concert.fcVenue??)</div>
+                        <div class="itemInf-time">#(longToString(concert.fcTime??,"yyyy-MM-dd"))</div>
+                    </div>
+                </a>
+
+                #end
+                #else if (page.records == null || page.records.size() <= 0)
+                暂无数据！
+                #end
+            </div>
+        </div>
+    </div>
+    #include("../include/footer.html")
+</div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        //点击回车
+        $("#keyword").keydown(function (e) {
+            if (e.keyCode == 13) {
+                search()
+            }
+        });
+    })
+
+    function search() {
+        window.location.href = "api/concert/list?keyword=" + $("#keyword").val();
+    }
+</script>
+#end

@@ -35,6 +35,17 @@
                         <div class="itemInf-time">#(longToString(album.faTime??,"yyyy-MM-dd"))</div>
                     </div>
                 </a>
+<!--                <a href="/api/album/detail?albumId=#(album.faId)" class="itemBgBox">-->
+<!--                    <div class="item-img">-->
+<!--                        <img src="#(album.faImg??)" alt="" class="albumImg">-->
+<!--                        <img src="res/pc/images/stick.png" alt="" class="stickImg">-->
+<!--                    </div>-->
+<!--                    <div class="item-dec marginLeft">-->
+<!--                        <div class="itemInf-name">#(album.faName??)</div>-->
+<!--                        <div class="itemInf-time">#(longToString(album.faTime??,"yyyy-MM-dd"))</div>-->
+<!--                    </div>-->
+<!--                </a>-->
+
                 #end
                 #else if (page.records == null || page.records.size() <= 0)
                 暂无数据！

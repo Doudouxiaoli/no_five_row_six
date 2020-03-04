@@ -20,7 +20,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("api/album")
@@ -68,6 +70,31 @@ public class AlbumController {
         mm.addAttribute("keyword", keyword);
         return "pc/album/list";
     }
+    /**
+     * 专辑详情页面
+     *
+     * @param mm
+     * @param albumId
+     * @return
+     */
+    @RequestMapping("/albumDetail")
+    public String albumDetail(ModelMap mm, Long albumId) {
+        try {
+            FrsAlbum album = albumService.getById(albumId);
+            QueryWrapper<FrsSong> queryWrapper = new QueryWrapper<FrsSong>()
+                    .eq("fs_fa_id", albumId)
+                    .eq("fs_is_valid", 1)
+                    .orderByDesc("fs_sort");
+            List<FrsSong> songList = songService.list(queryWrapper);
+            mm.addAttribute("album", album);
+            mm.addAttribute("songList", songList);
+            return "pc/album/albumDetail";
+        } catch (Exception e) {
+            e.printStackTrace();
+            mm.addAttribute("errMsg", "专辑详情查询出错");
+            return "error/error";
+        }
+    }
 
     /**
      * 列表ajax
@@ -107,31 +134,21 @@ public class AlbumController {
         return JacksonMapper.newDataInstance(page);
     }
 
-    /**
-     * 专辑详情页面
-     *
-     * @param mm
-     * @param albumId
-     * @return
-     */
-    @RequestMapping("/albumDetail")
-    public String albumDetail(ModelMap mm, Long albumId) {
+    @RequestMapping("/detail")
+    @ResponseBody
+    public JsonNode detail(Long albumId) {
+        Map<Integer, List> map = new HashMap<>();
         try {
-            FrsAlbum album = albumService.getById(albumId);
-            QueryWrapper<FrsSong> queryWrapper = new QueryWrapper<FrsSong>()
-                    .eq("fs_fa_id", albumId)
-                    .eq("fs_is_valid", 1)
-                    .orderByDesc("fs_sort");
+            List<FrsAlbum> album = albumService.list(new QueryWrapper<FrsAlbum>().eq("fa_id", albumId));
+            QueryWrapper<FrsSong> queryWrapper = new QueryWrapper<FrsSong>().eq("fs_fa_id", albumId).eq("fs_is_valid", 1).orderByDesc("fs_sort");
             List<FrsSong> songList = songService.list(queryWrapper);
-            mm.addAttribute("album", album);
-            mm.addAttribute("songList", songList);
-            return "pc/album/albumDetail";
+            map.put(0, album);
+            map.put(1, songList);
         } catch (Exception e) {
             e.printStackTrace();
-            mm.addAttribute("errMsg", "专辑详情查询出错");
-            return "error/error";
+            return JacksonMapper.newErrorInstance("详情跳转出错");
         }
-
+        return JacksonMapper.newDataInstance(map);
     }
 
     @RequestMapping("/songDetail")
