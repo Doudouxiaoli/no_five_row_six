@@ -64,7 +64,14 @@
             <p id="fcTimeStrp" style="color:red;"></p>
         </div>
     </div>
-
+    <div class="form-group">
+        <label for="fcContent" class="col-sm-3 control-label">专辑创作背景</label>
+        <div class="col-sm-5">
+            <input type="hidden" id="fcContent" name="content" value="#(concert.fcContent??)"/>
+            <!-- 加载编辑器的容器 -->
+            <sccipt id="container" name="fcContent" type="text/plain"></sccipt>
+        </div>
+    </div>
 
 </div>
 <div class="box-footer">
@@ -78,7 +85,19 @@
 #include("../uploadPic.html")
 
 <script type="text/javascript">
-
+    var ue;
+    $(document).ready(function () {
+        // 实例化编辑器
+        ue = UE.getEditor('container', {
+            // topOffset: 50,//浮动时工具栏距离浏览器顶部的高度，用于某些具有固定头部的页面
+            initialFrameHeight: 400
+        });
+        ue.ready(function () {
+            if ($("#faId").val() != null && $("#faId").val() != "") {
+                ue.setContent($("#fcContent").val());
+            }
+        });
+    })
     function checkFcTitle() {
         if ($("#fcTitle").val() != undefined && $("#fcTitle").val() != "") {
             $("#fcTitlep").text("");
