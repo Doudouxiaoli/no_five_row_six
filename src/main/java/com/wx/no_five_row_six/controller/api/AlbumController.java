@@ -151,19 +151,6 @@ public class AlbumController {
         return JacksonMapper.newDataInstance(map);
     }
 
-    @RequestMapping("/songDetail")
-    public String songDetail(ModelMap mm, Long id) {
-        try {
-            mm.addAttribute("song", songService.getById(id));
-//            mm.addAttribute("stage",stage);
-            return "pc/album/songDetail";
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error("歌曲详情查询出错", e);
-            mm.addAttribute("errMsg", "歌曲详情查询出错");
-            return "error/error";
-        }
-    }
 }
 
 

@@ -202,6 +202,8 @@
     height: 350px;
     margin: 40px 50px;
     text-align: center;
+}
+.albumBg{
     background: url("../images/albumb.jpg") top center no-repeat;
 }
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 #@pc_layout()
 #define title()
-<title>专辑</title>
+<title>代言食物</title>
 #end
 #define css()
 #end
@@ -9,12 +9,12 @@
 #end
 #define main()
 <div class="indexBox">
-    #include("../include/header.html",navId="album")
+    #include("../include/header.html",navId="food")
     <div class="scrollCon">
         <div class="comm clear">
             <div class="informationTop">
                 <div class="lf informationLf">
-                    <div class="informationTitle">歌曲中心</div>
+                    <div class="informationTitle">代言食物中心</div>
                 </div>
                 <div class="rt informationRt">
                     <input type="text" id="keyword" name="keyword" value="#(keyword??)" class="searchIpt"
@@ -24,28 +24,17 @@
             </div>
             <div class="informationWrapper flex">
                 #if(page.records?? != null && page.records.size() > 0)
-                #for(album:page.records)
-                <a href="/api/album/albumDetail?albumId=#(album.faId)" class="itemBgBox albumBg">
+                #for(food:page.records)
+                <a href="/api/endorsement/endorsementDetail?endorsementId=#(food.feId)&type=0" class="itemBgBox">
                     <div class="item-img">
-                        <img src="#(album.faImg??)" alt="" class="albumImg">
-                        <img src="res/pc/images/stick.png" alt="" class="stickImg">
+                        <img src="#(food.feImg??)" alt="" class="albumImg" style="margin-left: 0">
+                        <img src="res/pc/images/stick.png" alt="" class="stickImg" style="left: 0">
                     </div>
                     <div class="item-dec marginLeft">
-                        <div class="itemInf-name">#(album.faName??)</div>
-                        <div class="itemInf-time">#(longToString(album.faTime??,"yyyy-MM-dd"))</div>
+                        <div class="itemInf-name"style="margin-left: 100px">#(food.feName??)</div>
+                        <div class="itemInf-time">#(longToString(food.feTime??,"yyyy-MM-dd"))</div>
                     </div>
                 </a>
-<!--                <a href="/api/album/detail?albumId=#(album.faId)" class="itemBgBox">-->
-<!--                    <div class="item-img">-->
-<!--                        <img src="#(album.faImg??)" alt="" class="albumImg">-->
-<!--                        <img src="res/pc/images/stick.png" alt="" class="stickImg">-->
-<!--                    </div>-->
-<!--                    <div class="item-dec marginLeft">-->
-<!--                        <div class="itemInf-name">#(album.faName??)</div>-->
-<!--                        <div class="itemInf-time">#(longToString(album.faTime??,"yyyy-MM-dd"))</div>-->
-<!--                    </div>-->
-<!--                </a>-->
-
                 #end
                 #else if (page.records == null || page.records.size() <= 0)
                 暂无数据！
@@ -68,7 +57,7 @@
     })
 
     function search() {
-        window.location.href = "/album/list?keyword=" + $("#keyword").val();
+        window.location.href = "/endorsement/list?keyword=" + $("#keyword").val();
     }
 </script>
 #end
