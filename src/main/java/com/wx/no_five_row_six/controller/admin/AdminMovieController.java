@@ -54,12 +54,12 @@ public class AdminMovieController {
         QueryWrapper<FrsMovie> queryWrapper = null;
         IPage<FrsMovie> page = new Page<>(current, size);
         try {
-            queryWrapper = new QueryWrapper<FrsMovie>().like(StringUtils.isNotEmpty(keyword), "fm_name", keyword)
-                    .ge(StringUtils.isNotEmpty(startDate), "fm_time", TimeUtil.stringToLong(startDate, TimeUtil.FORMAT_DATE))
-                    .le(StringUtils.isNotEmpty(endDate), "fm_time", TimeUtil.stringToLong(endDate, TimeUtil.FORMAT_DATE))
-                    .eq("fm_is_valid", state)
-                    .eq("fm_fmv_id", workId)
-                    .orderByDesc("fm_sort", "fm_time");
+            queryWrapper = new QueryWrapper<>();
+            queryWrapper.lambda().like(StringUtils.isNotEmpty(keyword), FrsMovie::getFmName, keyword)
+                    .between(StringUtils.isNotEmpty(startDate) && StringUtils.isNotEmpty(endDate), FrsMovie::getFmTime, TimeUtil.stringToLong(startDate, TimeUtil.FORMAT_DATE), TimeUtil.stringToLong(endDate, TimeUtil.FORMAT_DATE))
+                    .eq(FrsMovie::getFmIsValid, state)
+                    .eq(FrsMovie::getFmFmvId, workId)
+                    .orderByDesc(FrsMovie::getFmTime, FrsMovie::getFmSort);
             page = movieService.page(page, queryWrapper);
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,7 +73,7 @@ public class AdminMovieController {
         mm.addAttribute("endDate", endDate);
         mm.addAttribute("state", state);
         mm.addAttribute("workId", workId);
-        mm.addAttribute("type",molivideoService.getById(workId).getFmvType());
+        mm.addAttribute("type", molivideoService.getById(workId).getFmvType());
         return "admin/molivideo/movie/detail/list";
     }
 
@@ -82,8 +82,8 @@ public class AdminMovieController {
      *
      * @return
      */
-    @RequestMapping("addUI")
-    public String newsAddUI(ModelMap mm, Long workId) {
+    @RequestMapping("add")
+    public String add(ModelMap mm, Long workId) {
         try {
             mm.addAttribute("workId", workId);
             String workName = molivideoService.getById(workId).getFmvName();
@@ -103,8 +103,8 @@ public class AdminMovieController {
      * @param id
      * @return
      */
-    @RequestMapping("editUI")
-    public String editUI(ModelMap mm, Long id) {
+    @RequestMapping("edit")
+    public String edit(ModelMap mm, Long id) {
         try {
             FrsMovie movie = movieService.getById(id);
             if (movie != null) {
@@ -176,7 +176,27 @@ public class AdminMovieController {
     }
 
     /**
-     * 恢复
+     * 销毁电影(不可逆)
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping("destroy")
+    public String destroy(ModelMap mm, Long id) {
+        try {
+            FrsMovie movie = movieService.getById(id);
+            movieService.removeById(movie);
+            return "redirect:list?workId=" + movie.getFmFmvId();
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error("后台管理-销毁电影异常。", e);
+            mm.addAttribute("errMsg", "销毁电影异常");
+            return "error/error";
+        }
+    }
+
+    /**
+     * 恢复删除
      *
      * @param id
      * @return

@@ -33,7 +33,7 @@ public class AdminLoginController {
         return "index";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = {"", "/login"}, method = RequestMethod.GET)
     public String LoginInit() {
         return "/admin/login";
     }

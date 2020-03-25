@@ -2,6 +2,9 @@ package com.wx.no_five_row_six.common;
 
 import org.springframework.mobile.device.LiteDeviceResolver;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author gx
  * @date 2018/11/15
@@ -75,11 +78,11 @@ public class Const {
     public static String PIC_PATH_MOLIVIDEO_TV = "up/molivideo/tv/pic/";//影视作品中电视剧海报
     public static String PIC_PATH_MOLIVIDEO_VARIETY = "up/molivideo/variety/pic/";//影视作品中综艺海报
 
-    public static String PIC_PATH_ENDORSEMENT_FOOD="up/endorsement/food/pic/";//代言食物宣传照
-    public static String PIC_PATH_ENDORSEMENT_MAKEUP="up/endorsement/makeup/pic/";//代言美妆宣传照
-    public static String PIC_PATH_ENDORSEMENT_CLOTHES="up/endorsement/clothes/pic/";//代言服饰宣传照
-    public static String PIC_PATH_ENDORSEMENT_LUXURY="up/endorsement/luxury/pic/";//代言轻奢品宣传照
-    public static String PIC_PATH_ENDORSEMENT_GAME="up/endorsement/game/pic/";//代言游戏宣传照
+    public static String PIC_PATH_ENDORSEMENT_FOOD = "up/endorsement/food/pic/";//代言食物宣传照
+    public static String PIC_PATH_ENDORSEMENT_MAKEUP = "up/endorsement/makeup/pic/";//代言美妆宣传照
+    public static String PIC_PATH_ENDORSEMENT_CLOTHES = "up/endorsement/clothes/pic/";//代言服饰宣传照
+    public static String PIC_PATH_ENDORSEMENT_LUXURY = "up/endorsement/luxury/pic/";//代言轻奢品宣传照
+    public static String PIC_PATH_ENDORSEMENT_GAME = "up/endorsement/game/pic/";//代言游戏宣传照
 
     public static String PIC_PATH_SHARECODE = "up/shareCode/pic/";// 小程序分享二维码存储路径
 
@@ -91,17 +94,17 @@ public class Const {
      * web图片存储类型 start
      */
     public static String PIC_TYPE_ALBUM = "album";// 专辑
-    public static String PIC_TYPE_DANCE="dance";//舞蹈
+    public static String PIC_TYPE_DANCE = "dance";//舞蹈
     public static String PIC_TYPE_CONCERT = "concert";//演唱会
     public static String PIC_TYPE_CONCERT_PROGRAM = "program";//演唱会节目
     public static String PIC_TYPE_MOLIVIDEO_MOVIE = "movie";//电影
     public static String PIC_TYPE_MOLIVIDEO_TV = "tv";//电视剧
     public static String PIC_TYPE_MOLIVIDEO_VARIETY = "variety";//综艺
-    public static String PIC_TYPE_ENDORSEMENT_FOOD="food";//食物
-    public static String PIC_TYPE_ENDORSEMENT_MAKEUP="makeup";//美妆
-    public static String PIC_TYPE_ENDORSEMENT_CLOTHES="clothes";//服饰
-    public static String PIC_TYPE_ENDORSEMENT_LUXURY="luxury";//轻奢品
-    public static String PIC_TYPE_ENDORSEMENT_GAME="game";//游戏
+    public static String PIC_TYPE_ENDORSEMENT_FOOD = "food";//食物
+    public static String PIC_TYPE_ENDORSEMENT_MAKEUP = "makeup";//美妆
+    public static String PIC_TYPE_ENDORSEMENT_CLOTHES = "clothes";//服饰
+    public static String PIC_TYPE_ENDORSEMENT_LUXURY = "luxury";//轻奢品
+    public static String PIC_TYPE_ENDORSEMENT_GAME = "game";//游戏
     /**
      * web图片存储类型 end
      */
@@ -115,22 +118,40 @@ public class Const {
      * 代言常量
      */
     public static Integer ENDORSEMENT_FOOT_ID = 0;
-    public static String ENDORSEMENT_FOOT_TYPE = "食物";
     public static Integer ENDORSEMENT_MAKEUP_ID = 1;
-    public static String ENDORSEMENT_MAKEUP_TYPE = "美妆";
     public static Integer ENDORSEMENT_CLOTHES_ID = 2;
-    public static String ENDORSEMENT_CLOTHES_TYPE = "服饰";
     public static Integer ENDORSEMENT_LUXURY_ID = 3;
-    public static String ENDORSEMENT_LUXURY_TYPE = "轻奢品";
     public static Integer ENDORSEMENT_GAME_ID = 4;
-    public static String ENDORSEMENT_GAME_TYPE = "游戏";
     /**
      * 影视作品常量
      */
     public static Integer MOLIVIDEO_MOVIE_ID = 1;
-    public static String MOLIVIDEO_MOVIE_TYPE = "电影";
     public static Integer MOLIVIDEO_TV_ID = 2;
-    public static String MOLIVIDEO_TV_TYPE = "电视剧";
     public static Integer MOLIVIDEO_VARIETY_ID = 3;
-    public static String MOLIVIDEO_VARIETY_TYPE = "综艺";
+    public static Map<Integer, String> map = new HashMap<>();
+
+    static {
+        map.put(ENDORSEMENT_FOOT_ID, "食物");
+        map.put(ENDORSEMENT_MAKEUP_ID, "美妆");
+        map.put(ENDORSEMENT_CLOTHES_ID, "服饰");
+        map.put(ENDORSEMENT_LUXURY_ID, "轻奢品");
+        map.put(ENDORSEMENT_GAME_ID, "游戏");
+
+        map.put(MOLIVIDEO_MOVIE_ID, "电影");
+        map.put(MOLIVIDEO_TV_ID, "电视剧");
+        map.put(MOLIVIDEO_VARIETY_ID, "综艺");
+    }
+
+    /**
+     * 取值
+     *
+     * @param id
+     * @return
+     */
+    public static String getType(Integer id) {
+        if (map.containsKey(id)) {
+            return map.get(id);
+        }
+        return "";
+    }
 }

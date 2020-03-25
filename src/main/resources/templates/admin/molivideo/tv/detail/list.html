@@ -33,7 +33,7 @@
                     <div class="box-body">
                         <div class="box-header">
                             <div class="col-sm-1 col-md-1">
-                                <a class="btn btn-success" href="admin/molivideo/tv/addUI?workId=#(workId)">新增</a>
+                                <a class="btn btn-success" href="admin/molivideo/tv/add?workId=#(workId)">新增</a>
                             </div>
                             <div class="col-sm-10 col-md-10">
                                 <form class="form-inline" name="searchForm" id="searchForm">
@@ -41,7 +41,8 @@
                                     <input type="hidden" id="current" name="current" value="#(page.getCurrent())"/>
                                     <input type="hidden" id="size" name="size" value="#(page.getSize())"/>
                                     <div class="form-group" style="margin-left: -20px">
-                                        <input type="text" class="form-control" id="keyword" name="keyword" placeholder=作品名称 value="#(keyword)"/>
+                                        <input type="text" class="form-control" id="keyword" name="keyword"
+                                               placeholder=作品名称 value="#(keyword)"/>
                                     </div>
                                     <input type="radio" name="state" value="1"
                                            #if(state== 1)
@@ -57,12 +58,15 @@
                                         <label>播出日期:</label>
                                         <div class="input-group date">
                                             <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                            <input type="text" class="form-control pull-right searchDate" id="datepicker" name="startDate" value="#(startDate)" readonly="true"/>
+                                            <input type="text" class="form-control pull-right searchDate"
+                                                   id="datepicker" name="startDate" value="#(startDate)"
+                                                   readonly="true"/>
                                         </div>
                                         &nbsp;~&nbsp;
                                         <div class="input-group date" style="width:40%;">
                                             <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                            <input type="text" class="form-control pull-right searchDate" id="datepicker1" name="endDate" value="#(endDate)" readonly="true"/>
+                                            <input type="text" class="form-control pull-right searchDate"
+                                                   id="datepicker1" name="endDate" value="#(endDate)" readonly="true"/>
                                         </div>
                                     </div>
                                     <button type="button" class="btn btn-success" id="searchBtn">搜索
@@ -106,12 +110,14 @@
                                 <td>
                                     #if(tv.ftIsValid?? == 1)
                                     <a type="button" class="btn btn-primary"
-                                       href="/admin/molivideo/tv/editUI?id=#(tv.ftId)">修改</a>
+                                       href="/admin/molivideo/tv/edit?id=#(tv.ftId)">修改</a>
                                     <a type="button" class="btn btn-primary"
                                        href="/admin/molivideo/tv/del?id=#(tv.ftId)">删除</a>
                                     #else if(tv.ftIsValid == 0)
                                     <a type="button" class="btn btn-primary"
                                        href="/admin/molivideo/tv/reBack?id=#(tv.ftId)">恢复</a>
+                                    <a type="button" class="btn btn-danger"
+                                       href="/admin/molivideo/tv/destroy?id=#(tv.ftId)">销毁</a>
                                     #end
                                 </td>
                             </tr>

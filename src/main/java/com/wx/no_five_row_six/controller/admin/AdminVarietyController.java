@@ -74,7 +74,7 @@ public class AdminVarietyController {
         mm.addAttribute("state", state);
         mm.addAttribute("workId", workId);
 //        返回综艺列表时使用
-        mm.addAttribute("type",molivideoService.getById(workId).getFmvType());
+        mm.addAttribute("type", molivideoService.getById(workId).getFmvType());
         return "admin/molivideo/variety/detail/list";
     }
 
@@ -83,8 +83,8 @@ public class AdminVarietyController {
      *
      * @return
      */
-    @RequestMapping("addUI")
-    public String newsAddUI(ModelMap mm, Long workId) {
+    @RequestMapping("add")
+    public String add(ModelMap mm, Long workId) {
         try {
             mm.addAttribute("workId", workId);
             String workName = molivideoService.getById(workId).getFmvName();
@@ -104,8 +104,8 @@ public class AdminVarietyController {
      * @param id
      * @return
      */
-    @RequestMapping("editUI")
-    public String editUI(ModelMap mm, Long id) {
+    @RequestMapping("edit")
+    public String edit(ModelMap mm, Long id) {
         try {
             FrsVariety variety = varietyService.getById(id);
             if (variety != null) {
@@ -177,7 +177,27 @@ public class AdminVarietyController {
     }
 
     /**
-     * 恢复
+     * 销毁综艺(不可逆)
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping("destroy")
+    public String destroy(ModelMap mm, Long id) {
+        try {
+            FrsVariety Variety = varietyService.getById(id);
+            varietyService.removeById(Variety);
+            return "redirect:list?workId=" + Variety.getFvFmvId();
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error("后台管理-销毁综艺异常。", e);
+            mm.addAttribute("errMsg", "销毁综艺异常");
+            return "error/error";
+        }
+    }
+
+    /**
+     * 恢复删除
      *
      * @param id
      * @return

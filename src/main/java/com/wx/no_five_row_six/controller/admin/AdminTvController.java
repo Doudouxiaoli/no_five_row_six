@@ -73,7 +73,7 @@ public class AdminTvController {
         mm.addAttribute("endDate", endDate);
         mm.addAttribute("state", state);
         mm.addAttribute("workId", workId);
-        mm.addAttribute("type",molivideoService.getById(workId).getFmvType());
+        mm.addAttribute("type", molivideoService.getById(workId).getFmvType());
         return "admin/molivideo/tv/detail/list";
     }
 
@@ -82,8 +82,8 @@ public class AdminTvController {
      *
      * @return
      */
-    @RequestMapping("addUI")
-    public String newsAddUI(ModelMap mm, Long workId) {
+    @RequestMapping("add")
+    public String add(ModelMap mm, Long workId) {
         try {
             mm.addAttribute("workId", workId);
             String workName = molivideoService.getById(workId).getFmvName();
@@ -103,8 +103,8 @@ public class AdminTvController {
      * @param id
      * @return
      */
-    @RequestMapping("editUI")
-    public String editUI(ModelMap mm, Long id) {
+    @RequestMapping("edit")
+    public String edit(ModelMap mm, Long id) {
         try {
             FrsTv tv = tvService.getById(id);
             if (tv != null) {
@@ -176,7 +176,28 @@ public class AdminTvController {
     }
 
     /**
-     * 恢复
+     * 销毁电视剧(不可逆)
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping("destroy")
+    public String destroy(ModelMap mm, Long id) {
+        try {
+            FrsTv tv = tvService.getById(id);
+            tvService.removeById(tv);
+            return "redirect:list?workId=" + tv.getFtFmvId();
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error("后台管理-销毁电视剧异常。", e);
+            mm.addAttribute("errMsg", "销毁电视剧异常");
+            return "error/error";
+        }
+    }
+
+
+    /**
+     * 恢复删除
      *
      * @param id
      * @return

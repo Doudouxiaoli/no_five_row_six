@@ -99,17 +99,7 @@ public class EndorsementController {
                     .eq("fe_is_valid", 1)
                     .orderByDesc("fe_sort");
             mm.addAttribute("endorsement", endorsement);
-            if (Const.ENDORSEMENT_FOOT_ID == type) {
-                mm.addAttribute("type", Const.ENDORSEMENT_FOOT_TYPE);
-            } else if (Const.ENDORSEMENT_MAKEUP_ID == type) {
-                mm.addAttribute("type", Const.ENDORSEMENT_MAKEUP_TYPE);
-            } else if (Const.ENDORSEMENT_CLOTHES_ID == type) {
-                mm.addAttribute("type", Const.ENDORSEMENT_CLOTHES_TYPE);
-            } else if (Const.ENDORSEMENT_LUXURY_ID == type) {
-                mm.addAttribute("type", Const.ENDORSEMENT_LUXURY_TYPE);
-            } else if (Const.ENDORSEMENT_GAME_ID == type) {
-                mm.addAttribute("type", Const.ENDORSEMENT_GAME_TYPE);
-            }
+            mm.addAttribute("type", Const.getType(type));
             return "pc/endorsement/endorsementDetail";
         } catch (Exception e) {
             e.printStackTrace();

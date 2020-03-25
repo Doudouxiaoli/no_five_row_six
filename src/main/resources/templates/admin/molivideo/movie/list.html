@@ -33,14 +33,16 @@
                     <div class="box-body">
                         <div class="box-header">
                             <div class="col-sm-1 col-md-1">
-                                <a class="btn btn-success" href="admin/molivideo/addUI?type=#(type)">新增</a>
+                                <a class="btn btn-success" href="admin/molivideo/add?type=#(type)">新增</a>
                             </div>
                             <div class="col-sm-10 col-md-10">
                                 <form class="form-inline" name="searchForm" id="searchForm">
                                     <input type="hidden" id="current" name="current" value="#(page.getCurrent())"/>
                                     <input type="hidden" id="size" name="size" value="#(page.getSize())"/>
+                                    <input type="hidden" id="type" name="type" value="#(type)"/>
                                     <div class="form-group" style="margin-left: -20px">
-                                        <input type="text" class="form-control" id="keyword" name="keyword" placeholder=作品名称/演出人员 value="#(keyword)"/>
+                                        <input type="text" class="form-control" id="keyword" name="keyword"
+                                               placeholder=作品名称/演出人员 value="#(keyword)"/>
                                     </div>
                                     <input type="radio" name="state" value="1"
                                            #if(state== 1)
@@ -70,7 +72,7 @@
                                 <th>电影名称</th>
                                 <th>导演</th>
                                 <th>主要出演人员</th>
-                                <th>宣传海报</th>
+                                <!--                                <th>宣传海报</th>-->
                                 <th>创建时间</th>
                                 <th>修改时间</th>
                                 <th><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>操作</th>
@@ -84,9 +86,9 @@
                                 <td>#(movie.fmvName??)</td>
                                 <td>#(movie.fmvDirector??)</td>
                                 <td>#(movie.fmvActors??)</td>
-                                <td>
-                                    <img src="#(movie.fmvImg??)" style="width:100px;"/>
-                                </td>
+                                <!--                                <td>-->
+                                <!--                                    <img src="#(movie.fmvImg??)" style="width:100px;"/>-->
+                                <!--                                </td>-->
                                 <td>#(longToString(movie.fmvCreateTime??,"yyyy-MM-dd HH:mm"))</td>
                                 <td>#(longToString(movie.fmvUpdateTime??,"yyyy-MM-dd HH:mm"))</td>
                                 <td>
@@ -94,12 +96,14 @@
                                     <a type="button" class="btn btn-primary"
                                        href="/admin/molivideo/movie/list?workId=#(movie.fmvId)">详情</a>
                                     <a type="button" class="btn btn-primary"
-                                       href="/admin/molivideo/editUI?id=#(movie.fmvId)">修改</a>
+                                       href="/admin/molivideo/edit?id=#(movie.fmvId)">修改</a>
                                     <a type="button" class="btn btn-primary"
                                        href="/admin/molivideo/del?id=#(movie.fmvId)">删除</a>
                                     #else if(movie.fmvIsValid == 0)
                                     <a type="button" class="btn btn-primary"
                                        href="/admin/molivideo/reBack?id=#(movie.fmvId)">恢复</a>
+                                    <a type="button" class="btn btn-danger"
+                                       href="/admin/molivideo/reBack?id=#(movie.fmvId)">销毁</a>
                                     #end
                                 </td>
                             </tr>
@@ -124,7 +128,7 @@
         //检索
         $("#searchBtn").bind("click", function () {
             var form = document.forms[0];
-            form.action = "admin/molivideo/list?type="+$("#type").val();
+            form.action = "admin/molivideo/list?type=" + $("#type").val();
             $("#page").val(1);
             form.submit();
         });

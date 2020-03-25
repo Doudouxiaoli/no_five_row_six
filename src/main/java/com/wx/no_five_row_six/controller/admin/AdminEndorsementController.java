@@ -81,6 +81,7 @@ public class AdminEndorsementController {
             return "error/error";
         }
     }
+
     /**
      * 添加代言界面
      *
@@ -88,22 +89,14 @@ public class AdminEndorsementController {
      */
     @RequestMapping("addUI")
     public String newsAddUI(ModelMap mm, Integer type) {
-        mm.addAttribute("type", type);
-        if (Const.ENDORSEMENT_FOOT_ID == type) {
-            mm.addAttribute("typeName",Const.ENDORSEMENT_FOOT_TYPE);
-        } else if (Const.ENDORSEMENT_MAKEUP_ID == type) {
-            mm.addAttribute("typeName",Const.ENDORSEMENT_MAKEUP_TYPE);
-        } else if (Const.ENDORSEMENT_CLOTHES_ID == type) {
-            mm.addAttribute("typeName",Const.ENDORSEMENT_CLOTHES_TYPE);
-        } else if (Const.ENDORSEMENT_LUXURY_ID == type) {
-            mm.addAttribute("typeName", Const.ENDORSEMENT_LUXURY_TYPE);
-        } else if (Const.ENDORSEMENT_GAME_ID == type) {
-            mm.addAttribute("typeName", Const.ENDORSEMENT_GAME_TYPE);
-        } else {
+        if (null != type) {
+            mm.addAttribute("type", type);
+            mm.addAttribute("typeName", Const.getType(type));
             mm.addAttribute("errMsg", "后台管理-代言>添加:类型传值错误");
+            return "admin/endorsement/edit";
+        } else {
             return "error/error";
         }
-        return "admin/endorsement/edit";
     }
 
     /**
@@ -119,20 +112,7 @@ public class AdminEndorsementController {
             mm.addAttribute("goods", endorsement);
             Integer type = endorsement.getFeType();
             mm.addAttribute("type", type);
-            if (Const.ENDORSEMENT_FOOT_ID == type) {
-               mm.addAttribute("typeName",Const.ENDORSEMENT_FOOT_TYPE);
-            } else if (Const.ENDORSEMENT_MAKEUP_ID == type) {
-                mm.addAttribute("typeName",Const.ENDORSEMENT_MAKEUP_TYPE);
-            } else if (Const.ENDORSEMENT_CLOTHES_ID == type) {
-                mm.addAttribute("typeName",Const.ENDORSEMENT_CLOTHES_TYPE);
-            } else if (Const.ENDORSEMENT_LUXURY_ID == type) {
-                mm.addAttribute("typeName", Const.ENDORSEMENT_LUXURY_TYPE);
-            } else if (Const.ENDORSEMENT_GAME_ID == type) {
-                mm.addAttribute("typeName", Const.ENDORSEMENT_GAME_TYPE);
-            } else {
-                mm.addAttribute("errMsg", "后台管理-代言>编辑:类型传值错误");
-                return "error/error";
-            }
+            mm.addAttribute("typeName", Const.getType(type));
             return "admin/endorsement/edit";
         } catch (Exception e) {
             e.printStackTrace();

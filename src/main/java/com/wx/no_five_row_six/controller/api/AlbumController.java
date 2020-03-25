@@ -35,68 +35,6 @@ public class AlbumController {
     private FrsSongServiceImpl songService;
 
     /**
-     * 列表
-     *
-     * @param mm
-     * @param current
-     * @param size
-     * @return
-     */
-    @RequestMapping(value = {"/list"})
-    public String list(ModelMap mm, Integer current, Integer size, String keyword) {
-        if (current == null) {
-            current = 1;
-        }
-        if (size == null) {
-            size = Const.WEB_PC_ROWSPERPAGE;
-        }
-        Integer state = 1;
-        QueryWrapper<FrsAlbum> queryWrapper = null;
-        IPage<FrsAlbum> page = new Page<>(current, size);
-        try {
-            // 查询条件
-            queryWrapper = new QueryWrapper<FrsAlbum>()
-                    .like(StringUtils.isNotEmpty(keyword), "fa_name", keyword)
-                    .eq("fa_is_valid", state)
-                    .orderByDesc("fa_sort", "fa_time");
-            page = albumService.page(page, queryWrapper);
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error("专辑列表异常", e);
-            mm.addAttribute("errMsg", "专辑列表异常");
-            return "error/error";
-        }
-        mm.addAttribute("page", page);
-        mm.addAttribute("keyword", keyword);
-        return "pc/album/list";
-    }
-    /**
-     * 专辑详情页面
-     *
-     * @param mm
-     * @param albumId
-     * @return
-     */
-    @RequestMapping("/albumDetail")
-    public String albumDetail(ModelMap mm, Long albumId) {
-        try {
-            FrsAlbum album = albumService.getById(albumId);
-            QueryWrapper<FrsSong> queryWrapper = new QueryWrapper<FrsSong>()
-                    .eq("fs_fa_id", albumId)
-                    .eq("fs_is_valid", 1)
-                    .orderByDesc("fs_sort");
-            List<FrsSong> songList = songService.list(queryWrapper);
-            mm.addAttribute("album", album);
-            mm.addAttribute("songList", songList);
-            return "pc/album/albumDetail";
-        } catch (Exception e) {
-            e.printStackTrace();
-            mm.addAttribute("errMsg", "专辑详情查询出错");
-            return "error/error";
-        }
-    }
-
-    /**
      * 列表ajax
      *
      * @param current

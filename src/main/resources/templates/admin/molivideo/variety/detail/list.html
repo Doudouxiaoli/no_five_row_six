@@ -33,7 +33,7 @@
                     <div class="box-body">
                         <div class="box-header">
                             <div class="col-sm-1 col-md-1">
-                                <a class="btn btn-success" href="admin/molivideo/variety/addUI?workId=#(workId)">新增</a>
+                                <a class="btn btn-success" href="admin/molivideo/variety/add?workId=#(workId)">新增</a>
                             </div>
                             <div class="col-sm-10 col-md-10">
                                 <form class="form-inline" name="searchForm" id="searchForm">
@@ -103,12 +103,14 @@
                                 <td>
                                     #if(variety.fvIsValid?? == 1)
                                     <a type="button" class="btn btn-primary"
-                                       href="/admin/molivideo/variety/editUI?id=#(variety.fvId)">修改</a>
+                                       href="/admin/molivideo/variety/edit?id=#(variety.fvId)">修改</a>
                                     <a type="button" class="btn btn-primary"
                                        href="/admin/molivideo/variety/del?id=#(variety.fvId)">删除</a>
                                     #else if(variety.fvIsValid == 0)
                                     <a type="button" class="btn btn-primary"
                                        href="/admin/molivideo/variety/reBack?id=#(variety.fvId)">恢复</a>
+                                    <a type="button" class="btn btn-primary"
+                                       href="/admin/molivideo/variety/destroy?id=#(variety.fvId)">销毁</a>
                                     #end
                                 </td>
                             </tr>

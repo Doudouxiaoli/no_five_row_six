@@ -6,7 +6,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wx.common.util.TimeUtil;
 import com.wx.no_five_row_six.common.Const;
 import com.wx.no_five_row_six.entity.FrsMolivideo;
+import com.wx.no_five_row_six.entity.FrsMovie;
+import com.wx.no_five_row_six.entity.FrsTv;
+import com.wx.no_five_row_six.entity.FrsVariety;
 import com.wx.no_five_row_six.service.impl.FrsMolivideoServiceImpl;
+import com.wx.no_five_row_six.service.impl.FrsMovieServiceImpl;
+import com.wx.no_five_row_six.service.impl.FrsTvServiceImpl;
+import com.wx.no_five_row_six.service.impl.FrsVarietyServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +29,12 @@ public class AdminMolivideoController {
 
     @Autowired
     private FrsMolivideoServiceImpl molivideoService;
+    @Autowired
+    private FrsMovieServiceImpl movieService;
+    @Autowired
+    private FrsTvServiceImpl tvService;
+    @Autowired
+    private FrsVarietyServiceImpl varietyService;
 
     /**
      * 影视作品列表
@@ -86,17 +98,17 @@ public class AdminMolivideoController {
      *
      * @return
      */
-    @RequestMapping("addUI")
-    public String newsAddUI(ModelMap mm, Integer type) {
-        mm.addAttribute("type", type);
+    @RequestMapping("add")
+    public String add(ModelMap mm, Integer type) {
+        mm.addAttribute("typeName", Const.getType(type));
         if (Const.MOLIVIDEO_MOVIE_ID == type) {
-            mm.addAttribute("typeName", Const.MOLIVIDEO_MOVIE_TYPE);
+            mm.addAttribute("typeName", Const.getType(type));
             return "admin/molivideo/movie/add";
         } else if (Const.MOLIVIDEO_TV_ID == type) {
-            mm.addAttribute("typeName", Const.MOLIVIDEO_TV_TYPE);
+            mm.addAttribute("typeName", Const.getType(type));
             return "admin/molivideo/tv/add";
         } else if (Const.MOLIVIDEO_VARIETY_ID == type) {
-            mm.addAttribute("typeName", Const.MOLIVIDEO_VARIETY_TYPE);
+            mm.addAttribute("typeName", Const.getType(type));
             return "admin/molivideo/variety/add";
         } else {
             mm.addAttribute("errMsg", "后台管理-影视作品>电影添加:类型传值错误");
@@ -110,8 +122,8 @@ public class AdminMolivideoController {
      * @param id
      * @return
      */
-    @RequestMapping("editUI")
-    public String editUI(ModelMap mm, Long id) {
+    @RequestMapping("edit")
+    public String edit(ModelMap mm, Long id) {
         try {
             FrsMolivideo molivideo = molivideoService.getById(id);
             Integer type = molivideo.getFmvType();
@@ -146,13 +158,65 @@ public class AdminMolivideoController {
     @RequestMapping("saveOrUpdate")
     public String saveOrUpdate(ModelMap mm, FrsMolivideo molivideo) {
         try {
+            Long now = TimeUtil.dateToLong();
             if (molivideo.getFmvId() == null) {
-                molivideo.setFmvCreateTime(TimeUtil.dateToLong());
+                molivideo.setFmvCreateTime(now);
                 molivideo.setFmvIsValid(1);
                 molivideoService.save(molivideo);
+                Integer type = molivideo.getFmvType();
+                if (Const.MOLIVIDEO_MOVIE_ID == type) {
+                    FrsMovie movie = new FrsMovie();
+                    movie.setFmFmvId(molivideo.getFmvId());
+                    movie.setFmName(molivideo.getFmvName());
+                    movie.setFmCreateTime(now);
+                    movie.setFmIsValid(1);
+                    movieService.save(movie);
+                } else if (Const.MOLIVIDEO_TV_ID == type) {
+                    FrsTv tv = new FrsTv();
+                    tv.setFtFmvId(molivideo.getFmvId());
+                    tv.setFtName(molivideo.getFmvName());
+                    tv.setFtCreateTime(now);
+                    tv.setFtIsValid(1);
+                    tvService.save(tv);
+                } else if (Const.MOLIVIDEO_VARIETY_ID == type) {
+                    FrsVariety variety = new FrsVariety();
+                    variety.setFvFmvId(molivideo.getFmvId());
+                    variety.setFvName(molivideo.getFmvName());
+                    variety.setFvCreateTime(now);
+                    variety.setFvIsValid(1);
+                    varietyService.save(variety);
+                } else {
+                    return "error/error";
+                }
             } else {
-                molivideo.setFmvUpdateTime(TimeUtil.dateTolong());
+                Long fmvId = molivideo.getFmvId();
+                molivideo.setFmvUpdateTime(now);
                 molivideoService.updateById(molivideo);
+                Integer type = molivideo.getFmvType();
+                if (Const.MOLIVIDEO_MOVIE_ID == type) {
+                    QueryWrapper<FrsMovie> queryWrapper = new QueryWrapper<>();
+                    queryWrapper.lambda().eq(FrsMovie::getFmFmvId, fmvId);
+                    FrsMovie movie = movieService.getOne(queryWrapper, false);
+                    movie.setFmName(molivideo.getFmvName());
+                    movie.setFmUpdateTime(now);
+                    movieService.updateById(movie);
+                } else if (Const.MOLIVIDEO_TV_ID == type) {
+                    QueryWrapper<FrsTv> queryWrapper = new QueryWrapper<>();
+                    queryWrapper.lambda().eq(FrsTv::getFtFmvId, fmvId);
+                    FrsTv tv = tvService.getOne(queryWrapper, false);
+                    tv.setFtName(molivideo.getFmvName());
+                    tv.setFtUpdateTime(now);
+                    tvService.updateById(tv);
+                } else if (Const.MOLIVIDEO_VARIETY_ID == type) {
+                    QueryWrapper<FrsVariety> queryWrapper = new QueryWrapper<>();
+                    queryWrapper.lambda().eq(FrsVariety::getFvFmvId, fmvId);
+                    FrsVariety variety = varietyService.getOne(queryWrapper, false);
+                    variety.setFvName(molivideo.getFmvName());
+                    variety.setFvUpdateTime(now);
+                    varietyService.updateById(variety);
+                } else {
+                    return "error/error";
+                }
             }
             return "redirect:list?type=" + molivideo.getFmvType();
         } catch (Exception e) {
@@ -165,6 +229,7 @@ public class AdminMolivideoController {
 
     /**
      * 删除影视作品
+     * 假删
      *
      * @param id
      * @return
@@ -180,6 +245,43 @@ public class AdminMolivideoController {
             e.printStackTrace();
             LOGGER.error("后台管理-删除影视作品异常。", e);
             mm.addAttribute("errMsg", "删除影视作品异常");
+            return "error/error";
+        }
+    }
+
+    /**
+     * 彻底销毁影视作品
+     * (不可逆)
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping("destroy")
+    public String destroy(ModelMap mm, Long id) {
+        try {
+            FrsMolivideo molivideo = molivideoService.getById(id);
+            molivideoService.removeById(molivideo);
+            Integer type = molivideo.getFmvType();
+            if (Const.MOLIVIDEO_MOVIE_ID == type) {
+                QueryWrapper<FrsMovie> queryWrapper = new QueryWrapper<>();
+                queryWrapper.lambda().eq(FrsMovie::getFmFmvId, id);
+                movieService.remove(queryWrapper);
+            } else if (Const.MOLIVIDEO_TV_ID == type) {
+                QueryWrapper<FrsTv> queryWrapper = new QueryWrapper<>();
+                queryWrapper.lambda().eq(FrsTv::getFtFmvId, id);
+                tvService.remove(queryWrapper);
+            } else if (Const.MOLIVIDEO_VARIETY_ID == type) {
+                QueryWrapper<FrsVariety> queryWrapper = new QueryWrapper<>();
+                queryWrapper.lambda().eq(FrsVariety::getFvFmvId, id);
+                varietyService.remove(queryWrapper);
+            } else {
+                return "error/error";
+            }
+            return "redirect:list?type=" + molivideo.getFmvType();
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error("后台管理-销毁影视作品异常。", e);
+            mm.addAttribute("errMsg", "销毁影视作品异常");
             return "error/error";
         }
     }

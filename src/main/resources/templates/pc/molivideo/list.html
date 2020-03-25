@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 #@pc_layout()
 #define title()
-<title>代言食物</title>
+<title>影视作品-#(TypeName??)</title>
 #end
 #define css()
 #end
@@ -9,12 +9,12 @@
 #end
 #define main()
 <div class="indexBox">
-    #include("../include/header.html",navId="food")
+    #include("../include/header.html")
     <div class="scrollCon">
         <div class="comm clear">
             <div class="informationTop">
                 <div class="lf informationLf">
-                    <div class="informationTitle">代言食物中心</div>
+                    <div class="informationTitle">#(TypeName??)</div>
                 </div>
                 <div class="rt informationRt">
                     <input type="text" id="keyword" name="keyword" value="#(keyword??)" class="searchIpt"
@@ -23,21 +23,20 @@
                 </div>
             </div>
             <div class="informationWrapper flex">
-                #if(page.records?? != null && page.records.size() > 0)
-                #for(food:page.records)
-                <a href="/api/endorsement/endorsementDetail?endorsementId=#(food.feId)&type=0" class="itemBgBox">
+                <input type="hidden" id="type" name="type" value="#(type??)">
+                #if(list?? != null && list.size() > 0)
+                #for(item:list)
+                <a href="/api/molivideo/#(url)Detail?fmvId=#(item.fmvId)" class="itemBgBox">
                     <div class="item-img">
-                        <img src="#(food.feImg??)" alt="" class="albumImg" style="margin-left: 0">
+                        <img src="#(item.fmvImg??)" alt="" class="albumImg" style="margin-left: 0">
                         <img src="res/pc/images/stick.png" alt="" class="stickImg" style="left: 0">
                     </div>
                     <div class="item-dec marginLeft" style="margin-left: 20px">
-                        <div class="itemInf-name">#(food.feName??)</div>
-                        <div class="itemInf-time">#(longToString(food.feStartTime??,"yyyy-MM-dd"))~#(longToString(food.feEndTime??,"yyyy-MM-dd"))</div>
+                        <div class="itemInf-name">#(item.fmvName??)</div>
+                        <div class="itemInf-time">#(item.fmvDirector??)</div>
                     </div>
                 </a>
                 #end
-                #else if (page.records == null || page.records.size() <= 0)
-                暂无数据！
                 #end
             </div>
         </div>
@@ -57,7 +56,7 @@
     })
 
     function search() {
-        window.location.href = "api/endorsement/list?type=0&keyword=" + $("#keyword").val();
+        window.location.href = "api/molivideo/listMovie?keyword=" + $("#keyword").val();
     }
 </script>
 #end
