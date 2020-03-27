@@ -3,7 +3,6 @@ package com.wx.no_five_row_six.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-
 import java.io.Serializable;
 
 /**
@@ -12,11 +11,11 @@ import java.io.Serializable;
  * </p>
  *
  * @author dxl
- * @since 2020-01-23
+ * @since 2020-03-27
  */
 public class FrsTv implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID=1L;
 
     @TableId(value = "ft_id", type = IdType.AUTO)
     private Long ftId;
@@ -75,6 +74,11 @@ public class FrsTv implements Serializable {
      * 状态 0:删除 1:显示
      */
     private Integer ftIsValid;
+
+    /**
+     * 观看量
+     */
+    private Integer ftHitsNum;
 
     @TableField(exist = false)
     private String ftTimeStr;
@@ -175,7 +179,16 @@ public class FrsTv implements Serializable {
         this.ftIsValid = ftIsValid;
     }
 
+    public Integer getFtHitsNum() {
+        return ftHitsNum;
+    }
+
+    public void setFtHitsNum(Integer ftHitsNum) {
+        this.ftHitsNum = ftHitsNum;
+    }
+
     public String getFtTimeStr() {
+
         return ftTimeStr;
     }
 
@@ -198,6 +211,7 @@ public class FrsTv implements Serializable {
                 ", ftCreateTime=" + ftCreateTime +
                 ", ftUpdateTime=" + ftUpdateTime +
                 ", ftIsValid=" + ftIsValid +
+                ", ftHitsNum=" + ftHitsNum +
                 ", ftTimeStr='" + ftTimeStr + '\'' +
                 '}';
     }

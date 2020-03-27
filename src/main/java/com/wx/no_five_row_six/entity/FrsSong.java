@@ -10,7 +10,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author dxl
- * @since 2020-01-15
+ * @since 2020-03-27
  */
 public class FrsSong implements Serializable {
 
@@ -48,14 +48,7 @@ public class FrsSong implements Serializable {
      * 音乐播放地址
      */
     private String fsLink;
-    /**
-     * 歌手
-     */
-    private String fsSinger;
-    /**
-     * 时长
-     */
-    private String fsLength;
+
     /**
      * 收藏数
      */
@@ -75,6 +68,26 @@ public class FrsSong implements Serializable {
      * 状态 0:删除 1:显示
      */
     private Integer fsIsValid;
+
+    /**
+     * 歌手姓名
+     */
+    private String fsSinger;
+
+    /**
+     * 歌曲时长
+     */
+    private String fsLength;
+
+    /**
+     * 点击数
+     */
+    private Integer fsHitsNum;
+
+    /**
+     * 点赞数
+     */
+    private Integer fsLikeNum;
 
 
     public Long getFsId() {
@@ -181,22 +194,40 @@ public class FrsSong implements Serializable {
         this.fsLength = fsLength;
     }
 
+    public Integer getFsHitsNum() {
+        return fsHitsNum;
+    }
+
+    public void setFsHitsNum(Integer fsHitsNum) {
+        this.fsHitsNum = fsHitsNum;
+    }
+
+    public Integer getFsLikeNum() {
+        return fsLikeNum;
+    }
+
+    public void setFsLikeNum(Integer fsLikeNum) {
+        this.fsLikeNum = fsLikeNum;
+    }
+
     @Override
     public String toString() {
         return "FrsSong{" +
-                "fsId=" + fsId +
-                ", fsSort=" + fsSort +
-                ", fsFaId=" + fsFaId +
-                ", fsFaName='" + fsFaName + '\'' +
-                ", fsName='" + fsName + '\'' +
-                ", fsVid='" + fsVid + '\'' +
-                ", fsLink='" + fsLink + '\'' +
-                ", fsSinger='" + fsSinger + '\'' +
-                ", fsLength='" + fsLength + '\'' +
-                ", fsCollectionNum=" + fsCollectionNum +
-                ", fsCreateTime=" + fsCreateTime +
-                ", fsUpdateTime=" + fsUpdateTime +
-                ", fsIsValid=" + fsIsValid +
-                '}';
+        "fsId=" + fsId +
+        ", fsSort=" + fsSort +
+        ", fsFaId=" + fsFaId +
+        ", fsFaName=" + fsFaName +
+        ", fsName=" + fsName +
+        ", fsVid=" + fsVid +
+        ", fsLink=" + fsLink +
+        ", fsCollectionNum=" + fsCollectionNum +
+        ", fsCreateTime=" + fsCreateTime +
+        ", fsUpdateTime=" + fsUpdateTime +
+        ", fsIsValid=" + fsIsValid +
+        ", fsSinger=" + fsSinger +
+        ", fsLength=" + fsLength +
+        ", fsHitsNum=" + fsHitsNum +
+        ", fsLikeNum=" + fsLikeNum +
+        "}";
     }
 }

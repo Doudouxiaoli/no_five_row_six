@@ -12,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author dxl
- * @since 2020-01-23
+ * @since 2020-03-27
  */
 public class FrsMovie implements Serializable {
 
@@ -70,6 +70,16 @@ public class FrsMovie implements Serializable {
      * 状态 0:删除 1:显示
      */
     private Integer fmIsValid;
+
+    /**
+     * 观看量
+     */
+    private Integer fmHitsNum;
+
+    /**
+     * 封面
+     */
+    private String fmImg;
 
     @TableField(exist = false)
     private String fmTimeStr;
@@ -162,6 +172,22 @@ public class FrsMovie implements Serializable {
         this.fmIsValid = fmIsValid;
     }
 
+    public Integer getFmHitsNum() {
+        return fmHitsNum;
+    }
+
+    public void setFmHitsNum(Integer fmHitsNum) {
+        this.fmHitsNum = fmHitsNum;
+    }
+
+    public String getFmImg() {
+        return fmImg;
+    }
+
+    public void setFmImg(String fmImg) {
+        this.fmImg = fmImg;
+    }
+
     public String getFmTimeStr() {
         return fmTimeStr;
     }
@@ -184,6 +210,8 @@ public class FrsMovie implements Serializable {
                 ", fmCreateTime=" + fmCreateTime +
                 ", fmUpdateTime=" + fmUpdateTime +
                 ", fmIsValid=" + fmIsValid +
+                ", fmHitsNum=" + fmHitsNum +
+                ", fmImg='" + fmImg + '\'' +
                 ", fmTimeStr='" + fmTimeStr + '\'' +
                 '}';
     }

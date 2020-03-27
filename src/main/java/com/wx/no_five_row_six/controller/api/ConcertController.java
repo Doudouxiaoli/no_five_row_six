@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -78,6 +77,10 @@ public class ConcertController {
     public JsonNode detail(Long concertId, Long runningId) {
         Map<Integer, Object> map = new HashMap<>();
         try {
+            FrsConcert concert = concertService.getById(concertId);
+            if (null != concert) {
+                map.put(0, concert);
+            }
             QueryWrapper<FrsConcertProgram> queryWrapper = new QueryWrapper<FrsConcertProgram>().eq("fcp_is_valid", 1).orderByDesc("fcp_sort").eq("fcp_fc_id", concertId);
             if (runningId != null) {
 //                消除重复代码
@@ -86,12 +89,16 @@ public class ConcertController {
                 runningId = program.getFcpId();
             }
             FrsConcertProgram runningMv = programService.getById(runningId);
+            if (null != runningMv) {
+                runningMv.setFcpHitsNum(runningMv.getFcpHitsNum() + 1);
+                programService.updateById(runningMv);
+                map.put(1, runningMv);
+            }
             queryWrapper.notLike("fcp_id", runningId);
             List<FrsConcertProgram> programList = programService.list(queryWrapper);
-            FrsConcert concert = concertService.getById(concertId);
-            map.put(0, concert);
-            map.put(1, runningMv);
-            map.put(2, programList);
+            if (null != programList) {
+                map.put(2, programList);
+            }
             return JacksonMapper.newDataInstance(map);
         } catch (Exception e) {
             e.printStackTrace();

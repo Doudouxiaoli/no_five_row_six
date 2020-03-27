@@ -3,6 +3,7 @@ package com.wx.no_five_row_six.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 
 /**
@@ -11,11 +12,11 @@ import java.io.Serializable;
  * </p>
  *
  * @author dxl
- * @since 2020-01-23
+ * @since 2020-03-27
  */
 public class FrsVariety implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @TableId(value = "fv_id", type = IdType.AUTO)
     private Long fvId;
@@ -74,6 +75,20 @@ public class FrsVariety implements Serializable {
      * 状态 0:删除 1:显示
      */
     private Integer fvIsValid;
+
+    /**
+     * 标题
+     */
+    private String fvTitle;
+
+    /**
+     * 观看量
+     */
+    private Integer fvHitsNum;
+    /**
+     * 封面
+     */
+    private String fvImg;
 
     @TableField(exist = false)
     private String fvTimeStr;
@@ -174,6 +189,30 @@ public class FrsVariety implements Serializable {
         this.fvIsValid = fvIsValid;
     }
 
+    public String getFvTitle() {
+        return fvTitle;
+    }
+
+    public void setFvTitle(String fvTitle) {
+        this.fvTitle = fvTitle;
+    }
+
+    public Integer getFvHitsNum() {
+        return fvHitsNum;
+    }
+
+    public void setFvHitsNum(Integer fvHitsNum) {
+        this.fvHitsNum = fvHitsNum;
+    }
+
+    public String getFvImg() {
+        return fvImg;
+    }
+
+    public void setFvImg(String fvImg) {
+        this.fvImg = fvImg;
+    }
+
     public String getFvTimeStr() {
         return fvTimeStr;
     }
@@ -197,6 +236,9 @@ public class FrsVariety implements Serializable {
                 ", fvCreateTime=" + fvCreateTime +
                 ", fvUpdateTime=" + fvUpdateTime +
                 ", fvIsValid=" + fvIsValid +
+                ", fvTitle='" + fvTitle + '\'' +
+                ", fvHitsNum=" + fvHitsNum +
+                ", fvImg='" + fvImg + '\'' +
                 ", fvTimeStr='" + fvTimeStr + '\'' +
                 '}';
     }

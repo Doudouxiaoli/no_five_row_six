@@ -65,7 +65,7 @@
                     <div class="box-body">
                         #if(page.records?? != null && page.total > 0)
                         <table class="table table-striped table-hover table-condensed cus_table"
-                               style="table-layout: auto;">
+                               style="table-layout: fixed;">
                             <thead>
                             <tr>
                                 <th>序号</th>
@@ -75,7 +75,7 @@
                                 <!--                                <th>宣传海报</th>-->
                                 <th>创建时间</th>
                                 <th>修改时间</th>
-                                <th><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>操作</th>
+                                <th style="width: 200px"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -88,8 +88,8 @@
                                 <!--                                <td>-->
                                 <!--                                    <img src="#(variety.fmvImg??)" style="width:100px;"/>-->
                                 <!--                                </td>-->
-                                <td>#(longToString(variety.fmvCreateTime??,"yyyy-MM-dd HH:mm"))</td>
-                                <td>#(longToString(variety.fmvUpdateTime??,"yyyy-MM-dd HH:mm"))</td>
+                                <td>#(longToString(variety.fmvCreateTime??,"yyyy-MM-dd"))</td>
+                                <td>#(longToString(variety.fmvUpdateTime??,"yyyy-MM-dd"))</td>
                                 <td>
                                     #if(variety.fmvIsValid?? == 1)
                                     <a type="button" class="btn btn-primary"

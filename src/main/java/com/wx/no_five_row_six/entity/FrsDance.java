@@ -3,6 +3,7 @@ package com.wx.no_five_row_six.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 
 /**
@@ -11,11 +12,11 @@ import java.io.Serializable;
  * </p>
  *
  * @author dxl
- * @since 2020-01-14
+ * @since 2020-03-27
  */
 public class FrsDance implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @TableId(value = "fd_id", type = IdType.AUTO)
     private Long fdId;
@@ -69,8 +70,22 @@ public class FrsDance implements Serializable {
      * 状态 0:删除 1:显示
      */
     private Integer fdIsValid;
+
+    /**
+     * 观看数
+     */
+    private Integer fdHitsNum;
+
     @TableField(exist = false)
     private String fdTimeStr;
+
+    public String getFdTimeStr() {
+        return fdTimeStr;
+    }
+
+    public void setFdTimeStr(String fdTimeStr) {
+        this.fdTimeStr = fdTimeStr;
+    }
 
     public Long getFdId() {
         return fdId;
@@ -160,12 +175,12 @@ public class FrsDance implements Serializable {
         this.fdIsValid = fdIsValid;
     }
 
-    public String getFdTimeStr() {
-        return fdTimeStr;
+    public Integer getFdHitsNum() {
+        return fdHitsNum;
     }
 
-    public void setFdTimeStr(String fdTimeStr) {
-        this.fdTimeStr = fdTimeStr;
+    public void setFdHitsNum(Integer fdHitsNum) {
+        this.fdHitsNum = fdHitsNum;
     }
 
     @Override
@@ -182,6 +197,7 @@ public class FrsDance implements Serializable {
                 ", fdCreateTime=" + fdCreateTime +
                 ", fdUpdateTime=" + fdUpdateTime +
                 ", fdIsValid=" + fdIsValid +
+                ", fdHitsNum=" + fdHitsNum +
                 ", fdTimeStr='" + fdTimeStr + '\'' +
                 '}';
     }

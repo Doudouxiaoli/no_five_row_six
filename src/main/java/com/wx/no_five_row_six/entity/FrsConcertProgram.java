@@ -10,7 +10,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author dxl
- * @since 2020-03-03
+ * @since 2020-03-27
  */
 public class FrsConcertProgram implements Serializable {
 
@@ -63,6 +63,11 @@ public class FrsConcertProgram implements Serializable {
      * 状态 0:删除 1:显示
      */
     private Integer fcpIsValid;
+
+    /**
+     * 观看数
+     */
+    private Integer fcpHitsNum;
 
 
     public Long getFcpId() {
@@ -145,6 +150,14 @@ public class FrsConcertProgram implements Serializable {
         this.fcpIsValid = fcpIsValid;
     }
 
+    public Integer getFcpHitsNum() {
+        return fcpHitsNum;
+    }
+
+    public void setFcpHitsNum(Integer fcpHitsNum) {
+        this.fcpHitsNum = fcpHitsNum;
+    }
+
     @Override
     public String toString() {
         return "FrsConcertProgram{" +
@@ -158,6 +171,7 @@ public class FrsConcertProgram implements Serializable {
         ", fcpCreateTime=" + fcpCreateTime +
         ", fcpUpdateTime=" + fcpUpdateTime +
         ", fcpIsValid=" + fcpIsValid +
+        ", fcpHitsNum=" + fcpHitsNum +
         "}";
     }
 }

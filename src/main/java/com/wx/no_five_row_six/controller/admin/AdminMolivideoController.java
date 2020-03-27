@@ -111,7 +111,7 @@ public class AdminMolivideoController {
             mm.addAttribute("typeName", Const.getType(type));
             return "admin/molivideo/variety/add";
         } else {
-            mm.addAttribute("errMsg", "后台管理-影视作品>电影添加:类型传值错误");
+            mm.addAttribute("errMsg", "后台管理-影视作品>添加:类型传值错误");
             return "error/error";
         }
     }
@@ -138,7 +138,7 @@ public class AdminMolivideoController {
             } else if (Const.MOLIVIDEO_VARIETY_ID == type) {
                 return "admin/molivideo/variety/edit";
             } else {
-                mm.addAttribute("errMsg", "后台管理-影视作品>电影编辑:类型传值错误");
+                mm.addAttribute("errMsg", "后台管理-影视作品>编辑:类型传值错误");
                 return "error/error";
             }
         } catch (Exception e) {
@@ -168,8 +168,10 @@ public class AdminMolivideoController {
                     FrsMovie movie = new FrsMovie();
                     movie.setFmFmvId(molivideo.getFmvId());
                     movie.setFmName(molivideo.getFmvName());
+                    movie.setFmImg(molivideo.getFmvImg());
                     movie.setFmCreateTime(now);
                     movie.setFmIsValid(1);
+                    movie.setFmHitsNum(0);
                     movieService.save(movie);
                 } else if (Const.MOLIVIDEO_TV_ID == type) {
                     FrsTv tv = new FrsTv();
@@ -177,13 +179,16 @@ public class AdminMolivideoController {
                     tv.setFtName(molivideo.getFmvName());
                     tv.setFtCreateTime(now);
                     tv.setFtIsValid(1);
+                    tv.setFtHitsNum(0);
                     tvService.save(tv);
                 } else if (Const.MOLIVIDEO_VARIETY_ID == type) {
                     FrsVariety variety = new FrsVariety();
                     variety.setFvFmvId(molivideo.getFmvId());
                     variety.setFvName(molivideo.getFmvName());
+                    variety.setFvImg(molivideo.getFmvImg());
                     variety.setFvCreateTime(now);
                     variety.setFvIsValid(1);
+                    variety.setFvHitsNum(0);
                     varietyService.save(variety);
                 } else {
                     return "error/error";

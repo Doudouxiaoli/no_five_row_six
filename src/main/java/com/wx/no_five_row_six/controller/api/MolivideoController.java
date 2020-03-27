@@ -1,6 +1,8 @@
 package com.wx.no_five_row_six.controller.api;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.wx.common.jackson.JacksonMapper;
 import com.wx.no_five_row_six.common.Const;
 import com.wx.no_five_row_six.entity.FrsMolivideo;
 import com.wx.no_five_row_six.entity.FrsMovie;
@@ -15,10 +17,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/api/molivideo")
 @Controller
@@ -37,86 +41,86 @@ public class MolivideoController {
     /**
      * 影视作品列表
      *
-     * @param mm
-     * @param state
      * @return
      */
-    @RequestMapping(value = {"/index"})
-    public String index(ModelMap mm, Integer state) {
-        if (state == null) {
-            state = 1;
-        }
+    @ResponseBody
+    @RequestMapping("index")
+    public JsonNode index() {
         QueryWrapper<FrsMolivideo> q1 = null;
         QueryWrapper<FrsMolivideo> q2 = null;
         QueryWrapper<FrsMolivideo> q3 = null;
+        Map<Integer, List> map = new HashMap<>();
         try {
             q1 = new QueryWrapper<FrsMolivideo>().
-                    eq("fmv_is_valid", state)
+                    eq("fmv_is_valid", 1)
                     .eq("fmv_type", Const.MOLIVIDEO_MOVIE_ID)
                     .last("limit 3");
             // 查询条件
             List<FrsMolivideo> movieList = molivideoService.list(q1);
             q2 = new QueryWrapper<FrsMolivideo>()
-                    .eq("fmv_is_valid", state)
+                    .eq("fmv_is_valid", 1)
                     .eq("fmv_type", Const.MOLIVIDEO_TV_ID)
                     .last("limit 3");
             List<FrsMolivideo> tvList = molivideoService.list(q2);
             q3 = new QueryWrapper<FrsMolivideo>()
-                    .eq("fmv_is_valid", state)
+                    .eq("fmv_is_valid", 1)
                     .eq("fmv_type", Const.MOLIVIDEO_VARIETY_ID)
                     .last("limit 3");
             List<FrsMolivideo> varietyList = molivideoService.list(q3);
-            mm.addAttribute("movieList", movieList);
-            mm.addAttribute("tvList", tvList);
-            mm.addAttribute("varietyList", varietyList);
-            return "pc/molivideo/index";
+            map.put(1, movieList);
+            map.put(2, tvList);
+            map.put(3, varietyList);
+            return JacksonMapper.newDataInstance(map);
         } catch (Exception e) {
             e.printStackTrace();
-            LOGGER.error("后台管理-影视作品列表异常", e);
-            mm.addAttribute("errMsg", "影视作品列表异常");
-            return "error/error";
+            String errMsg = "后台管理-影视作品列表异常";
+            LOGGER.error(errMsg, e);
+            return JacksonMapper.newErrorInstance(errMsg);
         }
-
     }
 
     /**
      * 获取电视剧/电影/综艺列表
      *
-     * @param mm
      * @param keyword
+     * @param type
      * @return
      */
+    @ResponseBody
     @RequestMapping("list")
-    public String list(ModelMap mm, String keyword, Integer type) {
+    public JsonNode list(String keyword, Integer type) {
         QueryWrapper<FrsMolivideo> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(null != type, FrsMolivideo::getFmvType, type)
                 .eq(FrsMolivideo::getFmvIsValid, 1)
                 .like(StringUtils.isNotEmpty(keyword), FrsMolivideo::getFmvName, keyword)
                 .orderByDesc(FrsMolivideo::getFmvSort);
         List<FrsMolivideo> list = molivideoService.list(queryWrapper);
-        mm.addAttribute("list", list);
+        Map<Integer, Object> map = new HashMap<>();
+//        列表
+        map.put(0, list);
         if (Const.MOLIVIDEO_MOVIE_ID == type) {
-            mm.addAttribute("url", "movie");
+            map.put(1, "movie");
         } else if (Const.MOLIVIDEO_TV_ID == type) {
-            mm.addAttribute("url", "tv");
+            map.put(1, "tv");
         } else if (Const.MOLIVIDEO_VARIETY_ID == type) {
-            mm.addAttribute("url", "variety");
+            map.put(1, "variety");
         } else {
-            mm.addAttribute("url", "");
+            return JacksonMapper.newErrorInstance("参数传递异常");
         }
-        mm.addAttribute("TypeName", Const.getType(type));
-        return "pc/molivideo/list";
+        map.put(2, Const.getType(type));
+        return JacksonMapper.newDataInstance(map);
     }
 
     /**
      * 电影详情
      *
-     * @param mm
+     * @param fmvId
      * @param id
      * @return
      */
+    @ResponseBody
     @RequestMapping("movieDetail")
-    public String movieDetail(ModelMap mm, Long fmvId, Long id) {
+    public JsonNode movieDetail(Long fmvId, Long id) {
         QueryWrapper<FrsMovie> waitQW = new QueryWrapper<>();
         Long runningId = null;
         FrsMovie runningMovie = null;
@@ -125,73 +129,75 @@ public class MolivideoController {
             runQW.lambda().eq(FrsMovie::getFmFmvId, fmvId).eq(FrsMovie::getFmIsValid, 1).orderByDesc(FrsMovie::getFmSort);
             runningMovie = movieService.getOne(runQW, false);
             runningId = runningMovie.getFmId();
-
         } else if (null != id) {
             runningMovie = movieService.getById(id);
             runningId = id;
+        } else {
+            return JacksonMapper.newErrorInstance("参数传递异常");
         }
         waitQW.lambda().notLike(null != runningId, FrsMovie::getFmId, runningId).eq(FrsMovie::getFmIsValid, 1).orderByDesc(FrsMovie::getFmSort).last("limit 4");
         List<FrsMovie> waitingList = movieService.list(waitQW);
-        mm.addAttribute("waitingList", waitingList);
-        mm.addAttribute("runningMovie", runningMovie);
-        return "pc/molivideo/movieDetail";
+        Map<Integer, Object> map = new HashMap<>();
+        map.put(1, runningMovie);
+        map.put(2, waitingList);
+        return JacksonMapper.newDataInstance(map);
     }
 
     /**
      * 电视剧详情
      *
-     * @param mm
+     * @param fmvId
      * @param id
      * @return
      */
+    @ResponseBody
     @RequestMapping("tvDetail")
-    public String tvDetail(ModelMap mm, Long fmvId, Long id) {
+    public JsonNode tvDetail(Long fmvId, Long id) {
         QueryWrapper<FrsTv> queryWrapper = new QueryWrapper<>();
-        Long runningId = null;
         FrsTv runningTv = null;
         queryWrapper.lambda().eq(FrsTv::getFtIsValid, 1).orderByAsc(FrsTv::getFtSort);
         if (null != fmvId) {
             queryWrapper.lambda().eq(FrsTv::getFtFmvId, fmvId);
             runningTv = tvService.getOne(queryWrapper, false);
-            runningId = runningTv.getFtId();
         } else if (null != id) {
             runningTv = tvService.getById(id);
             queryWrapper.lambda().eq(FrsTv::getFtFmvId, runningTv.getFtFmvId());
-            runningId = id;
+        } else {
+            return JacksonMapper.newErrorInstance("参数传递异常");
         }
-        queryWrapper.lambda().notLike(null != runningId, FrsTv::getFtId, runningId).last("limit 4");
         List<FrsTv> waitingList = tvService.list(queryWrapper);
-        mm.addAttribute("waitingList", waitingList);
-        mm.addAttribute("runningTv", runningTv);
-        return "pc/molivideo/tvDetail";
+        Map<Integer, Object> map = new HashMap<>();
+        map.put(1, runningTv);
+        map.put(2, waitingList);
+        return JacksonMapper.newDataInstance(map);
     }
 
     /**
      * 综艺详情
      *
-     * @param mm
+     * @param fmvId
      * @param id
      * @return
      */
+    @ResponseBody
     @RequestMapping("varietyDetail")
-    public String varietyDetail(ModelMap mm, Long fmvId, Long id) {
+    public JsonNode varietyDetail(Long fmvId, Long id) {
         QueryWrapper<FrsVariety> queryWrapper = new QueryWrapper<>();
-        Long runningId = null;
         FrsVariety runningVariety = null;
         queryWrapper.lambda().eq(FrsVariety::getFvIsValid, 1).orderByAsc(FrsVariety::getFvSort);
         if (null != fmvId) {
             queryWrapper.lambda().eq(FrsVariety::getFvFmvId, fmvId);
             runningVariety = varietyService.getOne(queryWrapper, false);
-            runningId = runningVariety.getFvId();
         } else if (null != id) {
             runningVariety = varietyService.getById(id);
             queryWrapper.lambda().eq(FrsVariety::getFvFmvId, runningVariety.getFvFmvId());
-            runningId = id;
+        } else {
+            return JacksonMapper.newErrorInstance("参数传递异常");
         }
-        queryWrapper.lambda().notLike(null != runningId, FrsVariety::getFvId, runningId).last("limit 4");
         List<FrsVariety> waitingList = varietyService.list(queryWrapper);
-        mm.addAttribute("waitingList", waitingList);
-        mm.addAttribute("runningVariety", runningVariety);
-        return "pc/molivideo/varietyDetail";
+        Map<Integer, Object> map = new HashMap<>();
+        map.put(1, runningVariety);
+        map.put(2, waitingList);
+        return JacksonMapper.newDataInstance(map);
     }
 }
