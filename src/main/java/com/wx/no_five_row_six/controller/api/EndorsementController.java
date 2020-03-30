@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.wx.common.jackson.JacksonMapper;
 import com.wx.no_five_row_six.common.Const;
 import com.wx.no_five_row_six.entity.FrsEndorsement;
-import com.wx.no_five_row_six.entity.FrsSong;
 import com.wx.no_five_row_six.service.impl.FrsEndorsementServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -31,131 +30,114 @@ public class EndorsementController {
     private FrsEndorsementServiceImpl endorsementService;
 
     /**
+     * 首页
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = {"/index"})
+    public JsonNode index(String keyword) {
+        Integer state = 1;
+        QueryWrapper<FrsEndorsement> footQW = new QueryWrapper<FrsEndorsement>();
+        QueryWrapper<FrsEndorsement> makeupQW = new QueryWrapper<FrsEndorsement>();
+        QueryWrapper<FrsEndorsement> clothesQW = new QueryWrapper<FrsEndorsement>();
+        QueryWrapper<FrsEndorsement> luxuryQW = new QueryWrapper<FrsEndorsement>();
+        QueryWrapper<FrsEndorsement> gameQW = new QueryWrapper<FrsEndorsement>();
+        Map<Integer, List> map = new HashMap<>();
+        try {
+            // 查询条件
+            footQW.lambda().like(StringUtils.isNotEmpty(keyword), FrsEndorsement::getFeName, keyword)
+                    .eq(FrsEndorsement::getFeIsValid, state)
+                    .eq(FrsEndorsement::getFeType, Const.ENDORSEMENT_FOOT_ID)
+                    .orderByDesc(FrsEndorsement::getFeSort)
+                    .last("limit 3");
+            List<FrsEndorsement> foodList = endorsementService.list(footQW);
+            map.put(0, foodList);
+            makeupQW.lambda().like(StringUtils.isNotEmpty(keyword), FrsEndorsement::getFeName, keyword)
+                    .eq(FrsEndorsement::getFeIsValid, state)
+                    .eq(FrsEndorsement::getFeType, Const.ENDORSEMENT_MAKEUP_ID)
+                    .orderByDesc(FrsEndorsement::getFeSort)
+                    .last("limit 3");
+            List<FrsEndorsement> makeupList = endorsementService.list(makeupQW);
+            map.put(1, makeupList);
+            clothesQW.lambda().like(StringUtils.isNotEmpty(keyword), FrsEndorsement::getFeName, keyword)
+                    .eq(FrsEndorsement::getFeIsValid, state)
+                    .eq(FrsEndorsement::getFeType, Const.ENDORSEMENT_CLOTHES_ID)
+                    .orderByDesc(FrsEndorsement::getFeSort)
+                    .last("limit 3");
+            List<FrsEndorsement> clothesList = endorsementService.list(clothesQW);
+            map.put(2, clothesList);
+            luxuryQW.lambda().like(StringUtils.isNotEmpty(keyword), FrsEndorsement::getFeName, keyword)
+                    .eq(FrsEndorsement::getFeIsValid, state)
+                    .eq(FrsEndorsement::getFeType, Const.ENDORSEMENT_LUXURY_ID)
+                    .orderByDesc(FrsEndorsement::getFeSort)
+                    .last("limit 3");
+            List<FrsEndorsement> luxuryList = endorsementService.list(luxuryQW);
+            map.put(3, luxuryList);
+            gameQW.lambda().like(StringUtils.isNotEmpty(keyword), FrsEndorsement::getFeName, keyword)
+                    .eq(FrsEndorsement::getFeIsValid, state)
+                    .eq(FrsEndorsement::getFeType, Const.ENDORSEMENT_GAME_ID)
+                    .orderByDesc(FrsEndorsement::getFeSort)
+                    .last("limit 3");
+            List<FrsEndorsement> gameList = endorsementService.list(gameQW);
+            map.put(4, gameList);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            String errMsg = "列表异常";
+            LOGGER.error(errMsg, e);
+            return JacksonMapper.newErrorInstance(errMsg);
+        }
+        return JacksonMapper.newDataInstance(map);
+    }
+
+    /**
      * 列表
      *
-     * @param mm
-     * @param current
-     * @param size
      * @param type
      * @return
      */
+    @ResponseBody
     @RequestMapping(value = {"/list"})
-    public String list(ModelMap mm, Integer current, Integer size, String keyword, Integer type) {
-        if (current == null) {
-            current = 1;
-        }
-        if (size == null) {
-            size = Const.WEB_PC_ROWSPERPAGE;
-        }
+    public JsonNode list(String keyword, Integer type) {
         Integer state = 1;
         QueryWrapper<FrsEndorsement> queryWrapper = null;
-        IPage<FrsEndorsement> page = new Page<>(current, size);
+        Map<Integer, Object> map = new HashMap<>();
         try {
+            map.put(0, Const.getType(type));
             // 查询条件
             queryWrapper = new QueryWrapper<FrsEndorsement>().like(StringUtils.isNotEmpty(keyword), "fe_name", keyword)
                     .eq("fe_is_valid", state)
-                    .eq("fe_type", type)
+                    .eq(null != type, "fe_type", type)
                     .orderByDesc("fe_sort");
-            page = endorsementService.page(page, queryWrapper);
+            List<FrsEndorsement> list = endorsementService.list(queryWrapper);
+            map.put(1, list);
         } catch (Exception e) {
             e.printStackTrace();
-            LOGGER.error("专辑列表异常", e);
-            mm.addAttribute("errMsg", "专辑列表异常");
-            return "error/error";
+            String errMsg = "列表异常";
+            LOGGER.error(errMsg, e);
+            return JacksonMapper.newErrorInstance(errMsg);
         }
-        mm.addAttribute("page", page);
-        mm.addAttribute("keyword", keyword);
-        mm.addAttribute("state", state);
-        mm.addAttribute("type", type);
-        if (Const.ENDORSEMENT_FOOT_ID == type) {
-            return "pc/endorsement/listFood";
-        } else if (Const.ENDORSEMENT_MAKEUP_ID == type) {
-            return "pc/endorsement/listMakeup";
-        } else if (Const.ENDORSEMENT_CLOTHES_ID == type) {
-            return "pc/endorsement/listClothes";
-        } else if (Const.ENDORSEMENT_LUXURY_ID == type) {
-            return "pc/endorsement/listLuxury";
-        } else if (Const.ENDORSEMENT_GAME_ID == type) {
-            return "pc/endorsement/listGame";
-        } else {
-            return "error/error";
-        }
+        return JacksonMapper.newDataInstance(map);
     }
 
+
     /**
-     * 专辑详情页面
+     * 详情页面
      *
-     * @param mm
      * @param id
-     * @param type
      * @return
      */
-    @RequestMapping("/endorsementDetail")
-    public String endorsementDetail(ModelMap mm, Long id, Integer type) {
+    @ResponseBody
+    @RequestMapping("/detail")
+    public JsonNode detail(Long id) {
         try {
             FrsEndorsement endorsement = endorsementService.getById(id);
-            QueryWrapper<FrsEndorsement> queryWrapper = new QueryWrapper<FrsEndorsement>()
-                    .eq("fe_fa_id", id)
-                    .eq("fe_is_valid", 1)
-                    .orderByDesc("fe_sort");
-            mm.addAttribute("endorsement", endorsement);
-            mm.addAttribute("type", Const.getType(type));
-            return "pc/endorsement/endorsementDetail";
-        } catch (Exception e) {
-            e.printStackTrace();
-            mm.addAttribute("errMsg", "专辑详情查询出错");
-            return "error/error";
-        }
-    }
-
-    /**
-     * 列表ajax
-     *
-     * @param current
-     * @param size
-     * @param keyword
-     * @param type
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("/listAjax")
-    public JsonNode listAjax(Integer current, Integer size, String keyword, Integer type) {
-        Integer state = 1;
-        if (current == null) {
-            current = 1;
-        }
-        if (size == null) {
-            size = Const.WEB_PC_ROWSPERPAGE;
-        }
-        QueryWrapper<FrsEndorsement> queryWrapper = null;
-        IPage<FrsEndorsement> page = new Page<>(current, size);
-        try {
-            queryWrapper = new QueryWrapper<FrsEndorsement>()
-                    .like(StringUtils.isNotEmpty(keyword), "fs_name", keyword)
-                    .eq("fs_is_valid", state)
-                    .orderByDesc("fs_sort", "fa_time");
-            page = endorsementService.page(page, queryWrapper);
-//            for (FrsEndorsement endorsement : page.getRecords()) {
-//                endorsement.setFaTimeStr(TimeUtil.longToString(endorsement.getFaTime()));
-//            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            String err = "专辑列表查询异常";
-            LOGGER.error(err, e);
-            return JacksonMapper.newErrorInstance(err);
-        }
-        return JacksonMapper.newDataInstance(page);
-    }
-
-    @RequestMapping("/detail")
-    @ResponseBody
-    public JsonNode detail(Long endorsementId) {
-        try {
-            List<FrsEndorsement> endorsement = endorsementService.list(new QueryWrapper<FrsEndorsement>().eq("fe_id", endorsementId));
             return JacksonMapper.newDataInstance(endorsement);
         } catch (Exception e) {
             e.printStackTrace();
-            return JacksonMapper.newErrorInstance("详情跳转出错");
+            String errMsg = "详情查询出错";
+            return JacksonMapper.newErrorInstance(errMsg);
         }
     }
 }
