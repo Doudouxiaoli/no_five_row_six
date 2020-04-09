@@ -38,7 +38,7 @@ public class RC4Util {
 	 * 
 	 * @param in
 	 * @return
-	 * @throws UnsupportedEncodingException 
+	 * @throws UnsupportedEncodingException
 	 */
 	public static byte[] hexStringToBytes(String in) throws UnsupportedEncodingException {
 		byte[] arrB = in.getBytes("utf-8");
@@ -105,7 +105,7 @@ public class RC4Util {
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
-	public static String encode(String content, String key) throws UnsupportedEncodingException{
+	public static String encode(String content, String key) throws UnsupportedEncodingException {
 		String encode = RC4Util.bytesToHexString(RC4Util.rc4(content.getBytes("utf-8"), key.getBytes("utf-8")));
 		return encode;
 	}
@@ -117,7 +117,7 @@ public class RC4Util {
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
-	public static String decode(String encodedStr, String key) throws UnsupportedEncodingException{
+	public static String decode(String encodedStr, String key) throws UnsupportedEncodingException {
 		if(encodedStr == null){
 			return "";
 		}
@@ -138,7 +138,7 @@ public class RC4Util {
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
-	public static String encode(String content) throws UnsupportedEncodingException{
+	public static String encode(String content) throws UnsupportedEncodingException {
 		String key = RandomUtil.generateString(128);
 		String encode = RC4Util.bytesToHexString(RC4Util.rc4(content.getBytes("utf-8"), key.getBytes("utf-8")));
 		encode = encode + RC4Util.bytesToHexString(key.getBytes("utf-8"))

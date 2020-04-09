@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 全局异常处理
  * Created by ph on 2017/5/23.
  */
 @ControllerAdvice

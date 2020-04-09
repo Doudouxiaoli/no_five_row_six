@@ -1,6 +1,6 @@
 // ======================================
 // Project Name:meddb-starter
-// Package Name:com.wx.common.log
+// Package Name:cn.meddb.core.common.log
 // File Name:LogLocalContext.java
 // Create Date:2019年10月17日  14:32
 // ======================================

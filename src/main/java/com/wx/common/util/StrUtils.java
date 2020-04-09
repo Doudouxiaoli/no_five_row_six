@@ -1,5 +1,6 @@
 package com.wx.common.util;
-import org.apache.commons.lang3.StringUtils;
+
+import org.springframework.util.StringUtils;
 
 /**
  * 字符串工具类
@@ -12,7 +13,7 @@ public class StrUtils {
      * @param str
      * @return
      */
-    public static boolean isEmpty(String  str) {
+    public static boolean isEmpty(Object str) {
         return StringUtils.isEmpty(str);
     }
 
@@ -22,7 +23,7 @@ public class StrUtils {
      * @param str
      * @return
      */
-    public static boolean isNotEmpty(String  str) {
+    public static boolean isNotEmpty(Object str) {
         return !StringUtils.isEmpty(str);
     }
 

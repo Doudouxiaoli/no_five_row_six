@@ -50,10 +50,10 @@ public class ImageUtil {
      * @param fromFileStr
      * @param saveToFileStr
      * @param width
-     * @param hight
+     * @param height
      * @throws Exception
      */
-    public static void saveImage(String fromFileStr, String saveToFileStr, int width, int hight)
+    public static void saveImage(String fromFileStr, String saveToFileStr, int width, int height)
             throws IOException {
         BufferedImage srcImage;
         //String ex = saveToFileStr.substring(saveToFileStr.lastIndexOf("."));
@@ -65,8 +65,8 @@ public class ImageUtil {
         File fromFile = new File(fromFileStr);
         srcImage = ImageIO.read(fromFile);
         if (srcImage != null) {
-            if (width > 0 || hight > 0) {
-                srcImage = resize(srcImage, width, hight);
+            if (width > 0 || height > 0) {
+                srcImage = resize(srcImage, width, height);
             }
             ImageIO.write(srcImage, imgType, saveFile);
         }
@@ -74,11 +74,14 @@ public class ImageUtil {
     }
 
     /**
+     * 自动压缩,宽度大于1920时改分辨率压缩
+     * 宽度小于1920时,不改分辨率压缩
+     * 画质几乎不损失,大小减为原来的1/N
      * @param file
      * @param saveFile
-     * @throws Exception
+     * @throws IOException
      */
-    public static void saveImage(File file, File saveFile) throws Exception {
+    public static void saveImage(File file, File saveFile) throws IOException {
         BufferedImage srcImage;
         String imgType = "JPEG";
         if (file.getName().toLowerCase().endsWith(".png")) {
@@ -87,6 +90,9 @@ public class ImageUtil {
         saveFile.mkdirs();
         srcImage = ImageIO.read(file);
         if (srcImage != null) {
+            if (srcImage.getWidth() > 1920) {
+                srcImage = resize(srcImage, 1920, 1080);
+            }
             ImageIO.write(srcImage, imgType, saveFile);
         }
     }

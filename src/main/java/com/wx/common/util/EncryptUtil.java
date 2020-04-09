@@ -1,8 +1,6 @@
 package com.wx.common.util;
 
 
-import org.apache.commons.lang3.RandomUtils;
-
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -148,22 +146,10 @@ public class EncryptUtil {
         return strResult.toString();
     }
 
-    /**
-     * 获取指定位数长度的随机字符串
-     */
-    public static String randomString(int length) {
-        if (length <= 0 || length > 1000) {
-            length = 6;
-        }
-        int max = PHONE_NUM.length;
-        StringBuilder sb = new StringBuilder("");
-        for (int i = 0; i < length; i++) {
-            sb.append(PHONE_NUM[RandomUtils.nextInt(0, max)]);
-        }
-        return sb.toString();
-    }
-
     public static void main(String[] args) throws UnsupportedEncodingException {
-        System.out.println(EncryptUtil.getSHA256Value("gio!@#"));
+        System.out.println(EncryptUtil.getSHA256Value("Kingyee@pm175"));
+//		projectId=5userId=oZZ2fjiUFxPBAPuW9dkz92XUOMj4email=dept=userName=key=OKKNECZKImdLFPdW
+        String str = "projectId=5userId=oZZ2fjiUFxPBAPuW9dkz92XUOMj4email=dept=userName=key=OKKNECZKImdLFPdW";
+		System.out.println(EncryptUtil.getMD5Value(str));
     }
 }

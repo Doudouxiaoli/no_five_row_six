@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="V5" author="dxl">
+
+        <comment>浏览记录表增加字段</comment>
+        <addColumn tableName="frs_view_record">
+            <column name="fvl_ip" type="varchar(128)" remarks="ip地址"/>
+            <column name="fvl_like" type="int" remarks="是否点赞(0：未点赞；1: 点赞)"/>
+            <column name="fvl_like_time" type="bigint" remarks="点赞时间/取消点赞时间"/>
+            <column name="fvl_favorite" type="int" remarks="是否收藏(0：未收藏；1: 收藏)"/>
+            <column name="fvl_favorite_time" type="bigint" remarks="收藏时间/取消收藏时间"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

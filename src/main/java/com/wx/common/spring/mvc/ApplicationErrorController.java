@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author ph
  */
 @Controller
+@RequestMapping(value = "/")
 public class ApplicationErrorController implements ErrorController {
 
     @Override

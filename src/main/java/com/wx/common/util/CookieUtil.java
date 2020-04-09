@@ -22,9 +22,10 @@ public class CookieUtil {
 
     /**
      * 根据cookie的名称取得cookie
-     * @param request			http请求
-     * @param name				cookie的名称
-     * @return cookie			Cookie类
+     *
+     * @param request http请求
+     * @param name    cookie的名称
+     * @return cookie            Cookie类
      */
     public static Cookie getCookie(HttpServletRequest request, String name) {
         Cookie cookies[] = request.getCookies();
@@ -35,11 +36,11 @@ public class CookieUtil {
         for (int i = 0; i < cookies.length; i++) {
             if (!cookies[i].getName().equals(name)) {
                 continue;
-            }else {
+            } else {
                 cookie = cookies[i];
                 break;
             }
-            
+
 //            if (request.getServerName().equals(cookie.getDomain())) {
 //                break;
 //            }
@@ -47,11 +48,13 @@ public class CookieUtil {
         return cookie;
     }
 
+
     /**
      * 删除cookie
-     * @param request			http请求
-     * @param response		http响应
-     * @param cookie			Cookie类
+     *
+     * @param request  http请求
+     * @param response http响应
+     * @param cookie   Cookie类
      */
     public static void deleteCookie(HttpServletRequest request, HttpServletResponse response, Cookie cookie) {
         if (cookie != null) {
@@ -67,9 +70,10 @@ public class CookieUtil {
             response.addCookie(cookie);
         }
     }
-    
+
     /**
      * 设定cookie(有效期为30天)
+     *
      * @param request
      * @param response
      * @param name
@@ -81,11 +85,12 @@ public class CookieUtil {
 
     /**
      * 设定cookie
+     *
      * @param request
      * @param response
      * @param name
      * @param value
-     * @param maxAge		cookie有效期(单位为秒)
+     * @param maxAge   cookie有效期(单位为秒)
      */
     public static void setCookie(HttpServletRequest request, HttpServletResponse response, String name, String value,
                                  int maxAge) {
@@ -103,31 +108,59 @@ public class CookieUtil {
         cookie.setPath(path);
         response.addCookie(cookie);
     }
-    
+
     /**
      * 设定cookie
+     *
      * @param request
      * @param response
      * @param name
      * @param value
-     * @param maxAge		cookie有效期(单位为秒)
+     * @param maxAge   cookie有效期(单位为秒)
      */
     public static void setCookie(HttpServletRequest request, HttpServletResponse response, String name, String value,
                                  int maxAge, String domain) {
-    	if (value == null) {
-    		value = "";
-    	}
-    	String path = request.getContextPath() != null ? request.getContextPath() : "/";
-    	if ("".equals(path)) {
-    		path = "/";
-    	}
-    	/*for test*/
-    	path = "/";
-    	Cookie cookie = new Cookie(name, value);
-    	cookie.setMaxAge(maxAge);
-    	cookie.setPath(path);
-    	cookie.setDomain(domain);
-    	response.addCookie(cookie);
+        if (value == null) {
+            value = "";
+        }
+        String path = request.getContextPath() != null ? request.getContextPath() : "/";
+        if ("".equals(path)) {
+            path = "/";
+        }
+        /*for test*/
+        path = "/";
+        Cookie cookie = new Cookie(name, value);
+        cookie.setMaxAge(maxAge);
+        cookie.setPath(path);
+        cookie.setDomain(domain);
+        response.addCookie(cookie);
     }
-    
+
+    /**
+     * 设定cookie
+     *
+     * @param request
+     * @param response
+     * @param name
+     * @param value
+     * @param maxAge   cookie有效期(单位为秒)
+     */
+    public static void setCookie(HttpServletRequest request, HttpServletResponse response, String name, String value,
+                                 int maxAge, Boolean isHttpOnly) {
+        if (value == null) {
+            value = "";
+        }
+        String path = request.getContextPath() != null ? request.getContextPath() : "/";
+        if ("".equals(path)) {
+            path = "/";
+        }
+        /*for test*/
+        path = "/";
+        Cookie cookie = new Cookie(name, value);
+        cookie.setMaxAge(maxAge);
+        cookie.setPath(path);
+        cookie.setHttpOnly(isHttpOnly);
+        response.addCookie(cookie);
+    }
+
 }

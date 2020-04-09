@@ -52,6 +52,10 @@ public class FileUtil {
         //保存原始文件
         try {
             file.transferTo(dest);
+            if (!ext.equalsIgnoreCase(".png")) {
+                //自动压缩jpg原图
+                ImageUtil.saveImage(dest, dest);
+            }
             //保存缩略图
             ImageUtil.saveImage(fileName, fileThumbName, 166, 212);
         } catch (IOException e) {

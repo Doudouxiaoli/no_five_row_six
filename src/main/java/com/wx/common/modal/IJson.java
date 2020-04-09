@@ -18,4 +18,6 @@ public interface IJson {
 
 	String JSON = "org/json";
 
+	String CODE = "code";
+
 }

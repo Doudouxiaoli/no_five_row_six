@@ -1,6 +1,6 @@
 // ======================================
 // Project Name:meddb-starter
-// Package Name:com.wx.no_five_row_six.common.log
+// Package Name:cn.meddb.core.common.log
 // File Name:LogInterceptor.java
 // Create Date:2019年10月17日  14:35
 // ======================================
@@ -46,5 +46,6 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
             return;
         }
         logService.saveLog(logBean);
+        LogLocalContext.remove();
     }
 }

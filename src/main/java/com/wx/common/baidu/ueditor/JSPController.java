@@ -15,18 +15,16 @@ import java.io.PrintWriter;
 
 @Controller
 @Transactional
-@RequestMapping("/lib/ueditor/jsp")
+@RequestMapping("/libs/ueditor/jsp")
 public class JSPController {
 
     private static final Logger logger = LoggerFactory.getLogger(JSPController.class);
 
     @RequestMapping("/controller")
     @ResponseBody
-    public void getConfigInfo(HttpServletRequest request, HttpServletResponse response){
+    public void getConfigInfo(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("application/json");
-//        String rootPath = request.getSession().getServletContext()
-//                .getRealPath("/");
-        String rootPath =  ClassUtils.getDefaultClassLoader().getResource("static").getPath();
+        String rootPath = ClassUtils.getDefaultClassLoader().getResource("static").getPath();
         try {
             String exec = new ActionEnter(request, rootPath).exec();
             PrintWriter writer = response.getWriter();

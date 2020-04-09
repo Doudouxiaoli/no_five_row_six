@@ -5,8 +5,10 @@
  */
 package com.wx.common.util;
 
-import org.apache.commons.lang3.StringUtils;
 
+import org.springframework.util.StringUtils;
+
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -50,6 +52,12 @@ public class TimeUtil {
      * ueditor图片目录文件夹名称 - 日期格式 yyyy-MM-dd 2013-06-16
      */
     public static String UEDITOR_FORMAT_DATE = "yyyyMMdd";
+    /**
+     * 日期格式 零点
+     */
+    public static String FORMAT_DATETIME_FULL_ZERO = "yyyy-MM-dd 00:00:00";
+
+
 
     /**
      * 得到当前时间
@@ -815,11 +823,39 @@ public class TimeUtil {
         calendar.set(Calendar.MILLISECOND, calendar.getActualMaximum(Calendar.MILLISECOND));
     }
 
+    //当前日期的前n天到零点
+    public static Long thisDateLastDate(Integer num){
+        SimpleDateFormat format = null;
+        Date date = null;
+        Calendar myDate = Calendar.getInstance();
+        myDate.add(Calendar.DAY_OF_MONTH, -3);
+        date = myDate.getTime();
+        format = new SimpleDateFormat(FORMAT_DATE);
+        String rtnYes = format.format(date);
+        System.out.println(rtnYes);
+        return stringToLong(rtnYes,FORMAT_DATE);
+    }
+
+    //当前日期加1天
+    public static Long todayOneMore(){
+        Format f = new SimpleDateFormat(FORMAT_DATETIME);
+        Date today = new Date();
+//        System.out.println("今天是:" + f.format(today));
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(today);
+        c.add(Calendar.DAY_OF_MONTH, 1);// 今天+1天
+
+        Date tomorrow = c.getTime();
+//        System.out.println("明天是:" + f.format(tomorrow));
+        return tomorrow.getTime();
+    }
+
     public static void main(String[] args) {
 /*        System.out.println(TimeUtil.stringToLong("2018-12-23", "yyyy-MM-dd"));
         System.out.println(TimeUtil.intToStringTimeDiff(45000));*/
 
-        Calendar calendar = getYearFirstDay(2019);
+        /*Calendar calendar = getYearFirstDay(2019);
         System.out.println(longToString(calendar.getTimeInMillis(), FORMAT_DATETIME_FULL));
         calendar = getYearLastDay(2019);
         System.out.println(longToString(calendar.getTimeInMillis(), FORMAT_DATETIME_FULL));
@@ -843,7 +879,15 @@ public class TimeUtil {
         startCalendar = getLastDateByQuarter(firstDayYear.getTime(), 4);
         System.out.println(longToString(startCalendar.getTimeInMillis(), FORMAT_DATETIME_FULL));
 
-        System.out.println(getYears(stringToLong("2010-01-01"), dateToLong()));
+        System.out.println(getYears(stringToLong("2010-01-01"), dateToLong()));*/
+
+//        System.out.println(thisDateLastDate(3));
+//        System.out.println(todayOneMore());
+        System.out.println(stringToLong("2020-03-05"));
+        System.out.println(stringToLong("2020-03-08"));
+        System.out.println(stringToLong("2020-03-09"));
+        System.out.println(System.currentTimeMillis());
+        System.out.println(longToString(1583661310529L,FORMAT_DATE));
 
     }
 }

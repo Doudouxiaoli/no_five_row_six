@@ -1,6 +1,6 @@
 // ======================================
 // Project Name:ceog
-// Package Name:com.wx.no_five_row_six.common.jackson
+// Package Name:com.wx.common.jackson
 // File Name:JacksonMapper.java
 // Create Date:2018年02月07日  15:29
 // ======================================
@@ -84,6 +84,7 @@ public class JacksonMapper implements IJson {
     public static JsonNode newDataInstance(Object data) {
         Map<String, Object> map = new HashMap<>();
         map.put(SUCCESS, true);
+        map.put(CODE, 0);
         map.put(DATA, data == null ? "" : data);
         return toJsonNode(map);
     }
@@ -108,6 +109,7 @@ public class JacksonMapper implements IJson {
     public static JsonNode newCountInstance(Object data, long count) {
         Map<String, Object> map = new HashMap<>();
         map.put(SUCCESS, true);
+        map.put(CODE, 0);
         map.put(DATA, data == null ? "" : data);
         map.put(COUNT, count);
         return toJsonNode(map);

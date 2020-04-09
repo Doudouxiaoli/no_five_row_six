@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+#@pc_layout()
+#define title()
+<title>#(typeName)->详情</title>
+#end
+#define js()
+<script src="//player.polyv.net/script/player.js"></script>
+#end
+#define main()
+<body>
+<div class="indexBox">
+    #include("../include/header.html")
+    <div class="scrollCon">
+        <div class="comm">
+            <div class="informationWrapper open">
+                <div class="itemInf-name">
+                    #(endorsement.feName??)
+                </div>
+                <div class="itemInf-time">
+                    #(longToString(endorsement.feStartTime??,"yyyy-MM-dd"))~
+                    #if(endorsement.feEndTime!=null)
+                    #(longToString(endorsement.feEndTime??,"yyyy-MM-dd"))
+                    #else
+                    至今
+                    #end
+                </div>
+                <img src="#(endorsement.feImg??)" class="item-img">
+                #if(endorsement.feVid!=null)
+                <div id="player"></div>
+                #end
+            </div>
+        </div>
+        #include("../include/footer.html")
+    </div>
+</div>
+<script>
+    var player = polyvPlayer({
+        wrap: '#player',
+        width: '450px',
+        height: "300px",
+        vid: '#(endorsement.feVid ??)'
+    })
+</script>
+</body>
+#end
+
+
+

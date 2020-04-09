@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+#@pc_layout()
+#define title()
+<title>代言商品</title>
+#end
+#define css()
+<style>
+    .boxMargin {
+        margin: 0px 50px;
+    }
+
+    .MoreBtn {
+        margin-left: 1000px;
+        height: 30px;
+        background-color: #e9defc;
+        vertical-align: bottom;
+        border-radius: 10px;
+    }
+</style>
+#end
+#define js()
+#end
+#define main()
+<div class="indexBox">
+    #include("../include/header.html")
+    <div class="scrollCon">
+        <div class="comm clear">
+            <div class="informationTop">
+                <div class="lf informationLf">
+                    <div class="informationTitle">代言</div>
+                </div>
+                <div class="rt informationRt">
+                    <input type="text" id="keyword" name="keyword" value="#(keyword??)" class="searchIpt"
+                           placeholder="请输入搜索词">
+                    <i class="searchIcon" onclick="search()"></i>
+                </div>
+            </div>
+            <div class="informationWrapper flex">
+                <div class="informationTitle" style="background-color: transparent;color: #0d0d0d">食物
+                    <button type="button" class="MoreBtn"
+                            onclick="javascrtpt:window.location.href='/api/endorsement/list?type=0'">更多=>
+                    </button>
+                </div>
+                #if(foodList?? != null &&foodList.size() > 0)
+                #for(item:foodList)
+                <a href="/api/endorsement/detail?id=#(item.feId)&type=0" class="itemBgBox boxMargin">
+                    <div class="item-img">
+                        <img src="#(item.feImg??)" alt="" class="albumImg" style="margin-left: 0">
+                    </div>
+                    <div class="item-dec marginLeft" style="margin-left: 20px">
+                        <div class="itemInf-name">#(item.feName??)</div>
+                    </div>
+                </a>
+                #end
+                #end
+            </div>
+            <div class="informationWrapper flex">
+                <div class="informationTitle" style="background-color: transparent;color: #0d0d0d">美妆
+                    <button type="button" class="MoreBtn"
+                            onclick="javascrtpt:window.location.href='/api/endorsement/list?type=1'">更多=>
+                    </button>
+                </div>
+                #if(makeupList?? != null &&makeupList.size() > 0)
+                #for(item:makeupList)
+                <a href="/api/endorsement/detail?id=#(item.feId)&type=1" class="itemBgBox boxMargin">
+                    <div class="item-img">
+                        <img src="#(item.feImg??)" alt="" class="albumImg" style="margin-left: 0">
+                    </div>
+                    <div class="item-dec marginLeft" style="margin-left: 20px">
+                        <div class="itemInf-name">#(item.feName??)</div>
+                    </div>
+                </a>
+                #end
+                #end
+            </div>
+            <div class="informationWrapper flex">
+                <div class="informationTitle" style="background-color: transparent;color: #0d0d0d">服饰
+                    <button type="button" class="MoreBtn"
+                            onclick="javascrtpt:window.location.href='/api/endorsement/list?type=2'">更多=>
+                    </button>
+                </div>
+                #if(clothesList?? != null &&clothesList.size() > 0)
+                #for(item:clothesList)
+                <a href="/api/endorsement/detail?id=#(item.feId)&type=2" class="itemBgBox boxMargin">
+                    <div class="item-img">
+                        <img src="#(item.feImg??)" alt="" class="albumImg" style="margin-left: 0">
+                    </div>
+                    <div class="item-dec marginLeft" style="margin-left: 20px">
+                        <div class="itemInf-name">#(item.feName??)</div>
+                    </div>
+                </a>
+                #end
+                #end
+            </div>
+            <div class="informationWrapper flex">
+                <div class="informationTitle" style="background-color: transparent;color: #0d0d0d">轻奢
+                    <button type="button" class="MoreBtn"
+                            onclick="javascrtpt:window.location.href='/api/endorsement/list?type=3'">更多=>
+                    </button>
+                </div>
+                #if(luxuryList?? != null &&luxuryList.size() > 0)
+                #for(item:luxuryList)
+                <a href="/api/endorsement/detail?id=#(item.feId)&type=3" class="itemBgBox boxMargin">
+                    <div class="item-img">
+                        <img src="#(item.feImg??)" alt="" class="albumImg" style="margin-left: 0">
+                    </div>
+                    <div class="item-dec marginLeft" style="margin-left: 20px">
+                        <div class="itemInf-name">#(item.feName??)</div>
+                    </div>
+                </a>
+                #end
+                #end
+            </div>
+            <div class="informationWrapper flex">
+                <div class="informationTitle" style="background-color: transparent;color: #0d0d0d">游戏
+                    <button type="button" class="MoreBtn"
+                            onclick="javascrtpt:window.location.href='/api/endorsement/list?type=4'">更多=>
+                    </button>
+                </div>
+                #if(gameList?? != null &&gameList.size() > 0)
+                #for(item:gameList)
+                <a href="/api/endorsement/detail?id=#(item.feId)&type=4" class="itemBgBox boxMargin">
+                    <div class="item-img">
+                        <img src="#(item.feImg??)" alt="" class="albumImg" style="margin-left: 0">
+                    </div>
+                    <div class="item-dec marginLeft" style="margin-left: 20px">
+                        <div class="itemInf-name">#(item.feName??)</div>
+                    </div>
+                </a>
+                #end
+                #end
+            </div>
+        </div>
+    </div>
+    #include("../include/footer.html")
+</div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        //点击回车
+        $("#keyword").keydown(function (e) {
+            if (e.keyCode == 13) {
+                search()
+            }
+        });
+    })
+
+    function search() {
+        window.location.href = "/api/endorsement/index?keyword=" + $("#keyword").val();
+    }
+</script>
+#end

@@ -17,22 +17,20 @@ import java.util.Set;
 
 /**
  * HttpUtil工具类
+ *
  * @author ph
- * @date 2018-02-01
+ * @version 2018-02-01
  */
 public class HttpUtil {
 
     private static final int BUFFER_SIZE = 1024;
 
-    private static String[] SPIDERS = { "Googlebot", "msnbot", "Baiduspider", "bingbot", "Sogou web spider",
+    private static String[] SPIDERS = {"Googlebot", "msnbot", "Baiduspider", "bingbot", "Sogou web spider",
             "Sogou inst spider", "Sogou Pic Spider", "JikeSpider", "Sosospider", "Slurp", "360Spider", "YodaoBot",
             "OutfoxBot", "fast-webcrawler", "lycos_spider", "scooter", "ia_archiver", "MJ12bot", "AhrefsBot"};
 
     /**
      * 判断是否是爬虫的访问请求
-     *
-     * @param request
-     * @return
      */
     public static boolean isRequestFromSpider(HttpServletRequest request) {
         boolean isSpider = false;
@@ -40,7 +38,7 @@ public class HttpUtil {
         if (userAgent != null && userAgent.trim().length() > 0) {
             userAgent = userAgent.trim().toLowerCase();
             for (String spider : SPIDERS) {
-                if (userAgent.indexOf(spider.toLowerCase()) >= 0) {
+                if (userAgent.contains(spider.toLowerCase())) {
                     isSpider = true;
                     break;
                 }
@@ -51,27 +49,25 @@ public class HttpUtil {
 
     /**
      * 取得请求的IP地址
-     * @param request
-     * @return
      */
-    public static String getRemoteIpAddr(HttpServletRequest request){
+    public static String getRemoteIpAddr(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
-        if(isValidIpAddr(ip)){
+        if (isValidIpAddr(ip)) {
             return ip.split(",")[0];
         }
 
         ip = request.getHeader("Proxy-Client-IP");
-        if(isValidIpAddr(ip)){
+        if (isValidIpAddr(ip)) {
             return ip;
         }
 
         ip = request.getHeader("WL-Proxy-Client-IP");
-        if(isValidIpAddr(ip)){
+        if (isValidIpAddr(ip)) {
             return ip;
         }
 
         ip = request.getHeader("HTTP_CLIENT_IP");
-        if(isValidIpAddr(ip)){
+        if (isValidIpAddr(ip)) {
             return ip;
         }
 
@@ -80,41 +76,30 @@ public class HttpUtil {
 
     /**
      * 判断IP地址是否有效
-     * @param ip
-     * @return
      */
-    private static boolean isValidIpAddr(String ip){
+    private static boolean isValidIpAddr(String ip) {
         return ip != null && !ip.isEmpty() && !ip.equalsIgnoreCase("unknown");
     }
 
     /**
      * 判断请求是否是Ajax
-     * @param request
-     * @return
      */
     public static boolean isAjaxRequest(HttpServletRequest request) {
         String header = request.getHeader("X-Requested-With");
-        if (header != null && "XMLHttpRequest".equals(header)){
-            return true;
-        }else{
-            return false;
-        }
+        return "XMLHttpRequest".equals(header);
     }
 
     /**
      * 取得浏览的base路径
-     * @param request
-     * @return
-     * @throws UnsupportedEncodingException
      */
-    public static String getBasePath(HttpServletRequest request) throws UnsupportedEncodingException {
+    public static String getBasePath(HttpServletRequest request) {
         String path = request.getContextPath();
         int port = request.getServerPort();
-        String basePath = null;
-        if(port == 80){
+        String basePath;
+        if (port == 80) {
             basePath = request.getScheme() + "://"
                     + request.getServerName() + path + "/";
-        }else{
+        } else {
             basePath = request.getScheme() + "://"
                     + request.getServerName() + ":" + request.getServerPort()
                     + path + "/";
@@ -125,48 +110,46 @@ public class HttpUtil {
 
     /**
      * 取得当前请求的完全URL
+     *
      * @param request
      * @return
-     * @throws UnsupportedEncodingException
      */
-    public static String getFullUrl(HttpServletRequest request) throws UnsupportedEncodingException {
+    public static String getFullUrl(HttpServletRequest request) {
         return getFullUrl(request, true);
     }
 
     /**
      * 取得当前请求的完全URL
-     * @param request
+     *
      * @param encode 是做urlencode
-     * @return
-     * @throws UnsupportedEncodingException
      */
-    public static String getFullUrl(HttpServletRequest request, boolean encode) throws UnsupportedEncodingException {
+    public static String getFullUrl(HttpServletRequest request, boolean encode) {
         String orginUrl = request.getRequestURL().toString();
-        if(null != request.getQueryString()){
+        if (null != request.getQueryString()) {
             orginUrl += "?" + request.getQueryString();
-        }else{
+        } else {
             Map<String, String[]> parpMap = request.getParameterMap();
             Set<String> keys = parpMap.keySet();
-            String value = null;
-            StringBuffer querys = new StringBuffer();
-            for(String key : keys){
+            String value;
+            StringBuilder querys = new StringBuilder();
+            for (String key : keys) {
                 value = parpMap.get(key)[0];
-                if(null != value && !value.isEmpty()){
+                if (null != value && !value.isEmpty()) {
                     querys.append(key);
                     querys.append("=");
                     querys.append(value);
                     querys.append("&");
                 }
             }
-            if(querys.length() != 0){
-                orginUrl += "?" + querys.substring(0, querys.length()-1).toString();
+            if (querys.length() != 0) {
+                orginUrl += "?" + querys.substring(0, querys.length() - 1);
             }
         }
-        try{
-            if(encode){
-                orginUrl = URLEncoder.encode(orginUrl,"UTF-8");
+        try {
+            if (encode) {
+                orginUrl = URLEncoder.encode(orginUrl, "UTF-8");
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return orginUrl;
@@ -174,16 +157,13 @@ public class HttpUtil {
 
     /**
      * 判断是否是微信浏览器的访问请求
-     *
-     * @param request
-     * @return
      */
-    public static boolean isFromWeixin(HttpServletRequest request) {
+    public static boolean isWechat(HttpServletRequest request) {
         boolean isSpider = false;
         String userAgent = request.getHeader("User-Agent");
         if (userAgent != null && userAgent.trim().length() > 0) {
             userAgent = userAgent.trim().toLowerCase();
-            if (userAgent.indexOf("micromessenger") >= 0) {
+            if (userAgent.contains("micromessenger")) {
                 isSpider = true;
             }
         }
@@ -198,18 +178,13 @@ public class HttpUtil {
         response.setHeader("Content-Disposition", "inline");
 
         PrintWriter writer = response.getWriter();
-        StringReader reader = null;
-        try {
-            reader = new StringReader(msg);
+        try (StringReader reader = new StringReader(msg)) {
             char[] buffer = new char[BUFFER_SIZE];
-            int charRead = 0;
+            int charRead;
             while ((charRead = reader.read(buffer)) != -1) {
                 writer.write(buffer, 0, charRead);
             }
         } finally {
-            if (reader != null) {
-                reader.close();
-            }
             if (writer != null) {
                 writer.flush();
                 writer.close();
@@ -217,11 +192,11 @@ public class HttpUtil {
         }
     }
 
-
     /**
      * 从网络上下载图片
-     * @param url 下载url
-     * @param dirPath 文件保存路径
+     *
+     * @param url      下载url
+     * @param dirPath  文件保存路径
      * @param fileName 要保存的文件名
      */
     public static void downloadPicture(String url, String dirPath, String fileName) throws IOException {
@@ -234,8 +209,9 @@ public class HttpUtil {
                 .build();
         httpget.setConfig(requestConfig);
 
-        httpget.setHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.79 Safari/537.1");
-        httpget.setHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+        httpget.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.79 " +
+                "Safari/537.1");
+        httpget.setHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
         CloseableHttpResponse resp = null;
         try {
             resp = httpclient.execute(httpget);
@@ -253,8 +229,8 @@ public class HttpUtil {
     /**
      * 将图片写到 硬盘指定目录下
      *
-     * @param in 文件输入流
-     * @param dirPath 文件保存路径
+     * @param in       文件输入流
+     * @param dirPath  文件保存路径
      * @param fileName 要保存的文件名
      */
     private static void savePicToDisk(InputStream in, String dirPath, String fileName) throws IOException {
@@ -265,7 +241,7 @@ public class HttpUtil {
             }
 
             //文件真实路径
-            if(!dirPath.endsWith(File.separator)){
+            if (!dirPath.endsWith(File.separator)) {
                 dirPath = dirPath + File.separator;
             }
             String realPath = dirPath.concat(fileName);

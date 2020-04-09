@@ -1,6 +1,6 @@
 // ======================================
 // Project Name:meddb-starter
-// Package Name:com.wx.common.log.type
+// Package Name:cn.meddb.core.common.log.type
 // File Name:CommonLog.java
 // Create Date:2019年10月17日  14:26
 // ======================================
