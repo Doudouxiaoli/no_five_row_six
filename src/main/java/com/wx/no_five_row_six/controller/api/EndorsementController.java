@@ -6,6 +6,7 @@ import com.wx.common.jackson.JacksonMapper;
 import com.wx.no_five_row_six.common.Const;
 import com.wx.no_five_row_six.entity.FrsEndorsement;
 import com.wx.no_five_row_six.service.impl.FrsEndorsementServiceImpl;
+import com.wx.no_five_row_six.service.impl.FrsViewRecordServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +27,8 @@ public class EndorsementController {
 
     @Autowired
     private FrsEndorsementServiceImpl endorsementService;
+    @Autowired
+    private FrsViewRecordServiceImpl viewRecordService;
 
     /**
      * 首页
@@ -127,9 +131,11 @@ public class EndorsementController {
      */
     @ResponseBody
     @RequestMapping("/detail")
-    public JsonNode detail(Long id) {
+    public JsonNode detail(Long id, HttpServletRequest request) {
         try {
             FrsEndorsement endorsement = endorsementService.getById(id);
+//            保存访问记录
+            viewRecordService.saveVisit(id, request, Const.MODEL_TYPE_ENDORSEMENT, endorsement.getFeName());
             return JacksonMapper.newDataInstance(endorsement);
         } catch (Exception e) {
             e.printStackTrace();

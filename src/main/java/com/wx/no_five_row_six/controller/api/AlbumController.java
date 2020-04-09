@@ -11,6 +11,7 @@ import com.wx.no_five_row_six.entity.FrsAlbum;
 import com.wx.no_five_row_six.entity.FrsSong;
 import com.wx.no_five_row_six.service.impl.FrsAlbumServiceImpl;
 import com.wx.no_five_row_six.service.impl.FrsSongServiceImpl;
+import com.wx.no_five_row_six.service.impl.FrsViewRecordServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +34,8 @@ public class AlbumController {
     private FrsAlbumServiceImpl albumService;
     @Autowired
     private FrsSongServiceImpl songService;
+    @Autowired
+    private FrsViewRecordServiceImpl viewRecordService;
 
     /**
      * 列表ajax
@@ -88,6 +92,20 @@ public class AlbumController {
         return JacksonMapper.newDataInstance(map);
     }
 
+    /**
+     * 保存一条访问记录
+     *
+     * @param id
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("saveVisit")
+    public JsonNode saveVisit(Long id, HttpServletRequest request) {
+        FrsSong song = songService.getById(id);
+        viewRecordService.saveVisit(id, request, Const.MODEL_TYPE_SONG, song.getFsName());
+        return JacksonMapper.newSuccessInstance();
+    }
 }
 
 

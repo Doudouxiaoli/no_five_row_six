@@ -154,4 +154,30 @@ public class Const {
         }
         return "";
     }
+
+    public static Integer MODEL_TYPE_CONCERT = 11;
+    public static Integer MODEL_TYPE_DANCE = 12;
+    public static Integer MODEL_TYPE_SONG = 13;
+    public static Integer MODEL_TYPE_ENDORSEMENT = 14;
+    public static Integer MODEL_TYPE_MOVIE = 15;
+    public static Integer MODEL_TYPE_TV = 16;
+    public static Integer MODEL_TYPE_VARIETY = 17;
+    public static Map<Integer, String> model = new HashMap<>();
+
+    static {
+        map.put(MODEL_TYPE_CONCERT, "演唱会");
+        map.put(MODEL_TYPE_DANCE, "舞蹈");
+        map.put(MODEL_TYPE_SONG, "歌曲");
+        map.put(MODEL_TYPE_ENDORSEMENT, "代言");
+        map.put(MODEL_TYPE_MOVIE, "电影");
+        map.put(MODEL_TYPE_TV, "电视剧");
+        map.put(MODEL_TYPE_VARIETY, "综艺");
+    }
+
+    public static String getModelType(Integer id) {
+        if (map.containsKey(id)) {
+            return map.get(id);
+        }
+        return "";
+    }
 }

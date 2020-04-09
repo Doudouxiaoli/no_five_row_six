@@ -11,6 +11,7 @@ import com.wx.no_five_row_six.entity.FrsConcert;
 import com.wx.no_five_row_six.entity.FrsConcertProgram;
 import com.wx.no_five_row_six.service.impl.FrsConcertProgramServiceImpl;
 import com.wx.no_five_row_six.service.impl.FrsConcertServiceImpl;
+import com.wx.no_five_row_six.service.impl.FrsViewRecordServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +35,8 @@ public class ConcertController {
     private FrsConcertServiceImpl concertService;
     @Autowired
     private FrsConcertProgramServiceImpl programService;
+    @Autowired
+    private FrsViewRecordServiceImpl viewRecordService;
 
     /**
      * 列表ajax
@@ -74,7 +78,7 @@ public class ConcertController {
 
     @ResponseBody
     @RequestMapping("detail")
-    public JsonNode detail(Long concertId, Long runningId) {
+    public JsonNode detail(Long concertId, Long runningId, HttpServletRequest request) {
         Map<Integer, Object> map = new HashMap<>();
         try {
             QueryWrapper<FrsConcertProgram> queryWrapper = new QueryWrapper<FrsConcertProgram>().eq("fcp_is_valid", 1).orderByDesc("fcp_sort").eq("fcp_fc_id", concertId);
@@ -88,6 +92,8 @@ public class ConcertController {
             queryWrapper.notLike("fcp_id", runningId);
             List<FrsConcertProgram> programList = programService.list(queryWrapper);
             FrsConcert concert = concertService.getById(concertId);
+//            保存访问记录
+            viewRecordService.saveVisit(runningId, request, Const.MODEL_TYPE_CONCERT, runningMv.getFcpName());
             map.put(0, concert);
             map.put(1, runningMv);
             map.put(2, programList);

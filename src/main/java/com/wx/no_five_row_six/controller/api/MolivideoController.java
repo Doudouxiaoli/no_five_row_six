@@ -8,10 +8,7 @@ import com.wx.no_five_row_six.entity.FrsMolivideo;
 import com.wx.no_five_row_six.entity.FrsMovie;
 import com.wx.no_five_row_six.entity.FrsTv;
 import com.wx.no_five_row_six.entity.FrsVariety;
-import com.wx.no_five_row_six.service.impl.FrsMolivideoServiceImpl;
-import com.wx.no_five_row_six.service.impl.FrsMovieServiceImpl;
-import com.wx.no_five_row_six.service.impl.FrsTvServiceImpl;
-import com.wx.no_five_row_six.service.impl.FrsVarietyServiceImpl;
+import com.wx.no_five_row_six.service.impl.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +35,8 @@ public class MolivideoController {
     private FrsTvServiceImpl tvService;
     @Autowired
     private FrsVarietyServiceImpl varietyService;
+    @Autowired
+    private FrsViewRecordServiceImpl viewRecordService;
 
     /**
      * 影视作品列表
@@ -120,7 +120,7 @@ public class MolivideoController {
      */
     @ResponseBody
     @RequestMapping("movieDetail")
-    public JsonNode movieDetail(Long fmvId, Long id) {
+    public JsonNode movieDetail(Long fmvId, Long id, HttpServletRequest request) {
         QueryWrapper<FrsMovie> waitQW = new QueryWrapper<>();
         Long runningId = null;
         FrsMovie runningMovie = null;
@@ -137,6 +137,8 @@ public class MolivideoController {
         }
         waitQW.lambda().notLike(null != runningId, FrsMovie::getFmId, runningId).eq(FrsMovie::getFmIsValid, 1).orderByDesc(FrsMovie::getFmSort).last("limit 4");
         List<FrsMovie> waitingList = movieService.list(waitQW);
+//        保存访问记录
+        viewRecordService.saveVisit(runningId, request, Const.MODEL_TYPE_MOVIE, runningMovie.getFmName());
         Map<Integer, Object> map = new HashMap<>();
         map.put(1, runningMovie);
         map.put(2, waitingList);
@@ -152,7 +154,7 @@ public class MolivideoController {
      */
     @ResponseBody
     @RequestMapping("tvDetail")
-    public JsonNode tvDetail(Long fmvId, Long id) {
+    public JsonNode tvDetail(Long fmvId, Long id, HttpServletRequest request) {
         QueryWrapper<FrsTv> queryWrapper = new QueryWrapper<>();
         FrsTv runningTv = null;
         queryWrapper.lambda().eq(FrsTv::getFtIsValid, 1).orderByAsc(FrsTv::getFtSort);
@@ -166,6 +168,8 @@ public class MolivideoController {
             return JacksonMapper.newErrorInstance("参数传递异常");
         }
         List<FrsTv> waitingList = tvService.list(queryWrapper);
+//        保存浏览记录
+        viewRecordService.saveVisit(id, request, Const.MODEL_TYPE_TV, runningTv.getFtName());
         Map<Integer, Object> map = new HashMap<>();
         map.put(1, runningTv);
         map.put(2, waitingList);
@@ -181,7 +185,7 @@ public class MolivideoController {
      */
     @ResponseBody
     @RequestMapping("varietyDetail")
-    public JsonNode varietyDetail(Long fmvId, Long id) {
+    public JsonNode varietyDetail(Long fmvId, Long id, HttpServletRequest request) {
         QueryWrapper<FrsVariety> queryWrapper = new QueryWrapper<>();
         FrsVariety runningVariety = null;
         queryWrapper.lambda().eq(FrsVariety::getFvIsValid, 1).orderByAsc(FrsVariety::getFvSort);
@@ -195,6 +199,8 @@ public class MolivideoController {
             return JacksonMapper.newErrorInstance("参数传递异常");
         }
         List<FrsVariety> waitingList = varietyService.list(queryWrapper);
+//        保存访问记录
+        viewRecordService.saveVisit(runningVariety.getFvId(), request, Const.MODEL_TYPE_VARIETY, runningVariety.getFvName());
         Map<Integer, Object> map = new HashMap<>();
         map.put(1, runningVariety);
         map.put(2, waitingList);
