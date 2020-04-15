@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.jfinal.template.ext.spring.JFinalViewResolver;
 import com.jfinal.template.source.ClassPathSourceFactory;
 import com.wx.common.util.TimeUtil;
+import com.wx.no_five_row_six.config.EmailConfig;
+import com.wx.no_five_row_six.config.SystemConfig;
+import com.wx.no_five_row_six.config.WinxinConfig;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
@@ -21,7 +24,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @ComponentScan("com.wx.common.baidu")
 @ComponentScan("com.wx.no_five_row_six")
 @MapperScan("com.wx.no_five_row_six.mapper")
-@EnableConfigurationProperties({SystemConfig.class,EmailConfig.class,WinxinConfig.class})
+@EnableConfigurationProperties({SystemConfig.class, EmailConfig.class, WinxinConfig.class})
 @EnableScheduling
 public class NoFiveRowSixApplication {
 

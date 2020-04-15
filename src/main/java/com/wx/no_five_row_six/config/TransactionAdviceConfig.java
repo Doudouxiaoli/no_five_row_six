@@ -4,7 +4,7 @@
 // File Name:TransactionAdviceConfig.java
 // Create Date:2019年05月24日  15:41
 // ======================================
-package com.wx.no_five_row_six;
+package com.wx.no_five_row_six.config;
 
 import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;

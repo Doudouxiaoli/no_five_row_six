@@ -4,7 +4,7 @@
 // File Name:SystemConfig.java
 // Create Date:2019年10月16日  15:54
 // ======================================
-package com.wx.no_five_row_six;
+package com.wx.no_five_row_six.config;
 
 import com.wx.no_five_row_six.common.Const;
 import org.springframework.boot.context.properties.ConfigurationProperties;

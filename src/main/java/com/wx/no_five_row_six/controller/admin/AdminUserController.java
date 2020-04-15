@@ -62,7 +62,7 @@ public class AdminUserController {
         mm.addAttribute("startDate", startDate);
         mm.addAttribute("endDate", endDate);
         mm.addAttribute("recordSize", page.getRecords().size());
-        return "admin/adminUser/list";
+        return "admin/user/adminUser/list";
     }
 
     /**
@@ -86,7 +86,7 @@ public class AdminUserController {
         try {
             AdminUser user = adminUserService.getById(id);
             mm.addAttribute("user", user);
-            return "admin/adminUser/edit";
+            return "admin/user/adminUser/edit";
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.error("后台管理-获取管理员异常。", e);

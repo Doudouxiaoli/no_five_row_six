@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+#@admin_layout()
+
+#define title()
+<title>五排六号-用户>列表</title>
+#end
+
+#define main()
+<div class="wrapper">
+    #include("../header.html", navId="nav_admin_user", subNavId="")
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>后台用户列表</h1>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-body">
+                            <div class="box-header">
+                                <form class="form-inline" name="searchForm" id="searchForm" method="post">
+                                    <input type="hidden" id="current" name="current" value="#(page.getCurrent())"/>
+                                    <input type="hidden" id="size" name="size" value="#(page.getSize())"/>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="keyword" name="keyword"
+                                               placeholder="用户名" value="#(keyword)"/>
+                                    </div>
+                                    <button type="button" class="btn btn-success" id="searchBtn">搜索</button>
+                                    <a class="btn btn-success" href="admin/pcUser/list">重置搜索</a>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            #if(page.records != null && page.total > 0)
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="width: 5%;">序号</th>
+                                    <th>用户名</th>
+                                    <th>电话</th>
+                                    <th>地址</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                #for(user : page.records)
+                                <tr>
+                                    <td>#((page.size * (page.current -1)) + (for.index +1))</td>
+                                    <td>
+                                        #(user.fuName??)
+                                    </td>
+                                    <td>
+                                        #(user.fuPhone??)
+                                    </td>
+                                    <td>
+                                        #(user.fuProvince??)#(user.fuCity??)#(user.fuRegion??)
+                                    </td>
+                                </tr>
+                                #end
+                                </tbody>
+                            </table>
+                            #include("../pojoPageInfo.html", act="admin/pcUser/list", formName="searchForm")
+                            #else if (page.records == null || page.total <= 0)
+                            暂无数据！
+                            #end
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //检索
+        $("#searchBtn").bind("click", function () {
+            var form = document.forms[0];
+            form.action = "admin/pcUser/list";
+            $("#current").val(1);
+            form.submit();
+        });
+
+        //回车提交表单
+        $("#keyword").keydown(function (event) {
+            if (event.keyCode == 13) {
+                $("#searchBtn").click();
+            }
+        });
+
+    });
+</script>
+#end

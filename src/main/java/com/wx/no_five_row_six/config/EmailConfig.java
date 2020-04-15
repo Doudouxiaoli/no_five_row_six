@@ -1,4 +1,4 @@
-package com.wx.no_five_row_six;
+package com.wx.no_five_row_six.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

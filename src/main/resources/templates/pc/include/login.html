@@ -1,271 +1,56 @@
-<link rel="stylesheet" href="js/index.css">
-<script src="/js/distpicker.data.js"></script>
-<script src="/js/distpicker.js"></script>
-<script src="/js/public.js"></script>
-
-<div class="mask-box login-mask" style="display: none">
-    <div class="mask-cover">
-        <div class="login-tabs clearfix">
-            <div class="login-tab-li ligin-tab-active">
-                登录
-            </div>
-            <div class="login-tab-li">
-                注册
-            </div>
-        </div>
-        <div class="login-main-box">
-            <div class="login-main-li login-main-active">
-                <div class="user-type-box">
-                    <div class="user-type">
-                        <span class="user-type-li user-type-avtive">医生<i></i></span>
-                        <span class="user-type-li">员工<i></i></span>
-                    </div>
+<!DOCTYPE html>
+#@pc_layout()
+#define title()
+<title>登录</title>
+#end
+#define css()
+#end
+#define js()
+#end
+#define main()
+<div class="main-w3layouts wrapper">
+    <h1>五排六号登录</h1>
+    <div class="main-agileinfo">
+        <div class="agileits-top">
+            <form action="/api/user/login" method="post">
+                <input class="text" style="margin: 3em 0 0;" type="text" name="name" placeholder="用户名"
+                       required="">
+                <input class="text" style="margin: 3em 0 0;" type="password" name="password" placeholder="密码"
+                       required="">
+                <div class="wthree-text">
+                    <ul>
+                        <li>
+                            <label class="anim">
+                                <input type="checkbox" class="checkbox" required="">
+                                <span>登录须知</span>
+                            </label>
+                        </li>
+                        <li><a href="/api/user/forgetPasswordInit">忘记密码 ?</a></li>
+                    </ul>
+                    <div class="clear"></div>
                 </div>
-                <div class="user-type-mains">
-                    <div class="user-type-mainLi type-mainLi-active">
-                        <div class="wrap2">
-                            <div class="login-li">
-                                <div class="login-type">手机号</div>
-                                <input class="login-input" placeholder="请输入手机号" id="phone1">
-                            </div>
-                            <div class="login-li">
-                                <div class="login-type"><span>密</span><span>码</span></div>
-                                <input class="login-input" placeholder="请输入密码" type="password" id="password1">
-                            </div>
-                            <button class="login-btnses" id="login1">登录</button>
-                        </div>
-                        <div class="password-title"><sup>*</sup>初始密码为123456</div>
-                        <div class="login-desc">首次登录请先注册</div>
-                    </div>
-                    <div class="user-type-mainLi">
-                        <div class="wrap2">
-                            <div class="login-li">
-                                <div class="login-type">手机号</div>
-                                <input class="login-input" placeholder="请输入手机号" id="phone2">
-                            </div>
-                            <div class="login-li">
-                                <div class="login-type"><span>密</span><span>码</span></div>
-                                <input class="login-input" placeholder="请输入密码" type="password" id="password2">
-                            </div>
-                            <div class="login-li">
-                                <div class="login-type"><span>医</span><span>院</span></div>
-                                <input class="login-input" placeholder="请输入医院" id="hospital2">
-                            </div>
-                            <button class="login-btnses" id="login2">登录</button>
-                        </div>
-                        <div class="password-title"><sup>*</sup>初始密码为123456</div>
-                        <div class="login-desc">首次登录请先注册</div>
-                    </div>
-                </div>
-            </div>
-            <!--因没有下拉框样式设计，故采用系统默认样式，如下select电脑端调试时的效果可忽略。-->
-            <div class="login-main-li">
-                <div class="wrap2 login-loginMain">
-                    <div class="login-li login-li-twos">
-                        <div class="mask-input-box clearfix" id="distpicker_one">
-                            <div class="form-group select clearfix">
-                                <div class="login-type">省</div>
-                                <select class="my-selected form-control" id="province3">
-                                </select>
-                            </div>
-                            <div class="form-group select2 clearfix">
-                                <div class="login-type">市</div>
-                                <select class="my-selected form-control" id="city3"></select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="login-li">
-                        <div class="login-type">手机号</div>
-                        <input class="login-input" placeholder="请输入手机号" id="phone3">
-                    </div>
-                    <div class="login-li">
-                        <div class="login-type"><span>姓</span><span>名</span></div>
-                        <input class="login-input" placeholder="请输入姓名" id="name3">
-                    </div>
-                    <div class="login-li">
-                        <div class="login-type"><span>医</span><span>院</span></div>
-                        <input class="login-input" placeholder="请输入医院" id="hospital3">
-                    </div>
-                    <div class="login-li">
-                        <div class="login-type"><span>科</span><span>室</span></div>
-                        <select class="login-input login-select" id="department3">
-                            <option value="">===请选择===</option>
-                            <option value="风湿免疫科">风湿免疫科</option>
-                            <option value="骨质疏松科">骨质疏松科</option>
-                            <option value="肾病内科">肾病内科</option>
-                            <option value="骨科">骨科</option>
-                            <option value="其他">其他</option>
-                        </select>
-                    </div>
-                    <div class="login-li">
-                        <div class="login-type">邀请码</div>
-                        <input class="login-input" placeholder="罗氏员工工号（选填）" id="code3">
-                    </div>
-                    <button class="login-btnses" id="register3">注册</button>
-                </div>
-            </div>
+                <input type="submit" value="登录">
+            </form>
+            <p>创建一个账号? <a href="/api/user/registerInit"> 立即注册!</a></p>
         </div>
     </div>
+    <!-- copyright -->
+    <div class="w3copyright-agile">
+        <p>© 2017 Magical Login Form . All rights <a href="http://www.bootstrapmb.com/" title="bootstrapmb">Reserved</a>
+        </p>
+    </div>
+    <!-- //copyright -->
+    <ul class="w3lsg-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
 </div>
-
-<script>
-    $("#distpicker_one").distpicker({
-        autoSelect: false
-    });
-
-    if (!#(hasLogin()??)) {//未登录
-        $(".login-mask").show();
-        $("body").height($(window).height());
-        $("body").css("position", "fixed");
-    } else {
-        $("body").css("height", "auto")
-        $("body").css("position", "relative");
-    }
-    $("#login1").click(function () {
-        var reg = /^1[34578][0-9]{9}$/;
-        var phone = $("#phone1").val();
-        if (!reg.test(phone)) {
-            alert("请输入正确的手机号！");
-            return;
-        }
-        var password = $("#password1").val();
-        if (password == "") {
-            alert("密码不能为空！");
-            return;
-        }
-        $.ajax({
-            "url": "/userLogin",
-            "type": "post",
-            "data": {phone: phone, password: password},
-            "dataType": "json",
-            "success": function (data) {
-                if (data.success) {
-                    alert("登入成功！")
-                    window.location.href = window.location.href;
-                } else {
-                    alert("登入失败，请检查手机号或者密码是否正确！")
-                }
-            },
-            "error": function (xhr, err1) {
-                alert(err1)
-            }
-        });
-    })
-
-    $("#login2").click(function () {
-        var reg = /^1[34578][0-9]{9}$/;
-        var phone = $("#phone2").val();
-        alert
-        if (!reg.test(phone)) {
-            alert("请输入正确的手机号！");
-            return;
-        }
-        var password = $("#password2").val();
-        if (password == "") {
-            alert("密码不能为空！");
-            return;
-        }
-        var hospital = $("#hospital2").val();
-        if (hospital == "") {
-            alert("医院不能为空！");
-            return;
-        }
-        $.ajax({
-            "url": "/userLogin",
-            "type": "post",
-            "data": {phone: phone, password: password, hospital: hospital},
-            "dataType": "json",
-            "success": function (data) {
-                if (data.success) {
-                    alert("登入成功！")
-                    window.location.href = window.location.href;
-                } else {
-                    alert("登入失败，请检查手机号或者密码是否正确！")
-                }
-            },
-            "error": function (xhr, err1) {
-                alert(err1)
-            }
-        });
-    })
-    $("#close").click(function () {
-        var userAgent = navigator.userAgent;
-        if (userAgent.indexOf("Firefox") != -1 || userAgent.indexOf("Chrome") != -1) {
-            window.location.href = "about:blank";
-        } else if (userAgent.indexOf('Android') > -1 || userAgent.indexOf('Linux') > -1) {
-            window.opener = null;
-            window.open('about:blank', '_self', '').close();
-        } else {
-            window.opener = null;
-            window.open("about:blank", "_self");
-            window.close();
-        }
-    })
-    $("#register3").click(function () {
-        var user = {};
-        var reg = /^1[34578][0-9]{9}$/;
-        var province = $("#province3").val();
-        var city = $('#city3').val();
-        var phone = $("#phone3").val();
-        var name = $("#name3").val();
-        var hospital = $('#hospital3').val();
-        var department = $('#department3').val();
-        var code = $("#code3").val();
-        if (province == "") {
-            alert("请选择省！");
-            return;
-        }
-        if (city == "") {
-            alert("请选择市！");
-            return;
-        }
-        if (phone == "") {
-            alert("请输入手机号！");
-            return;
-        } else {
-            if (!reg.test(phone)) {
-                alert("请输入正确的手机号！");
-                return;
-            }
-        }
-        if (name == "") {
-            alert("请输入姓名！");
-            return;
-        }
-        if (hospital == "") {
-            alert("请输入医院！");
-            return;
-        }
-        if (department == "") {
-            alert("请选择科室！");
-            return;
-        }
-
-        $.ajax({
-            "url": "/userRegister",
-            "type": "post",
-            "data": {
-                guProvinces : province,
-                guCity : city,
-                guTel : phone,
-                guName : name,
-                guHospital : hospital,
-                guDepartments : department,
-                guCode : code
-            },
-            "dataType": "json",
-            "success": function (data) {
-                if (data.success) {
-                    alert("注册成功！")
-                    window.location.href = window.location.href;
-                } else {
-                    alert("注册失败您已经注册此手机号！")
-                }
-            },
-            "error": function (xhr, err1) {
-                alert(err1)
-            }
-        });
-    })
-</script>
-
+#end

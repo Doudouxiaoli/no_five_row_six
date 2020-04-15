@@ -2,6 +2,7 @@ package com.wx.no_five_row_six.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 
 /**
@@ -14,7 +15,7 @@ import java.io.Serializable;
  */
 public class FrsUser implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @TableId(value = "fu_id", type = IdType.AUTO)
     private Long fuId;
@@ -38,7 +39,22 @@ public class FrsUser implements Serializable {
      * 修改时间
      */
     private Long fuUpdateTime;
-
+    /**
+     * 省份
+     */
+    private String fuProvince;
+    /**
+     * 城市
+     */
+    private String fuCity;
+    /**
+     * 区县
+     */
+    private String fuRegion;
+    /**
+     * 电话号
+     */
+    private String fuPhone;
 
     public Long getFuId() {
         return fuId;
@@ -80,14 +96,50 @@ public class FrsUser implements Serializable {
         this.fuUpdateTime = fuUpdateTime;
     }
 
+    public String getFuProvince() {
+        return fuProvince;
+    }
+
+    public void setFuProvince(String fuProvince) {
+        this.fuProvince = fuProvince;
+    }
+
+    public String getFuCity() {
+        return fuCity;
+    }
+
+    public void setFuCity(String fuCity) {
+        this.fuCity = fuCity;
+    }
+
+    public String getFuRegion() {
+        return fuRegion;
+    }
+
+    public void setFuRegion(String fuRegion) {
+        this.fuRegion = fuRegion;
+    }
+
+    public String getFuPhone() {
+        return fuPhone;
+    }
+
+    public void setFuPhone(String fuPhone) {
+        this.fuPhone = fuPhone;
+    }
+
     @Override
     public String toString() {
         return "FrsUser{" +
-        "fuId=" + fuId +
-        ", fuName=" + fuName +
-        ", fuPassword=" + fuPassword +
-        ", fuCreateTime=" + fuCreateTime +
-        ", fuUpdateTime=" + fuUpdateTime +
-        "}";
+                "fuId=" + fuId +
+                ", fuName='" + fuName + '\'' +
+                ", fuPassword='" + fuPassword + '\'' +
+                ", fuCreateTime=" + fuCreateTime +
+                ", fuUpdateTime=" + fuUpdateTime +
+                ", fuProvince='" + fuProvince + '\'' +
+                ", fuCity='" + fuCity + '\'' +
+                ", fuRegion='" + fuRegion + '\'' +
+                ", fuPhone='" + fuPhone + '\'' +
+                '}';
     }
 }
