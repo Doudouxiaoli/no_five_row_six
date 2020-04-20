@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("common")
+@RequestMapping("/api/common")
 public class CommonController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CommonController.class);
     @Autowired

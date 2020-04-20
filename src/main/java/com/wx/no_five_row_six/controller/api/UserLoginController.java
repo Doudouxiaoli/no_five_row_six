@@ -8,7 +8,6 @@ import com.wx.common.util.TimeUtil;
 import com.wx.no_five_row_six.common.security.UserModel;
 import com.wx.no_five_row_six.common.security.UserUtil;
 import com.wx.no_five_row_six.entity.FrsUser;
-import com.wx.no_five_row_six.entity.FrsWechatUser;
 import com.wx.no_five_row_six.entity.SmsCode;
 import com.wx.no_five_row_six.service.impl.FrsUserServiceImpl;
 import com.wx.no_five_row_six.service.impl.FrsWechatUserServiceImpl;
@@ -17,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -43,13 +41,9 @@ public class UserLoginController {
      *
      * @return
      */
-    @RequestMapping(value = {"", "LoginInit"})
-    public String LoginInit() {
-        return "pc/include/login";
-    }
-
+    @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(ModelMap mm, String name, String password, HttpServletRequest request) {
+    public JsonNode login(String name, String password, HttpServletRequest request) {
         try {
             QueryWrapper<FrsUser> queryWrapper = new QueryWrapper<FrsUser>();
             queryWrapper.lambda()
@@ -57,7 +51,7 @@ public class UserLoginController {
                     .eq(FrsUser::getFuPassword, EncryptUtil.getSHA256Value(password));
             FrsUser user = userService.getOne(queryWrapper, false);
             if (user == null) {
-                mm.addAttribute("errMsg", "用户名或密码错误");
+                return JacksonMapper.newErrorInstance("用户名或密码错误");
             }
             UserModel userModel = new UserModel();
             userModel.setUser(user);
@@ -66,43 +60,41 @@ public class UserLoginController {
                 session.removeAttribute(UserUtil.USER_SESSION_NAME);
             }
             session.setAttribute(UserUtil.USER_SESSION_NAME, userModel);
-            return "pc/include/index";
+            return JacksonMapper.newSuccessInstance();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             LOGGER.error(e.getMessage(), e);
-            mm.addAttribute("errMsg", "登录出错了");
-            return "pc/include/login";
+            return JacksonMapper.newErrorInstance("登录出错了");
         }
     }
 
-    /**
-     * 注册
-     *
-     * @return
-     */
-    @RequestMapping("registerInit")
-    public String registerInit() {
-        return "pc/include/register";
-    }
-
+    @ResponseBody
     @RequestMapping("register")
-    public String register(FrsUser user, String scCode, ModelMap mm) {
+    public JsonNode register(String fuName, String fuPassword, String fuProvince, String fuCity, String fuRegion, String fuPhone, String scCode) {
         try {
             QueryWrapper<FrsUser> queryWrapper = new QueryWrapper<>();
-            queryWrapper.lambda().eq(FrsUser::getFuPhone, user.getFuPhone());
+            queryWrapper.lambda().eq(FrsUser::getFuPhone, fuPhone);
             FrsUser userDb = userService.getOne(queryWrapper, false);
             if (userDb != null) {
-                mm.addAttribute("errMsg", "此手机号已经注册，请直接登录");
-                return "pc/include/login";
+                return JacksonMapper.newErrorInstance("此手机号已经注册，请直接登录");
             }
             QueryWrapper<SmsCode> smsWrapper = new QueryWrapper<>();
-            smsWrapper.lambda().eq(SmsCode::getScPhone, user.getFuPhone())
+            smsWrapper.lambda().eq(SmsCode::getScPhone, fuPhone)
                     .eq(SmsCode::getScCode, scCode)
                     .eq(SmsCode::getScType, smsCodeService.MOBILE_REGISTER)
                     .eq(SmsCode::getScIsUsed, 0)
                     .le(SmsCode::getScCreateDate, TimeUtil.dateTolong())
                     .ge(SmsCode::getScInvalidDate, TimeUtil.dateTolong());
             SmsCode dbCode = smsCodeService.getOne(smsWrapper, false);
+            if (dbCode == null) {
+                return JacksonMapper.newErrorInstance("验证码输入错误或已失效,请从新获取");
+            }
+            FrsUser user = new FrsUser();
+            user.setFuName(fuName);
+            user.setFuCity(fuCity);
+            user.setFuProvince(fuProvince);
+            user.setFuRegion(fuRegion);
+            user.setFuPassword(EncryptUtil.getSHA256Value(fuPassword));
             user.setFuCreateTime(TimeUtil.dateToLong());
             user.setFuUpdateTime(TimeUtil.dateTolong());
             userService.save(user);
@@ -119,12 +111,10 @@ public class UserLoginController {
 //            userModel.setWechatUser(FrsWechatUser);
             userModel.setUser(user);
             UserUtil.login(userModel);
-            return "pc/include/index";
+            return JacksonMapper.newSuccessInstance();
         } catch (Exception e) {
-            String errMsg = "注册异常，请重试";
             LOGGER.error(e.getMessage(), e);
-            mm.addAttribute("errMsg", errMsg);
-            return "error/error";
+            return JacksonMapper.newErrorInstance("登录异常");
         }
     }
 
@@ -133,14 +123,9 @@ public class UserLoginController {
      *
      * @return
      */
-    @RequestMapping("forgetPasswordInit")
-    public String forgetPasswordInit() {
-        return "pc/include/forgetPassword";
-    }
-
-    @RequestMapping("forgetPassword")
     @ResponseBody
-    public String forgetPassword(String scCode, String fuPhone, ModelMap mm, HttpServletRequest request) {
+    @RequestMapping("forgetPassword")
+    public JsonNode forgetPassword(String scCode, String fuPhone, HttpServletRequest request) {
         try {
             QueryWrapper<SmsCode> queryWrapper = new QueryWrapper<>();
             queryWrapper.lambda()
@@ -155,13 +140,12 @@ public class UserLoginController {
                 session.removeAttribute(UserUtil.USER_SESSION_NAME);
             }
             session.setAttribute(UserUtil.USER_SESSION_NAME, userModel);
-            return "pc/include/index";
+            return JacksonMapper.newSuccessInstance();
         } catch (Exception e) {
             e.printStackTrace();
             String errMsg = "登录出错了";
             LOGGER.error(errMsg, e);
-            mm.addAttribute("errMsg", errMsg);
-            return "pc/include/forgetPassword";
+            return JacksonMapper.newErrorInstance(errMsg);
         }
     }
 
@@ -170,15 +154,16 @@ public class UserLoginController {
      *
      * @return
      */
+    @ResponseBody
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout() {
+    public JsonNode logout() {
         try {
             UserUtil.logout();
-            return "pc/include/login";
+            return JacksonMapper.newSuccessInstance();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             LOGGER.error("前台用户退出失败，openid=" + UserUtil.getOpenid(), e);
-            return "11";
+            return JacksonMapper.newErrorInstance("前台用户退出失败，openid=" + UserUtil.getOpenid());
         }
     }
 
