@@ -1,6 +1,7 @@
 package com.wx.no_five_row_six.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wx.common.excel.ExcelData;
 import com.wx.no_five_row_six.common.Const;
 import com.wx.no_five_row_six.common.security.UserUtil;
@@ -9,8 +10,6 @@ import com.wx.no_five_row_six.entity.FrsLikeRecord;
 import com.wx.no_five_row_six.entity.FrsViewRecord;
 import com.wx.no_five_row_six.mapper.FrsViewRecordMapper;
 import com.wx.no_five_row_six.service.IFrsViewRecordService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 /**
  * <p>
@@ -80,11 +78,11 @@ public class FrsViewRecordServiceImpl extends ServiceImpl<FrsViewRecordMapper, F
         visitLog.setFvrContentName(contentName);
         visitLog.setFvrTypeId(type);
         visitLog.setFvrTypeName(Const.getModelType(type));
-        visitLog.setFvlLike(like);
-        visitLog.setFvlLikeTime(likeTime);
-        visitLog.setFvlFavorite(favorite);
-        visitLog.setFvlFavoriteTime(favoriteTime);
-        visitLog.setFvlIp(ip);
+        visitLog.setFvrLike(like);
+        visitLog.setFvrLikeTime(likeTime);
+        visitLog.setFvrFavorite(favorite);
+        visitLog.setFvrFavoriteTime(favoriteTime);
+        visitLog.setFvrIp(ip);
         visitLog.setFvrTime(now);
         return save(visitLog);
     }
@@ -111,11 +109,11 @@ public class FrsViewRecordServiceImpl extends ServiceImpl<FrsViewRecordMapper, F
                 row.add(log.getFvrTypeName());
                 row.add(log.getFvrContentId());
                 row.add(log.getFvrContentName());
-                row.add(log.getFvlLike() == 1 ? "是" : "否");
-                row.add(log.getFvlLikeTime());
-                row.add(log.getFvlFavorite() == 1 ? "是" : "否");
-                row.add(log.getFvlFavoriteTime());
-                row.add(log.getFvlIp());
+                row.add(log.getFvrLike() == 1 ? "是" : "否");
+                row.add(log.getFvrLikeTime());
+                row.add(log.getFvrFavorite() == 1 ? "是" : "否");
+                row.add(log.getFvrFavoriteTime());
+                row.add(log.getFvrIp());
                 rows.add(row);
             }
         }

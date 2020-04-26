@@ -22,15 +22,7 @@
             <column name="password" value="6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"/>
         </insert>
 
-        <createTable tableName="frs_user" remarks="用户表">
-            <column name="fu_id" type="bigint" autoIncrement="true" remarks="主键">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="fu_name" type="varchar(128)" remarks="登录名"/>
-            <column name="fu_password" type="varchar(128)" remarks="密码"/>
-            <column name="fu_create_time" type="bigint(20)" remarks="创建时间"/>
-            <column name="fu_update_time" type="bigint(20)" remarks="修改时间"/>
-        </createTable>
+
 
         <createTable tableName="frs_album" remarks="专辑表">
             <column name="fa_id" type="bigint" autoIncrement="true" remarks="主键">

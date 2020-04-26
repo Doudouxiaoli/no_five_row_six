@@ -3,7 +3,7 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-    <changeSet id="V5" author="dxl">
+    <changeSet id="V6.0.0" author="dxl">
 
         <comment>创建短信验证码表</comment>
         <createTable tableName="sms_code" remarks="短信验证码">

@@ -52,27 +52,27 @@ public class FrsViewRecord implements Serializable {
     /**
      * ip地址
      */
-    private String fvlIp;
+    private String fvrIp;
 
     /**
      * 是否点赞(0：未点赞；1: 点赞)
      */
-    private Integer fvlLike;
+    private Integer fvrLike;
 
     /**
      * 点赞时间/取消点赞时间
      */
-    private Long fvlLikeTime;
+    private Long fvrLikeTime;
 
     /**
      * 是否收藏(0：未收藏；1: 收藏)
      */
-    private Integer fvlFavorite;
+    private Integer fvrFavorite;
 
     /**
      * 收藏时间/取消收藏时间
      */
-    private Long fvlFavoriteTime;
+    private Long fvrFavoriteTime;
 
 
     public Long getFvrId() {
@@ -131,61 +131,61 @@ public class FrsViewRecord implements Serializable {
         this.fvrTypeId = fvrTypeId;
     }
 
-    public String getFvlIp() {
-        return fvlIp;
+    public String getFvrIp() {
+        return fvrIp;
     }
 
-    public void setFvlIp(String fvlIp) {
-        this.fvlIp = fvlIp;
+    public void setFvrIp(String fvrIp) {
+        this.fvrIp = fvrIp;
     }
 
-    public Integer getFvlLike() {
-        return fvlLike;
+    public Integer getFvrLike() {
+        return fvrLike;
     }
 
-    public void setFvlLike(Integer fvlLike) {
-        this.fvlLike = fvlLike;
+    public void setFvrLike(Integer fvrLike) {
+        this.fvrLike = fvrLike;
     }
 
-    public Long getFvlLikeTime() {
-        return fvlLikeTime;
+    public Long getFvrLikeTime() {
+        return fvrLikeTime;
     }
 
-    public void setFvlLikeTime(Long fvlLikeTime) {
-        this.fvlLikeTime = fvlLikeTime;
+    public void setFvrLikeTime(Long fvrLikeTime) {
+        this.fvrLikeTime = fvrLikeTime;
     }
 
-    public Integer getFvlFavorite() {
-        return fvlFavorite;
+    public Integer getFvrFavorite() {
+        return fvrFavorite;
     }
 
-    public void setFvlFavorite(Integer fvlFavorite) {
-        this.fvlFavorite = fvlFavorite;
+    public void setFvrFavorite(Integer fvrFavorite) {
+        this.fvrFavorite = fvrFavorite;
     }
 
-    public Long getFvlFavoriteTime() {
-        return fvlFavoriteTime;
+    public Long getFvrFavoriteTime() {
+        return fvrFavoriteTime;
     }
 
-    public void setFvlFavoriteTime(Long fvlFavoriteTime) {
-        this.fvlFavoriteTime = fvlFavoriteTime;
+    public void setFvrFavoriteTime(Long fvrFavoriteTime) {
+        this.fvrFavoriteTime = fvrFavoriteTime;
     }
 
     @Override
     public String toString() {
         return "FrsViewRecord{" +
-        "fvrId=" + fvrId +
-        ", fvrUserId=" + fvrUserId +
-        ", fvrContentId=" + fvrContentId +
-        ", fvrContentName=" + fvrContentName +
-        ", fvrTypeName=" + fvrTypeName +
-        ", fvrTime=" + fvrTime +
-        ", fvrTypeId=" + fvrTypeId +
-        ", fvlIp=" + fvlIp +
-        ", fvlLike=" + fvlLike +
-        ", fvlLikeTime=" + fvlLikeTime +
-        ", fvlFavorite=" + fvlFavorite +
-        ", fvlFavoriteTime=" + fvlFavoriteTime +
-        "}";
+                "fvrId=" + fvrId +
+                ", fvrUserId=" + fvrUserId +
+                ", fvrContentId=" + fvrContentId +
+                ", fvrContentName='" + fvrContentName + '\'' +
+                ", fvrTypeName='" + fvrTypeName + '\'' +
+                ", fvrTime=" + fvrTime +
+                ", fvrTypeId=" + fvrTypeId +
+                ", fvrIp='" + fvrIp + '\'' +
+                ", fvrLike=" + fvrLike +
+                ", fvrLikeTime=" + fvrLikeTime +
+                ", fvrFavorite=" + fvrFavorite +
+                ", fvrFavoriteTime=" + fvrFavoriteTime +
+                '}';
     }
 }

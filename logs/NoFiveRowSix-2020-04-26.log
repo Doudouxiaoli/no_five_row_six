@@ -1,0 +1,330 @@
+2020-04-26 09:22:42,546 WARN Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [org/springframework/boot/autoconfigure/liquibase/LiquibaseAutoConfiguration$LiquibaseConfiguration.class]: Invocation of init method failed; nested exception is liquibase.exception.ValidationFailedException: Validation Failed:
+     1 change sets check sum
+          classpath:db/changelog/db.changelog-init.xml::V1.0.0::dxl was: 8:de56e0872ad62ba80d207c109d02e056 but is now: 8:d039edd7c69343456da1850861923c23
+
+2020-04-26 09:22:42,635 ERROR Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [org/springframework/boot/autoconfigure/liquibase/LiquibaseAutoConfiguration$LiquibaseConfiguration.class]: Invocation of init method failed; nested exception is liquibase.exception.ValidationFailedException: Validation Failed:
+     1 change sets check sum
+          classpath:db/changelog/db.changelog-init.xml::V1.0.0::dxl was: 8:de56e0872ad62ba80d207c109d02e056 but is now: 8:d039edd7c69343456da1850861923c23
+
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1778)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:593)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:307)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:847)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:141)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:744)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:391)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:312)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1215)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1204)
+	at com.wx.no_five_row_six.NoFiveRowSixApplication.main(NoFiveRowSixApplication.java:35)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: liquibase.exception.ValidationFailedException: Validation Failed:
+     1 change sets check sum
+          classpath:db/changelog/db.changelog-init.xml::V1.0.0::dxl was: 8:de56e0872ad62ba80d207c109d02e056 but is now: 8:d039edd7c69343456da1850861923c23
+
+	at liquibase.changelog.DatabaseChangeLog.validate(DatabaseChangeLog.java:276)
+	at liquibase.Liquibase.update(Liquibase.java:198)
+	at liquibase.Liquibase.update(Liquibase.java:179)
+	at liquibase.integration.spring.SpringLiquibase.performUpdate(SpringLiquibase.java:353)
+	at liquibase.integration.spring.SpringLiquibase.afterPropertiesSet(SpringLiquibase.java:305)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1837)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1774)
+	... 23 common frames omitted
+2020-04-26 09:35:44,683 WARN Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [org/springframework/boot/autoconfigure/liquibase/LiquibaseAutoConfiguration$LiquibaseConfiguration.class]: Invocation of init method failed; nested exception is liquibase.exception.ValidationFailedException: Validation Failed:
+     1 change sets check sum
+          classpath:db/changelog/db.changelog-init.xml::V1.0.0::dxl was: 8:de56e0872ad62ba80d207c109d02e056 but is now: 8:d039edd7c69343456da1850861923c23
+
+2020-04-26 09:35:44,724 ERROR Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [org/springframework/boot/autoconfigure/liquibase/LiquibaseAutoConfiguration$LiquibaseConfiguration.class]: Invocation of init method failed; nested exception is liquibase.exception.ValidationFailedException: Validation Failed:
+     1 change sets check sum
+          classpath:db/changelog/db.changelog-init.xml::V1.0.0::dxl was: 8:de56e0872ad62ba80d207c109d02e056 but is now: 8:d039edd7c69343456da1850861923c23
+
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1778)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:593)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:307)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:847)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:141)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:744)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:391)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:312)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1215)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1204)
+	at com.wx.no_five_row_six.NoFiveRowSixApplication.main(NoFiveRowSixApplication.java:35)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: liquibase.exception.ValidationFailedException: Validation Failed:
+     1 change sets check sum
+          classpath:db/changelog/db.changelog-init.xml::V1.0.0::dxl was: 8:de56e0872ad62ba80d207c109d02e056 but is now: 8:d039edd7c69343456da1850861923c23
+
+	at liquibase.changelog.DatabaseChangeLog.validate(DatabaseChangeLog.java:276)
+	at liquibase.Liquibase.update(Liquibase.java:198)
+	at liquibase.Liquibase.update(Liquibase.java:179)
+	at liquibase.integration.spring.SpringLiquibase.performUpdate(SpringLiquibase.java:353)
+	at liquibase.integration.spring.SpringLiquibase.afterPropertiesSet(SpringLiquibase.java:305)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1837)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1774)
+	... 23 common frames omitted
+2020-04-26 09:56:53,693 ERROR Change Set classpath:db/changelog/db.changelog_v5.1.xml::V5.1.0.0::dxl failed.  Error: Table 'wx_five-row-six.frs_like_record' doesn't exist [Failed SQL: ALTER TABLE `wx_five-row-six`.frs_like_record ADD flr_type_id INT NULL COMMENT '模板id']
+2020-04-26 09:56:53,704 WARN Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [org/springframework/boot/autoconfigure/liquibase/LiquibaseAutoConfiguration$LiquibaseConfiguration.class]: Invocation of init method failed; nested exception is liquibase.exception.MigrationFailedException: Migration failed for change set classpath:db/changelog/db.changelog_v5.1.xml::V5.1.0.0::dxl:
+     Reason: liquibase.exception.DatabaseException: Table 'wx_five-row-six.frs_like_record' doesn't exist [Failed SQL: ALTER TABLE `wx_five-row-six`.frs_like_record ADD flr_type_id INT NULL COMMENT '模板id']
+2020-04-26 09:56:53,769 ERROR Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [org/springframework/boot/autoconfigure/liquibase/LiquibaseAutoConfiguration$LiquibaseConfiguration.class]: Invocation of init method failed; nested exception is liquibase.exception.MigrationFailedException: Migration failed for change set classpath:db/changelog/db.changelog_v5.1.xml::V5.1.0.0::dxl:
+     Reason: liquibase.exception.DatabaseException: Table 'wx_five-row-six.frs_like_record' doesn't exist [Failed SQL: ALTER TABLE `wx_five-row-six`.frs_like_record ADD flr_type_id INT NULL COMMENT '模板id']
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1778)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:593)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:307)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:847)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:141)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:744)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:391)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:312)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1215)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1204)
+	at com.wx.no_five_row_six.NoFiveRowSixApplication.main(NoFiveRowSixApplication.java:35)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: liquibase.exception.MigrationFailedException: Migration failed for change set classpath:db/changelog/db.changelog_v5.1.xml::V5.1.0.0::dxl:
+     Reason: liquibase.exception.DatabaseException: Table 'wx_five-row-six.frs_like_record' doesn't exist [Failed SQL: ALTER TABLE `wx_five-row-six`.frs_like_record ADD flr_type_id INT NULL COMMENT '模板id']
+	at liquibase.changelog.ChangeSet.execute(ChangeSet.java:637)
+	at liquibase.changelog.visitor.UpdateVisitor.visit(UpdateVisitor.java:53)
+	at liquibase.changelog.ChangeLogIterator.run(ChangeLogIterator.java:83)
+	at liquibase.Liquibase.update(Liquibase.java:202)
+	at liquibase.Liquibase.update(Liquibase.java:179)
+	at liquibase.integration.spring.SpringLiquibase.performUpdate(SpringLiquibase.java:353)
+	at liquibase.integration.spring.SpringLiquibase.afterPropertiesSet(SpringLiquibase.java:305)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1837)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1774)
+	... 23 common frames omitted
+Caused by: liquibase.exception.DatabaseException: Table 'wx_five-row-six.frs_like_record' doesn't exist [Failed SQL: ALTER TABLE `wx_five-row-six`.frs_like_record ADD flr_type_id INT NULL COMMENT '模板id']
+	at liquibase.executor.jvm.JdbcExecutor$ExecuteStatementCallback.doInStatement(JdbcExecutor.java:356)
+	at liquibase.executor.jvm.JdbcExecutor.execute(JdbcExecutor.java:57)
+	at liquibase.executor.jvm.JdbcExecutor.execute(JdbcExecutor.java:125)
+	at liquibase.database.AbstractJdbcDatabase.execute(AbstractJdbcDatabase.java:1229)
+	at liquibase.database.AbstractJdbcDatabase.executeStatements(AbstractJdbcDatabase.java:1211)
+	at liquibase.changelog.ChangeSet.execute(ChangeSet.java:600)
+	... 31 common frames omitted
+Caused by: java.sql.SQLSyntaxErrorException: Table 'wx_five-row-six.frs_like_record' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:764)
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:648)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at liquibase.executor.jvm.JdbcExecutor$ExecuteStatementCallback.doInStatement(JdbcExecutor.java:352)
+	... 36 common frames omitted
+2020-04-26 10:33:03,537 ERROR Change Set classpath:db/changelog/db.changelog_v7.xml::V7.0.0::dxl failed.  Error: Table 'frs_user' already exists [Failed SQL: CREATE TABLE `wx_five-row-six`.frs_user (fu_id BIGINT AUTO_INCREMENT NOT NULL, fu_name VARCHAR(128) NULL COMMENT '登录名', fu_password VARCHAR(128) NULL COMMENT '密码', fu_phone VARCHAR(128) NULL COMMENT '手机号', fu_province_id BIGINT NULL COMMENT '省份id', fu_city_id BIGINT NULL COMMENT '城市id', fu_region_id BIGINT NULL COMMENT '区县id', fu_create_time BIGINT NULL COMMENT '创建时间', fu_update_time BIGINT NULL COMMENT '修改时间', CONSTRAINT PK_FRS_USER PRIMARY KEY (fu_id)) COMMENT='用户表']
+2020-04-26 10:33:03,548 WARN Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [org/springframework/boot/autoconfigure/liquibase/LiquibaseAutoConfiguration$LiquibaseConfiguration.class]: Invocation of init method failed; nested exception is liquibase.exception.MigrationFailedException: Migration failed for change set classpath:db/changelog/db.changelog_v7.xml::V7.0.0::dxl:
+     Reason: liquibase.exception.DatabaseException: Table 'frs_user' already exists [Failed SQL: CREATE TABLE `wx_five-row-six`.frs_user (fu_id BIGINT AUTO_INCREMENT NOT NULL, fu_name VARCHAR(128) NULL COMMENT '登录名', fu_password VARCHAR(128) NULL COMMENT '密码', fu_phone VARCHAR(128) NULL COMMENT '手机号', fu_province_id BIGINT NULL COMMENT '省份id', fu_city_id BIGINT NULL COMMENT '城市id', fu_region_id BIGINT NULL COMMENT '区县id', fu_create_time BIGINT NULL COMMENT '创建时间', fu_update_time BIGINT NULL COMMENT '修改时间', CONSTRAINT PK_FRS_USER PRIMARY KEY (fu_id)) COMMENT='用户表']
+2020-04-26 10:33:03,591 ERROR Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [org/springframework/boot/autoconfigure/liquibase/LiquibaseAutoConfiguration$LiquibaseConfiguration.class]: Invocation of init method failed; nested exception is liquibase.exception.MigrationFailedException: Migration failed for change set classpath:db/changelog/db.changelog_v7.xml::V7.0.0::dxl:
+     Reason: liquibase.exception.DatabaseException: Table 'frs_user' already exists [Failed SQL: CREATE TABLE `wx_five-row-six`.frs_user (fu_id BIGINT AUTO_INCREMENT NOT NULL, fu_name VARCHAR(128) NULL COMMENT '登录名', fu_password VARCHAR(128) NULL COMMENT '密码', fu_phone VARCHAR(128) NULL COMMENT '手机号', fu_province_id BIGINT NULL COMMENT '省份id', fu_city_id BIGINT NULL COMMENT '城市id', fu_region_id BIGINT NULL COMMENT '区县id', fu_create_time BIGINT NULL COMMENT '创建时间', fu_update_time BIGINT NULL COMMENT '修改时间', CONSTRAINT PK_FRS_USER PRIMARY KEY (fu_id)) COMMENT='用户表']
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1778)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:593)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:307)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:847)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:141)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:744)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:391)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:312)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1215)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1204)
+	at com.wx.no_five_row_six.NoFiveRowSixApplication.main(NoFiveRowSixApplication.java:35)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: liquibase.exception.MigrationFailedException: Migration failed for change set classpath:db/changelog/db.changelog_v7.xml::V7.0.0::dxl:
+     Reason: liquibase.exception.DatabaseException: Table 'frs_user' already exists [Failed SQL: CREATE TABLE `wx_five-row-six`.frs_user (fu_id BIGINT AUTO_INCREMENT NOT NULL, fu_name VARCHAR(128) NULL COMMENT '登录名', fu_password VARCHAR(128) NULL COMMENT '密码', fu_phone VARCHAR(128) NULL COMMENT '手机号', fu_province_id BIGINT NULL COMMENT '省份id', fu_city_id BIGINT NULL COMMENT '城市id', fu_region_id BIGINT NULL COMMENT '区县id', fu_create_time BIGINT NULL COMMENT '创建时间', fu_update_time BIGINT NULL COMMENT '修改时间', CONSTRAINT PK_FRS_USER PRIMARY KEY (fu_id)) COMMENT='用户表']
+	at liquibase.changelog.ChangeSet.execute(ChangeSet.java:637)
+	at liquibase.changelog.visitor.UpdateVisitor.visit(UpdateVisitor.java:53)
+	at liquibase.changelog.ChangeLogIterator.run(ChangeLogIterator.java:83)
+	at liquibase.Liquibase.update(Liquibase.java:202)
+	at liquibase.Liquibase.update(Liquibase.java:179)
+	at liquibase.integration.spring.SpringLiquibase.performUpdate(SpringLiquibase.java:353)
+	at liquibase.integration.spring.SpringLiquibase.afterPropertiesSet(SpringLiquibase.java:305)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1837)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1774)
+	... 23 common frames omitted
+Caused by: liquibase.exception.DatabaseException: Table 'frs_user' already exists [Failed SQL: CREATE TABLE `wx_five-row-six`.frs_user (fu_id BIGINT AUTO_INCREMENT NOT NULL, fu_name VARCHAR(128) NULL COMMENT '登录名', fu_password VARCHAR(128) NULL COMMENT '密码', fu_phone VARCHAR(128) NULL COMMENT '手机号', fu_province_id BIGINT NULL COMMENT '省份id', fu_city_id BIGINT NULL COMMENT '城市id', fu_region_id BIGINT NULL COMMENT '区县id', fu_create_time BIGINT NULL COMMENT '创建时间', fu_update_time BIGINT NULL COMMENT '修改时间', CONSTRAINT PK_FRS_USER PRIMARY KEY (fu_id)) COMMENT='用户表']
+	at liquibase.executor.jvm.JdbcExecutor$ExecuteStatementCallback.doInStatement(JdbcExecutor.java:356)
+	at liquibase.executor.jvm.JdbcExecutor.execute(JdbcExecutor.java:57)
+	at liquibase.executor.jvm.JdbcExecutor.execute(JdbcExecutor.java:125)
+	at liquibase.database.AbstractJdbcDatabase.execute(AbstractJdbcDatabase.java:1229)
+	at liquibase.database.AbstractJdbcDatabase.executeStatements(AbstractJdbcDatabase.java:1211)
+	at liquibase.changelog.ChangeSet.execute(ChangeSet.java:600)
+	... 31 common frames omitted
+Caused by: java.sql.SQLSyntaxErrorException: Table 'frs_user' already exists
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:764)
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:648)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at liquibase.executor.jvm.JdbcExecutor$ExecuteStatementCallback.doInStatement(JdbcExecutor.java:352)
+	... 36 common frames omitted
+2020-04-26 10:34:44,149 ERROR Change Set classpath:db/changelog/db.changelog_v5.xml::V5.0.0::dxl failed.  Error: Table 'frs_view_record' already exists [Failed SQL: CREATE TABLE `wx_five-row-six`.frs_view_record (fvr_id BIGINT AUTO_INCREMENT NOT NULL, fvr_user_id BIGINT NULL COMMENT '用户主键', fvr_content_id INT NULL COMMENT '内容id', fvr_content_name VARCHAR(128) NULL COMMENT '内容名称', fvr_type_id INT NULL COMMENT '模块id', fvr_type_name VARCHAR(128) NULL COMMENT '内容来源(模板名称)', fvr_ip VARCHAR(128) NULL COMMENT 'ip地址', fvr_like INT NULL COMMENT '是否点赞(0：未点赞；1: 点赞；2：取消点赞)', fvr_like_time BIGINT NULL COMMENT '点赞时间/取消点赞时间', fvr_favorite INT NULL COMMENT '是否收藏(0：未收藏；1: 收藏；2：取消收藏)', fvr_favorite_time BIGINT NULL COMMENT '收藏时间/取消收藏时间', CONSTRAINT PK_FRS_VIEW_RECORD PRIMARY KEY (fvr_id)) COMMENT='浏览记录表']
+2020-04-26 10:34:44,159 WARN Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [org/springframework/boot/autoconfigure/liquibase/LiquibaseAutoConfiguration$LiquibaseConfiguration.class]: Invocation of init method failed; nested exception is liquibase.exception.MigrationFailedException: Migration failed for change set classpath:db/changelog/db.changelog_v5.xml::V5.0.0::dxl:
+     Reason: liquibase.exception.DatabaseException: Table 'frs_view_record' already exists [Failed SQL: CREATE TABLE `wx_five-row-six`.frs_view_record (fvr_id BIGINT AUTO_INCREMENT NOT NULL, fvr_user_id BIGINT NULL COMMENT '用户主键', fvr_content_id INT NULL COMMENT '内容id', fvr_content_name VARCHAR(128) NULL COMMENT '内容名称', fvr_type_id INT NULL COMMENT '模块id', fvr_type_name VARCHAR(128) NULL COMMENT '内容来源(模板名称)', fvr_ip VARCHAR(128) NULL COMMENT 'ip地址', fvr_like INT NULL COMMENT '是否点赞(0：未点赞；1: 点赞；2：取消点赞)', fvr_like_time BIGINT NULL COMMENT '点赞时间/取消点赞时间', fvr_favorite INT NULL COMMENT '是否收藏(0：未收藏；1: 收藏；2：取消收藏)', fvr_favorite_time BIGINT NULL COMMENT '收藏时间/取消收藏时间', CONSTRAINT PK_FRS_VIEW_RECORD PRIMARY KEY (fvr_id)) COMMENT='浏览记录表']
+2020-04-26 10:34:44,226 ERROR Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [org/springframework/boot/autoconfigure/liquibase/LiquibaseAutoConfiguration$LiquibaseConfiguration.class]: Invocation of init method failed; nested exception is liquibase.exception.MigrationFailedException: Migration failed for change set classpath:db/changelog/db.changelog_v5.xml::V5.0.0::dxl:
+     Reason: liquibase.exception.DatabaseException: Table 'frs_view_record' already exists [Failed SQL: CREATE TABLE `wx_five-row-six`.frs_view_record (fvr_id BIGINT AUTO_INCREMENT NOT NULL, fvr_user_id BIGINT NULL COMMENT '用户主键', fvr_content_id INT NULL COMMENT '内容id', fvr_content_name VARCHAR(128) NULL COMMENT '内容名称', fvr_type_id INT NULL COMMENT '模块id', fvr_type_name VARCHAR(128) NULL COMMENT '内容来源(模板名称)', fvr_ip VARCHAR(128) NULL COMMENT 'ip地址', fvr_like INT NULL COMMENT '是否点赞(0：未点赞；1: 点赞；2：取消点赞)', fvr_like_time BIGINT NULL COMMENT '点赞时间/取消点赞时间', fvr_favorite INT NULL COMMENT '是否收藏(0：未收藏；1: 收藏；2：取消收藏)', fvr_favorite_time BIGINT NULL COMMENT '收藏时间/取消收藏时间', CONSTRAINT PK_FRS_VIEW_RECORD PRIMARY KEY (fvr_id)) COMMENT='浏览记录表']
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1778)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:593)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:307)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:847)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:141)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:744)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:391)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:312)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1215)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1204)
+	at com.wx.no_five_row_six.NoFiveRowSixApplication.main(NoFiveRowSixApplication.java:35)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: liquibase.exception.MigrationFailedException: Migration failed for change set classpath:db/changelog/db.changelog_v5.xml::V5.0.0::dxl:
+     Reason: liquibase.exception.DatabaseException: Table 'frs_view_record' already exists [Failed SQL: CREATE TABLE `wx_five-row-six`.frs_view_record (fvr_id BIGINT AUTO_INCREMENT NOT NULL, fvr_user_id BIGINT NULL COMMENT '用户主键', fvr_content_id INT NULL COMMENT '内容id', fvr_content_name VARCHAR(128) NULL COMMENT '内容名称', fvr_type_id INT NULL COMMENT '模块id', fvr_type_name VARCHAR(128) NULL COMMENT '内容来源(模板名称)', fvr_ip VARCHAR(128) NULL COMMENT 'ip地址', fvr_like INT NULL COMMENT '是否点赞(0：未点赞；1: 点赞；2：取消点赞)', fvr_like_time BIGINT NULL COMMENT '点赞时间/取消点赞时间', fvr_favorite INT NULL COMMENT '是否收藏(0：未收藏；1: 收藏；2：取消收藏)', fvr_favorite_time BIGINT NULL COMMENT '收藏时间/取消收藏时间', CONSTRAINT PK_FRS_VIEW_RECORD PRIMARY KEY (fvr_id)) COMMENT='浏览记录表']
+	at liquibase.changelog.ChangeSet.execute(ChangeSet.java:637)
+	at liquibase.changelog.visitor.UpdateVisitor.visit(UpdateVisitor.java:53)
+	at liquibase.changelog.ChangeLogIterator.run(ChangeLogIterator.java:83)
+	at liquibase.Liquibase.update(Liquibase.java:202)
+	at liquibase.Liquibase.update(Liquibase.java:179)
+	at liquibase.integration.spring.SpringLiquibase.performUpdate(SpringLiquibase.java:353)
+	at liquibase.integration.spring.SpringLiquibase.afterPropertiesSet(SpringLiquibase.java:305)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1837)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1774)
+	... 23 common frames omitted
+Caused by: liquibase.exception.DatabaseException: Table 'frs_view_record' already exists [Failed SQL: CREATE TABLE `wx_five-row-six`.frs_view_record (fvr_id BIGINT AUTO_INCREMENT NOT NULL, fvr_user_id BIGINT NULL COMMENT '用户主键', fvr_content_id INT NULL COMMENT '内容id', fvr_content_name VARCHAR(128) NULL COMMENT '内容名称', fvr_type_id INT NULL COMMENT '模块id', fvr_type_name VARCHAR(128) NULL COMMENT '内容来源(模板名称)', fvr_ip VARCHAR(128) NULL COMMENT 'ip地址', fvr_like INT NULL COMMENT '是否点赞(0：未点赞；1: 点赞；2：取消点赞)', fvr_like_time BIGINT NULL COMMENT '点赞时间/取消点赞时间', fvr_favorite INT NULL COMMENT '是否收藏(0：未收藏；1: 收藏；2：取消收藏)', fvr_favorite_time BIGINT NULL COMMENT '收藏时间/取消收藏时间', CONSTRAINT PK_FRS_VIEW_RECORD PRIMARY KEY (fvr_id)) COMMENT='浏览记录表']
+	at liquibase.executor.jvm.JdbcExecutor$ExecuteStatementCallback.doInStatement(JdbcExecutor.java:356)
+	at liquibase.executor.jvm.JdbcExecutor.execute(JdbcExecutor.java:57)
+	at liquibase.executor.jvm.JdbcExecutor.execute(JdbcExecutor.java:125)
+	at liquibase.database.AbstractJdbcDatabase.execute(AbstractJdbcDatabase.java:1229)
+	at liquibase.database.AbstractJdbcDatabase.executeStatements(AbstractJdbcDatabase.java:1211)
+	at liquibase.changelog.ChangeSet.execute(ChangeSet.java:600)
+	... 31 common frames omitted
+Caused by: java.sql.SQLSyntaxErrorException: Table 'frs_view_record' already exists
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:764)
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:648)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at liquibase.executor.jvm.JdbcExecutor$ExecuteStatementCallback.doInStatement(JdbcExecutor.java:352)
+	... 36 common frames omitted
+2020-04-26 10:35:54,804 ERROR Change Set classpath:db/changelog/db.changelog_v6.xml::V6.0.0::dxl failed.  Error: Table 'sms_code' already exists [Failed SQL: CREATE TABLE `wx_five-row-six`.sms_code (sc_id BIGINT AUTO_INCREMENT NOT NULL, sc_phone VARCHAR(64) NULL COMMENT '手机号', sc_code VARCHAR(64) NULL COMMENT '激活码', sc_type VARCHAR(64) NULL COMMENT '类型', sc_invalid_date BIGINT NULL COMMENT '失效时间', sc_create_date BIGINT NULL COMMENT '创建时间', sc_is_used INT NULL COMMENT '是否使用(0:否1:是)', sc_user_id BIGINT NULL COMMENT '用户id', sc_ip_address VARCHAR(64) NULL COMMENT 'IP地址', sc_send_prompt VARCHAR(255) NULL COMMENT '发送提示', sc_send_flag INT NULL COMMENT '发送标志（0：失败；1：成功）', CONSTRAINT PK_SMS_CODE PRIMARY KEY (sc_id)) COMMENT='短信验证码']
+2020-04-26 10:35:54,812 WARN Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [org/springframework/boot/autoconfigure/liquibase/LiquibaseAutoConfiguration$LiquibaseConfiguration.class]: Invocation of init method failed; nested exception is liquibase.exception.MigrationFailedException: Migration failed for change set classpath:db/changelog/db.changelog_v6.xml::V6.0.0::dxl:
+     Reason: liquibase.exception.DatabaseException: Table 'sms_code' already exists [Failed SQL: CREATE TABLE `wx_five-row-six`.sms_code (sc_id BIGINT AUTO_INCREMENT NOT NULL, sc_phone VARCHAR(64) NULL COMMENT '手机号', sc_code VARCHAR(64) NULL COMMENT '激活码', sc_type VARCHAR(64) NULL COMMENT '类型', sc_invalid_date BIGINT NULL COMMENT '失效时间', sc_create_date BIGINT NULL COMMENT '创建时间', sc_is_used INT NULL COMMENT '是否使用(0:否1:是)', sc_user_id BIGINT NULL COMMENT '用户id', sc_ip_address VARCHAR(64) NULL COMMENT 'IP地址', sc_send_prompt VARCHAR(255) NULL COMMENT '发送提示', sc_send_flag INT NULL COMMENT '发送标志（0：失败；1：成功）', CONSTRAINT PK_SMS_CODE PRIMARY KEY (sc_id)) COMMENT='短信验证码']
+2020-04-26 10:35:54,854 ERROR Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [org/springframework/boot/autoconfigure/liquibase/LiquibaseAutoConfiguration$LiquibaseConfiguration.class]: Invocation of init method failed; nested exception is liquibase.exception.MigrationFailedException: Migration failed for change set classpath:db/changelog/db.changelog_v6.xml::V6.0.0::dxl:
+     Reason: liquibase.exception.DatabaseException: Table 'sms_code' already exists [Failed SQL: CREATE TABLE `wx_five-row-six`.sms_code (sc_id BIGINT AUTO_INCREMENT NOT NULL, sc_phone VARCHAR(64) NULL COMMENT '手机号', sc_code VARCHAR(64) NULL COMMENT '激活码', sc_type VARCHAR(64) NULL COMMENT '类型', sc_invalid_date BIGINT NULL COMMENT '失效时间', sc_create_date BIGINT NULL COMMENT '创建时间', sc_is_used INT NULL COMMENT '是否使用(0:否1:是)', sc_user_id BIGINT NULL COMMENT '用户id', sc_ip_address VARCHAR(64) NULL COMMENT 'IP地址', sc_send_prompt VARCHAR(255) NULL COMMENT '发送提示', sc_send_flag INT NULL COMMENT '发送标志（0：失败；1：成功）', CONSTRAINT PK_SMS_CODE PRIMARY KEY (sc_id)) COMMENT='短信验证码']
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1778)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:593)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:307)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:847)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:141)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:744)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:391)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:312)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1215)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1204)
+	at com.wx.no_five_row_six.NoFiveRowSixApplication.main(NoFiveRowSixApplication.java:35)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: liquibase.exception.MigrationFailedException: Migration failed for change set classpath:db/changelog/db.changelog_v6.xml::V6.0.0::dxl:
+     Reason: liquibase.exception.DatabaseException: Table 'sms_code' already exists [Failed SQL: CREATE TABLE `wx_five-row-six`.sms_code (sc_id BIGINT AUTO_INCREMENT NOT NULL, sc_phone VARCHAR(64) NULL COMMENT '手机号', sc_code VARCHAR(64) NULL COMMENT '激活码', sc_type VARCHAR(64) NULL COMMENT '类型', sc_invalid_date BIGINT NULL COMMENT '失效时间', sc_create_date BIGINT NULL COMMENT '创建时间', sc_is_used INT NULL COMMENT '是否使用(0:否1:是)', sc_user_id BIGINT NULL COMMENT '用户id', sc_ip_address VARCHAR(64) NULL COMMENT 'IP地址', sc_send_prompt VARCHAR(255) NULL COMMENT '发送提示', sc_send_flag INT NULL COMMENT '发送标志（0：失败；1：成功）', CONSTRAINT PK_SMS_CODE PRIMARY KEY (sc_id)) COMMENT='短信验证码']
+	at liquibase.changelog.ChangeSet.execute(ChangeSet.java:637)
+	at liquibase.changelog.visitor.UpdateVisitor.visit(UpdateVisitor.java:53)
+	at liquibase.changelog.ChangeLogIterator.run(ChangeLogIterator.java:83)
+	at liquibase.Liquibase.update(Liquibase.java:202)
+	at liquibase.Liquibase.update(Liquibase.java:179)
+	at liquibase.integration.spring.SpringLiquibase.performUpdate(SpringLiquibase.java:353)
+	at liquibase.integration.spring.SpringLiquibase.afterPropertiesSet(SpringLiquibase.java:305)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1837)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1774)
+	... 23 common frames omitted
+Caused by: liquibase.exception.DatabaseException: Table 'sms_code' already exists [Failed SQL: CREATE TABLE `wx_five-row-six`.sms_code (sc_id BIGINT AUTO_INCREMENT NOT NULL, sc_phone VARCHAR(64) NULL COMMENT '手机号', sc_code VARCHAR(64) NULL COMMENT '激活码', sc_type VARCHAR(64) NULL COMMENT '类型', sc_invalid_date BIGINT NULL COMMENT '失效时间', sc_create_date BIGINT NULL COMMENT '创建时间', sc_is_used INT NULL COMMENT '是否使用(0:否1:是)', sc_user_id BIGINT NULL COMMENT '用户id', sc_ip_address VARCHAR(64) NULL COMMENT 'IP地址', sc_send_prompt VARCHAR(255) NULL COMMENT '发送提示', sc_send_flag INT NULL COMMENT '发送标志（0：失败；1：成功）', CONSTRAINT PK_SMS_CODE PRIMARY KEY (sc_id)) COMMENT='短信验证码']
+	at liquibase.executor.jvm.JdbcExecutor$ExecuteStatementCallback.doInStatement(JdbcExecutor.java:356)
+	at liquibase.executor.jvm.JdbcExecutor.execute(JdbcExecutor.java:57)
+	at liquibase.executor.jvm.JdbcExecutor.execute(JdbcExecutor.java:125)
+	at liquibase.database.AbstractJdbcDatabase.execute(AbstractJdbcDatabase.java:1229)
+	at liquibase.database.AbstractJdbcDatabase.executeStatements(AbstractJdbcDatabase.java:1211)
+	at liquibase.changelog.ChangeSet.execute(ChangeSet.java:600)
+	... 31 common frames omitted
+Caused by: java.sql.SQLSyntaxErrorException: Table 'sms_code' already exists
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:764)
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:648)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at liquibase.executor.jvm.JdbcExecutor$ExecuteStatementCallback.doInStatement(JdbcExecutor.java:352)
+	... 36 common frames omitted

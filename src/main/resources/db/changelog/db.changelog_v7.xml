@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="V7.0.0" author="dxl">
+
+        <comment>创建注册用户表</comment>
+        <createTable tableName="frs_user" remarks="用户表">
+            <column name="fu_id" type="bigint" autoIncrement="true" remarks="主键">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="fu_name" type="varchar(128)" remarks="登录名"/>
+            <column name="fu_password" type="varchar(128)" remarks="密码"/>
+            <column name="fu_phone" type="varchar(128)" remarks="手机号"/>
+            <column name="fu_province_id" type="bigint" remarks="省份id"/>
+            <column name="fu_city_id" type="bigint" remarks="城市id"/>
+            <column name="fu_region_id" type="bigint" remarks="区县id"/>
+            <column name="fu_create_time" type="bigint(20)" remarks="创建时间"/>
+            <column name="fu_update_time" type="bigint(20)" remarks="修改时间"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
