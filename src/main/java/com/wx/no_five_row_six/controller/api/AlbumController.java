@@ -25,6 +25,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author dxl
+ * @date 2020/2/28
+ * @desc 专辑
+ */
 @Controller
 @RequestMapping("api/album")
 public class AlbumController {
@@ -38,7 +43,7 @@ public class AlbumController {
     private FrsViewRecordServiceImpl viewRecordService;
 
     /**
-     * 列表ajax
+     * 列表
      *
      * @param current
      * @param size
@@ -75,6 +80,11 @@ public class AlbumController {
         return JacksonMapper.newDataInstance(page);
     }
 
+    /**
+     * 详情
+     * @param albumId 专辑id
+     * @return
+     */
     @RequestMapping("/detail")
     @ResponseBody
     public JsonNode detail(Long albumId) {

@@ -25,7 +25,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * @author dxl
+ * @date 2020/1/14
+ * @desc 演唱会
+ */
 @Controller
 @RequestMapping("api/concert")
 public class ConcertController {
@@ -81,9 +85,10 @@ public class ConcertController {
     public JsonNode detail(Long concertId, Long runningId, HttpServletRequest request) {
         Map<Integer, Object> map = new HashMap<>();
         try {
-            QueryWrapper<FrsConcertProgram> queryWrapper = new QueryWrapper<FrsConcertProgram>().eq("fcp_is_valid", 1).orderByDesc("fcp_sort").eq("fcp_fc_id", concertId);
+            QueryWrapper<FrsConcertProgram> queryWrapper = new QueryWrapper<FrsConcertProgram>().eq("fcp_is_valid", 1).orderByDesc(
+                    "fcp_sort").eq("fcp_fc_id", concertId);
             if (runningId != null) {
-//                消除重复代码
+                //                消除重复代码
             } else {
                 FrsConcertProgram program = programService.list(queryWrapper).get(0);
                 runningId = program.getFcpId();
@@ -92,7 +97,7 @@ public class ConcertController {
             queryWrapper.notLike("fcp_id", runningId);
             List<FrsConcertProgram> programList = programService.list(queryWrapper);
             FrsConcert concert = concertService.getById(concertId);
-//            保存访问记录
+            //            保存访问记录
             viewRecordService.saveVisit(runningId, request, Const.MODEL_TYPE_CONCERT, runningMv.getFcpName());
             map.put(0, concert);
             map.put(1, runningMv);

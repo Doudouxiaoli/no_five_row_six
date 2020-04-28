@@ -17,14 +17,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@RequestMapping("/api/userCenter")
+/**
+ * @author dxl
+ * @date 2020/4/28
+ * @desc 个人中心
+ */
 @Controller
+@RequestMapping("/api/userCenter")
 public class UserCenterController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserCenterController.class);
     @Autowired
@@ -36,40 +42,58 @@ public class UserCenterController {
     @Autowired
     private FrsBookmarkRecordServiceImpl bookmarkRecordService;
 
+    /**
+     * 个人中心首页
+     *
+     * @return
+     */
+    @ResponseBody
     @RequestMapping("index")
-    public String index(ModelMap mm) {
+    public JsonNode index() {
         if (UserUtil.hasLogin()) {
             String headImg = UserUtil.getHeadImg();
             Long userId = UserUtil.getUserId();
             List<FrsViewRecord> viewRecordList = viewRecordService.list(new QueryWrapper<FrsViewRecord>().eq("fvr_user_id", userId));
-            List<FrsBookmarkRecord> bookmarkRecordList = bookmarkRecordService.list(new QueryWrapper<FrsBookmarkRecord>().eq("fbr_user_id", userId));
+            List<FrsBookmarkRecord> bookmarkRecordList = bookmarkRecordService.list(new QueryWrapper<FrsBookmarkRecord>().eq("fbr_user_id"
+                    , userId));
             List<FrsLikeRecord> likeRecordList = likeRecordService.list(new QueryWrapper<FrsLikeRecord>().eq("flr_user_id", userId));
-            mm.addAttribute("headImg", headImg);
-            mm.addAttribute("viewList", viewRecordList);
-            mm.addAttribute("bookmarkList", bookmarkRecordList);
-            mm.addAttribute("likeList", likeRecordList);
-            return "pc/user/index";
+            Map<Integer, Object> map = new HashMap<>();
+            map.put(0, headImg);
+            map.put(1, viewRecordList);
+            map.put(2, bookmarkRecordList);
+            map.put(3, likeRecordList);
+            return JacksonMapper.newDataInstance(map);
         } else {
-            return "pc/include/login";
+            return JacksonMapper.newErrorInstance("用户信息获取失败");
         }
 
     }
 
+    /**
+     * 个人中心详情
+     *
+     * @return
+     */
+    @ResponseBody
     @RequestMapping("detail")
-    public String detail(ModelMap mm) {
+    public JsonNode detail() {
         try {
             FrsUser user = UserUtil.getUserModel().getUser();
-            mm.addAttribute("user", user);
-            return "pc/user/detail";
+            return JacksonMapper.newDataInstance(user);
         } catch (Exception e) {
             e.printStackTrace();
             String errMsg = "用户信息查询异常";
             LOGGER.error(errMsg);
-            mm.addAttribute("errMsg", errMsg);
-            return "error/error";
+            return JacksonMapper.newErrorInstance(errMsg);
         }
     }
 
+    /**
+     * 用户信息修改
+     *
+     * @param user
+     * @return
+     */
     @ResponseBody
     @RequestMapping("update")
     public JsonNode update(FrsUser user) {

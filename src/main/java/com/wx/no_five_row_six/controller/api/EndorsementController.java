@@ -20,6 +20,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author dxl
+ * @date 2020/2/24
+ * @desc 代言
+ */
 @Controller
 @RequestMapping("/api/endorsement")
 public class EndorsementController {
@@ -95,7 +100,7 @@ public class EndorsementController {
     /**
      * 列表
      *
-     * @param type
+     * @param type 类型
      * @return
      */
     @ResponseBody
@@ -126,7 +131,7 @@ public class EndorsementController {
     /**
      * 详情页面
      *
-     * @param id
+     * @param id 专辑ID
      * @return
      */
     @ResponseBody
@@ -134,7 +139,7 @@ public class EndorsementController {
     public JsonNode detail(Long id, HttpServletRequest request) {
         try {
             FrsEndorsement endorsement = endorsementService.getById(id);
-//            保存访问记录
+            //            保存访问记录
             viewRecordService.saveVisit(id, request, Const.MODEL_TYPE_ENDORSEMENT, endorsement.getFeName());
             return JacksonMapper.newDataInstance(endorsement);
         } catch (Exception e) {

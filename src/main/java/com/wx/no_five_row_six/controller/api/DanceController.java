@@ -20,6 +20,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author dxl
+ * @date 2020/3/27
+ * @desc 舞蹈
+ */
 @Controller
 @RequestMapping("/api/dance")
 public class DanceController {
@@ -31,6 +36,7 @@ public class DanceController {
 
     /**
      * 列表
+     *
      * @param keyword
      * @return
      */
@@ -41,9 +47,9 @@ public class DanceController {
         QueryWrapper<FrsDance> queryWrapper = new QueryWrapper<FrsDance>();
         try {
             queryWrapper.lambda()
-                    .like(StringUtils.isNotEmpty(keyword), FrsDance::getFdTvName,keyword)
+                    .like(StringUtils.isNotEmpty(keyword), FrsDance::getFdTvName, keyword)
                     .eq(FrsDance::getFdIsValid, 1)
-                    .orderByDesc(FrsDance::getFdSort,FrsDance::getFdTime);
+                    .orderByDesc(FrsDance::getFdSort, FrsDance::getFdTime);
             List<FrsDance> list = danceService.list(queryWrapper);
             return JacksonMapper.newDataInstance(list);
         } catch (Exception e) {
@@ -56,6 +62,7 @@ public class DanceController {
 
     /**
      * 详情
+     *
      * @param id
      * @param request
      * @return
@@ -67,7 +74,7 @@ public class DanceController {
         try {
             QueryWrapper<FrsDance> queryWrapper = new QueryWrapper<FrsDance>();
             queryWrapper.lambda().eq(FrsDance::getFdIsValid, 1).orderByDesc(FrsDance::getFdSort);
-            if (id ==null) {
+            if (id == null) {
                 FrsDance dance = danceService.list(queryWrapper).get(0);
                 id = dance.getFdId();
             }

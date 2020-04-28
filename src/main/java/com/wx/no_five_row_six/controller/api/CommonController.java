@@ -20,6 +20,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author dxl
+ * @date 2020/4/9
+ * @desc 公共
+ */
 @Controller
 @RequestMapping("/api/common")
 public class CommonController {
@@ -59,7 +64,7 @@ public class CommonController {
             QueryWrapper<FrsLikeRecord> queryWrapper = new QueryWrapper<>();
             queryWrapper.lambda().eq(FrsLikeRecord::getFlrContentId, id).eq(FrsLikeRecord::getFlrUserId, userId).eq(FrsLikeRecord::getFlrTypeId, type);
             FrsLikeRecord record = likeRecordService.getOne(queryWrapper, false);
-//       更改各个表的点赞数
+            //       更改各个表的点赞数
             if (Const.MODEL_TYPE_CONCERT == type) {
                 FrsConcert concert = concertService.getById(id);
                 if (null != record) {
@@ -123,7 +128,7 @@ public class CommonController {
                     contentName = variety.getFvName();
                 }
             }
-//存点赞记录表
+            //存点赞记录表
             if (null != record) {
                 record.setFlrState(record.getFlrState() == 0 ? 1 : 0);
                 record.setFlrTime(TimeUtil.dateToLong());
@@ -159,7 +164,7 @@ public class CommonController {
             QueryWrapper<FrsBookmarkRecord> queryWrapper = new QueryWrapper<>();
             queryWrapper.lambda().eq(FrsBookmarkRecord::getFbrContentId, id).eq(FrsBookmarkRecord::getFbrUserId, userId).eq(FrsBookmarkRecord::getFbrTypeId, type);
             FrsBookmarkRecord record = bookmarkRecordService.getOne(queryWrapper, false);
-//       更改各个表的收藏数
+            //       更改各个表的收藏数
             if (Const.MODEL_TYPE_CONCERT == type) {
                 FrsConcert concert = concertService.getById(id);
                 if (null != record) {
@@ -223,7 +228,7 @@ public class CommonController {
                     contentName = variety.getFvName();
                 }
             }
-//存点赞记录表
+            //存点赞记录表
             if (null != record) {
                 record.setFbrState(record.getFbrState() == 0 ? 1 : 0);
                 record.setFbrTime(TimeUtil.dateToLong());
@@ -307,7 +312,7 @@ public class CommonController {
      */
     @ResponseBody
     @RequestMapping("checkCode")
-    public JsonNode checkCode(String code,String type) {
+    public JsonNode checkCode(String code, String type) {
         QueryWrapper<SmsCode> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(SmsCode::getScCode, code)
                 .eq(SmsCode::getScType, type)

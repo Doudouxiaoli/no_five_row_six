@@ -22,6 +22,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author dxl
+ * @date 2020/1/23
+ * @desc 影视
+ */
 @RequestMapping("/api/molivideo")
 @Controller
 public class MolivideoController {
@@ -96,7 +101,7 @@ public class MolivideoController {
                 .orderByDesc(FrsMolivideo::getFmvSort);
         List<FrsMolivideo> list = molivideoService.list(queryWrapper);
         Map<Integer, Object> map = new HashMap<>();
-//        列表
+        //        列表
         map.put(0, list);
         if (Const.MOLIVIDEO_MOVIE_ID == type) {
             map.put(1, "movie");
@@ -137,7 +142,7 @@ public class MolivideoController {
         }
         waitQW.lambda().notLike(null != runningId, FrsMovie::getFmId, runningId).eq(FrsMovie::getFmIsValid, 1).orderByDesc(FrsMovie::getFmSort).last("limit 4");
         List<FrsMovie> waitingList = movieService.list(waitQW);
-//        保存访问记录
+        //        保存访问记录
         viewRecordService.saveVisit(runningId, request, Const.MODEL_TYPE_MOVIE, runningMovie.getFmName());
         Map<Integer, Object> map = new HashMap<>();
         map.put(1, runningMovie);
@@ -168,7 +173,7 @@ public class MolivideoController {
             return JacksonMapper.newErrorInstance("参数传递异常");
         }
         List<FrsTv> waitingList = tvService.list(queryWrapper);
-//        保存浏览记录
+        //        保存浏览记录
         viewRecordService.saveVisit(id, request, Const.MODEL_TYPE_TV, runningTv.getFtName());
         Map<Integer, Object> map = new HashMap<>();
         map.put(1, runningTv);
@@ -199,7 +204,7 @@ public class MolivideoController {
             return JacksonMapper.newErrorInstance("参数传递异常");
         }
         List<FrsVariety> waitingList = varietyService.list(queryWrapper);
-//        保存访问记录
+        //        保存访问记录
         viewRecordService.saveVisit(runningVariety.getFvId(), request, Const.MODEL_TYPE_VARIETY, runningVariety.getFvName());
         Map<Integer, Object> map = new HashMap<>();
         map.put(1, runningVariety);

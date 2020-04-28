@@ -25,6 +25,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 
+/**
+ * @author dxl
+ * @date 2020/4/15
+ * @desc 注册登录
+ */
 @Controller
 @RequestMapping(value = "/api/user")
 public class UserLoginController {
@@ -64,7 +69,7 @@ public class UserLoginController {
             session.setAttribute(UserUtil.USER_SESSION_NAME, userModel);
             //存储cookie
             //Cookie cookie = new Cookie("user",userModel.toString());
-            response.setHeader("token",session.getId());
+            response.setHeader("token", session.getId());
             return JacksonMapper.newSuccessInstance();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -75,6 +80,7 @@ public class UserLoginController {
 
     /**
      * 用户注册
+     *
      * @param fuName
      * @param fuPassword
      * @param fuProvince
@@ -98,16 +104,16 @@ public class UserLoginController {
             user.setFuUpdateTime(TimeUtil.dateTolong());
             userService.save(user);
             //用户和微信号绑定
-//            QueryWrapper<FrsWechatUser> wechatWrapper = new QueryWrapper<>();
-//            wechatWrapper.lambda().eq(FrsWechatUser::getFwuOpenid, UserUtil.getOpenid());
-//            FrsWechatUser FrsWechatUser = wechatUserService.getOne(wechatWrapper, false);
-//            FrsWechatUser.setFwuUserId(user.getFuId());
-//            FrsWechatUser.setFwuUpdateTime(TimeUtil.dateTolong());
-//            wechatUserService.updateById(FrsWechatUser);
-//            dbCode.setScIsUsed(1);
-//            smsCodeService.updateById(dbCode);
+            //            QueryWrapper<FrsWechatUser> wechatWrapper = new QueryWrapper<>();
+            //            wechatWrapper.lambda().eq(FrsWechatUser::getFwuOpenid, UserUtil.getOpenid());
+            //            FrsWechatUser FrsWechatUser = wechatUserService.getOne(wechatWrapper, false);
+            //            FrsWechatUser.setFwuUserId(user.getFuId());
+            //            FrsWechatUser.setFwuUpdateTime(TimeUtil.dateTolong());
+            //            wechatUserService.updateById(FrsWechatUser);
+            //            dbCode.setScIsUsed(1);
+            //            smsCodeService.updateById(dbCode);
             UserModel userModel = new UserModel();
-//            userModel.setWechatUser(FrsWechatUser);
+            //            userModel.setWechatUser(FrsWechatUser);
             userModel.setUser(user);
             UserUtil.login(userModel);
             return JacksonMapper.newSuccessInstance();
