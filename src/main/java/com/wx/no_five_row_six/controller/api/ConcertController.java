@@ -47,8 +47,8 @@ public class ConcertController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/listAjax")
-    public JsonNode listAjax(Integer current, Integer size, String keyword) {
+    @RequestMapping("/list")
+    public JsonNode list(Integer current, Integer size, String keyword) {
         Integer state = 1;
         if (current == null) {
             current = 1;

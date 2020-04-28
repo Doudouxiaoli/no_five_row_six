@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 
@@ -43,7 +44,7 @@ public class UserLoginController {
      */
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public JsonNode login(String name, String password, HttpServletRequest request) {
+    public JsonNode login(String name, String password, HttpServletRequest request, HttpServletResponse response) {
         try {
             QueryWrapper<FrsUser> queryWrapper = new QueryWrapper<FrsUser>();
             queryWrapper.lambda()
@@ -59,7 +60,11 @@ public class UserLoginController {
             if (session.getAttribute(UserUtil.USER_SESSION_NAME) != null) {
                 session.removeAttribute(UserUtil.USER_SESSION_NAME);
             }
+
             session.setAttribute(UserUtil.USER_SESSION_NAME, userModel);
+            //存储cookie
+            //Cookie cookie = new Cookie("user",userModel.toString());
+            response.setHeader("token",session.getId());
             return JacksonMapper.newSuccessInstance();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -68,33 +73,27 @@ public class UserLoginController {
         }
     }
 
+    /**
+     * 用户注册
+     * @param fuName
+     * @param fuPassword
+     * @param fuProvince
+     * @param fuCity
+     * @param fuRegion
+     * @param fuPhone
+     * @return
+     */
     @ResponseBody
-    @RequestMapping("register")
-    public JsonNode register(String fuName, String fuPassword, String fuProvince, String fuCity, String fuRegion, String fuPhone, String scCode) {
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public JsonNode register(String fuName, String fuPassword, String fuProvince, String fuCity, String fuRegion, String fuPhone) {
         try {
-            QueryWrapper<FrsUser> queryWrapper = new QueryWrapper<>();
-            queryWrapper.lambda().eq(FrsUser::getFuPhone, fuPhone);
-            FrsUser userDb = userService.getOne(queryWrapper, false);
-            if (userDb != null) {
-                return JacksonMapper.newErrorInstance("此手机号已经注册，请直接登录");
-            }
-            QueryWrapper<SmsCode> smsWrapper = new QueryWrapper<>();
-            smsWrapper.lambda().eq(SmsCode::getScPhone, fuPhone)
-                    .eq(SmsCode::getScCode, scCode)
-                    .eq(SmsCode::getScType, smsCodeService.MOBILE_REGISTER)
-                    .eq(SmsCode::getScIsUsed, 0)
-                    .le(SmsCode::getScCreateDate, TimeUtil.dateTolong())
-                    .ge(SmsCode::getScInvalidDate, TimeUtil.dateTolong());
-            SmsCode dbCode = smsCodeService.getOne(smsWrapper, false);
-            if (dbCode == null) {
-                return JacksonMapper.newErrorInstance("验证码输入错误或已失效,请从新获取");
-            }
             FrsUser user = new FrsUser();
             user.setFuName(fuName);
+            user.setFuPassword(EncryptUtil.getSHA256Value(fuPassword));
+            user.setFuPhone(fuPhone);
             user.setFuCity(fuCity);
             user.setFuProvince(fuProvince);
             user.setFuRegion(fuRegion);
-            user.setFuPassword(EncryptUtil.getSHA256Value(fuPassword));
             user.setFuCreateTime(TimeUtil.dateToLong());
             user.setFuUpdateTime(TimeUtil.dateTolong());
             userService.save(user);

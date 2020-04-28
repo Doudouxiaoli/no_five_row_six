@@ -307,10 +307,10 @@ public class CommonController {
      */
     @ResponseBody
     @RequestMapping("checkCode")
-    public JsonNode checkCode(String code) {
+    public JsonNode checkCode(String code,String type) {
         QueryWrapper<SmsCode> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(SmsCode::getScCode, code)
-                .eq(SmsCode::getScType, smsCodeService.MOBILE_MODIFY)
+                .eq(SmsCode::getScType, type)
                 .eq(SmsCode::getScIsUsed, 0)
                 .le(SmsCode::getScCreateDate, TimeUtil.dateTolong())
                 .ge(SmsCode::getScInvalidDate, TimeUtil.dateTolong());

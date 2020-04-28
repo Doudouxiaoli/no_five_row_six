@@ -40,6 +40,18 @@ public class FrsUser implements Serializable {
      */
     private Long fuUpdateTime;
     /**
+     * 省份id
+     */
+    private Integer fuProvinceId;
+    /**
+     * 城市id
+     */
+    private Integer fuCityId;
+    /**
+     * 区县id
+     */
+    private Integer fuRegionId;
+    /**
      * 省份
      */
     private String fuProvince;
@@ -128,6 +140,30 @@ public class FrsUser implements Serializable {
         this.fuPhone = fuPhone;
     }
 
+    public Integer getFuProvinceId() {
+        return fuProvinceId;
+    }
+
+    public void setFuProvinceId(Integer fuProvinceId) {
+        this.fuProvinceId = fuProvinceId;
+    }
+
+    public Integer getFuCityId() {
+        return fuCityId;
+    }
+
+    public void setFuCityId(Integer fuCityId) {
+        this.fuCityId = fuCityId;
+    }
+
+    public Integer getFuRegionId() {
+        return fuRegionId;
+    }
+
+    public void setFuRegionId(Integer fuRegionId) {
+        this.fuRegionId = fuRegionId;
+    }
+
     @Override
     public String toString() {
         return "FrsUser{" +
@@ -136,6 +172,9 @@ public class FrsUser implements Serializable {
                 ", fuPassword='" + fuPassword + '\'' +
                 ", fuCreateTime=" + fuCreateTime +
                 ", fuUpdateTime=" + fuUpdateTime +
+                ", fuProvinceId=" + fuProvinceId +
+                ", fuCityId=" + fuCityId +
+                ", fuRegionId=" + fuRegionId +
                 ", fuProvince='" + fuProvince + '\'' +
                 ", fuCity='" + fuCity + '\'' +
                 ", fuRegion='" + fuRegion + '\'' +

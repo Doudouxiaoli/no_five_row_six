@@ -9,4 +9,6 @@
     <include file="classpath:db/changelog/db.changelog_v5.xml"/>
     <include file="classpath:db/changelog/db.changelog_v6.xml"/>
     <include file="classpath:db/changelog/db.changelog_v7.xml"/>
+    <include file="classpath:db/changelog/db.changelog_v7.1.xml"/>
+    <include file="classpath:db/changelog/db.changelog_v5.1.xml"/>
 </databaseChangeLog>
