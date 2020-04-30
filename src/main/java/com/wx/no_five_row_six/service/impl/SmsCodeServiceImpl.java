@@ -103,7 +103,7 @@ public class SmsCodeServiceImpl extends ServiceImpl<SmsCodeMapper, SmsCode> impl
         List<String> values = new ArrayList<>();
         values.add(smsCode.getScCode());
         values.add("30");
-        values.add("【安斯泰来平台】");
+        values.add("【五排六号】");
         JsonNode obj = SmsTplUtil.sendSms(phone, "10000", values);
 
         if (obj.get("success").asText("").equals("true")) {
