@@ -7,7 +7,7 @@
 
 #define main()
 <div class="wrapper">
-    #include("../header.html", navId="nav_user", subNavId="nav_wechat_user")
+    #include("../../header.html", navId="nav_user", subNavId="nav_wechat_user")
 
     <div class="content-wrapper">
         <section class="content-header">
@@ -79,7 +79,7 @@
                                 #end
                                 </tbody>
                             </table>
-                            #include("../pojoPageInfo.html", act="admin/wechatUser/list", formName="searchForm")
+                            #include("../../pojoPageInfo.html", act="admin/wechatUser/list", formName="searchForm")
                             #else if (page.records == null || page.total <= 0)
                             暂无数据！
                             #end

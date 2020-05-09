@@ -51,11 +51,11 @@ public class UserCenterController {
     @RequestMapping("index")
     public JsonNode index() {
         if (UserUtil.hasLogin()) {
-            String headImg = UserUtil.getHeadImg();
+            String headImg = "1111";
+            //String headImg = UserUtil.getHeadImg();
             Long userId = UserUtil.getUserId();
             List<FrsViewRecord> viewRecordList = viewRecordService.list(new QueryWrapper<FrsViewRecord>().eq("fvr_user_id", userId));
-            List<FrsBookmarkRecord> bookmarkRecordList = bookmarkRecordService.list(new QueryWrapper<FrsBookmarkRecord>().eq("fbr_user_id"
-                    , userId));
+            List<FrsBookmarkRecord> bookmarkRecordList = bookmarkRecordService.list(new QueryWrapper<FrsBookmarkRecord>().eq("fbr_user_id", userId));
             List<FrsLikeRecord> likeRecordList = likeRecordService.list(new QueryWrapper<FrsLikeRecord>().eq("flr_user_id", userId));
             Map<Integer, Object> map = new HashMap<>();
             map.put(0, headImg);
