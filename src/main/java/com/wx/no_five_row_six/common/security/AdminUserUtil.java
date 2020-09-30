@@ -54,10 +54,6 @@ public class AdminUserUtil {
 		return getLoginUser().getId();
 	}
 	
-	public static long getRole(){
-		return getLoginUser().getRole();
-	}
-
 	public static void logout() {
 		getSession().removeAttribute(ADMIN_USER_LOGIN_SESSION);
 	}

@@ -9,7 +9,7 @@ package com.wx.no_five_row_six.common.security;
 import com.wx.common.spring.mvc.WebUtil;
 import com.wx.common.util.CookieUtil;
 import com.wx.common.util.RC4Util;
-import com.wx.no_five_row_six.entity.FrsUser;
+import com.wx.no_five_row_six.entity.WechatUser;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.Cookie;
@@ -62,7 +62,7 @@ public class UserUtil {
     public static Long getUserId() {
         if (hasLogin()) {
             UserModel userModel = (UserModel) getSession().getAttribute(USER_SESSION_NAME);
-            return userModel.getUser().getFuId();
+            return userModel.getWechatUser().getWuId();
         }
         return null;
     }
@@ -73,7 +73,7 @@ public class UserUtil {
     public static String getOpenid() {
         if (hasLogin()) {
             UserModel userModel = (UserModel) getSession().getAttribute(USER_SESSION_NAME);
-            return userModel.getWechatUser().getFwuOpenid();
+            return userModel.getWechatUser().getWuOpenid();
         }
         return "游客";
     }
@@ -84,7 +84,7 @@ public class UserUtil {
     public static String getUserName() {
         if (hasLogin()) {
             UserModel userModel = (UserModel) getSession().getAttribute(USER_SESSION_NAME);
-            return userModel.getUser().getFuName();
+            return userModel.getWechatUser().getWuNickname();
         }
         return "游客";
     }
@@ -95,7 +95,7 @@ public class UserUtil {
     public static String getWechatUserName() {
         if (hasLogin()) {
             UserModel userModel = (UserModel) getSession().getAttribute(USER_SESSION_NAME);
-            return userModel.getWechatUser().getFwuNickname();
+            return userModel.getWechatUser().getWuNickname();
         }
         return "游客";
     }
@@ -108,7 +108,7 @@ public class UserUtil {
     public static String getHeadImg() {
         if (hasLogin()) {
             UserModel userModel = (UserModel) getSession().getAttribute(USER_SESSION_NAME);
-            return userModel.getWechatUser().getFwuHeadimg();
+            return userModel.getWechatUser().getWuHeadimg();
         }
         return "游客";
     }
@@ -230,9 +230,9 @@ public class UserUtil {
      *
      * @param user
      */
-    public static void updateSession(FrsUser user) {
+    public static void updateSession(WechatUser user) {
         if (hasLogin()) {
-            getUserModel().setUser(user);
+            getUserModel().setWechatUser(user);
         }
     }
 }

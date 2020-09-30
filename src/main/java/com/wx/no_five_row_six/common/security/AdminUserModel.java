@@ -9,7 +9,6 @@ public class AdminUserModel implements Serializable {
 	private Long id;
 	private String name;
 	private String showName;
-	private Long role;
 
 	public Long getId() {
 		return id;
@@ -25,7 +24,5 @@ public class AdminUserModel implements Serializable {
 	}
 	public String getShowName() { return showName; }
 	public void setShowName(String showName) { this.showName = showName; }
-	public Long getRole() { return role; }
-	public void setRole(Long role) { this.role = role; }
 
 }

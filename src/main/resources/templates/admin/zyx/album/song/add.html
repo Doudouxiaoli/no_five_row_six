@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+#@admin_layout()
+
+#define title()
+<title>五排六号-专辑>歌曲新增</title>
+#end
+
+<script type="text/javascript" src="../../../../../static/lib/uploadPic.js"></script>
+
+#define main()
+<div class="wrapper">
+    #include("../../header.html", navId="nav_song", subNavId="")
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                新增歌曲
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="/admin/case/list"><i class="fa fa-sticky-note"></i>歌曲管理</a></li>
+                <li class="active">新增歌曲</li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">歌曲</h3>
+                        </div>
+                        <form class="form-horizontal" role="form" id="searchForm" name="searchForm"
+                              action="/admin/album/song/saveOrUpdate"
+                              method="post" onsubmit="return beforeSubmit();">
+                            #include("form.html")
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+#end
+

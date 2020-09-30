@@ -1,28 +1,18 @@
 package com.wx.no_five_row_six.common.security;
 
-import com.wx.no_five_row_six.entity.FrsUser;
-import com.wx.no_five_row_six.entity.FrsWechatUser;
+import com.wx.no_five_row_six.entity.WechatUser;
 
 import java.io.Serializable;
 
 public class UserModel implements Serializable {
 
-    FrsWechatUser wechatUser;
-    FrsUser user;
+    WechatUser wechatUser;
 
-    public FrsWechatUser getWechatUser() {
+    public WechatUser getWechatUser() {
         return wechatUser;
     }
 
-    public void setWechatUser(FrsWechatUser wechatUser) {
+    public void setWechatUser(WechatUser wechatUser) {
         this.wechatUser = wechatUser;
-    }
-
-    public FrsUser getUser() {
-        return user;
-    }
-
-    public void setUser(FrsUser user) {
-        this.user = user;
     }
 }

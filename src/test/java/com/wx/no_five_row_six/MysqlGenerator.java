@@ -34,7 +34,7 @@ public class MysqlGenerator {
         dsc.setUrl("jdbc:mysql://192.168.8.120:3306/wx_five-row-six?characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Shanghai&autoReconnect=true&failOverReadOnly=false");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("123456");
+        dsc.setPassword("329413");
         mpg.setDataSource(dsc);
 
         // 包配置

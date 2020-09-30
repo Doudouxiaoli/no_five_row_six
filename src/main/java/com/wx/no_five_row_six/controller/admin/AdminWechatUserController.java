@@ -5,13 +5,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wx.common.excel.ExcelData;
 import com.wx.common.excel.ExcelUtils;
-import com.wx.common.util.EncryptUtil;
 import com.wx.common.util.TimeUtil;
 import com.wx.no_five_row_six.common.Const;
-import com.wx.no_five_row_six.entity.FrsUser;
-import com.wx.no_five_row_six.entity.FrsWechatUser;
-import com.wx.no_five_row_six.service.impl.FrsUserServiceImpl;
-import com.wx.no_five_row_six.service.impl.FrsWechatUserServiceImpl;
+import com.wx.no_five_row_six.entity.WechatUser;
+import com.wx.no_five_row_six.service.IWechatUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +26,7 @@ import java.util.List;
 public class AdminWechatUserController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminWechatUserController.class);
     @Autowired
-    private FrsWechatUserServiceImpl wechatUserService;
+    private IWechatUserService wechatUserService;
 
     /**
      * 列表
@@ -50,11 +47,11 @@ public class AdminWechatUserController {
         if (size == null) {
             size = Const.ADMIN_ROWSPERPAGE_MORE;
         }
-        QueryWrapper<FrsWechatUser> queryWrapper = new QueryWrapper<FrsWechatUser>();
-        IPage<FrsWechatUser> page = new Page<>(current, size);
+        QueryWrapper<WechatUser> queryWrapper = new QueryWrapper<WechatUser>();
+        IPage<WechatUser> page = new Page<>(current, size);
         try {
             // 查询条件
-            queryWrapper.lambda().like(StringUtils.isNotEmpty(keyword), FrsWechatUser::getFwuNickname, keyword);
+            queryWrapper.lambda().like(StringUtils.isNotEmpty(keyword), WechatUser::getWuNickname, keyword);
             page = wechatUserService.page(page, queryWrapper);
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,9 +74,9 @@ public class AdminWechatUserController {
     @RequestMapping(value = "export")
     public void export(HttpServletResponse response, String keyword) {
         try {
-            QueryWrapper<FrsWechatUser> queryWrapper = new QueryWrapper<>();
-            queryWrapper.lambda().like(StringUtils.isNotEmpty(keyword), FrsWechatUser::getFwuNickname, keyword);
-            List<FrsWechatUser> list = wechatUserService.list(queryWrapper);
+            QueryWrapper<WechatUser> queryWrapper = new QueryWrapper<>();
+            queryWrapper.lambda().like(StringUtils.isNotEmpty(keyword), WechatUser::getWuNickname, keyword);
+            List<WechatUser> list = wechatUserService.list(queryWrapper);
             ExcelData excelData = wechatUserService.exportWechatUserExcel(list);
             String fileName = "五排六号微信用户导出" + TimeUtil.longToString(System.currentTimeMillis(), "yyyy-MM-dd") + ".xlsx";
             ExcelUtils.exportExcel(response, fileName, excelData);

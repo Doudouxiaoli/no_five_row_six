@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wx.common.util.EncryptUtil;
 import com.wx.no_five_row_six.common.security.AdminUserModel;
 import com.wx.no_five_row_six.common.security.AdminUserUtil;
-import com.wx.no_five_row_six.entity.AdminUser;
-import com.wx.no_five_row_six.service.impl.AdminUserServiceImpl;
+import com.wx.no_five_row_six.entity.SysUser;
+import com.wx.no_five_row_six.service.ISysUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ public class AdminLoginController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminLoginController.class);
 
     @Autowired
-    private AdminUserServiceImpl adminUserService;
+    private ISysUserService userService;
 
     @RequestMapping(value = {"", "/index"})
     public String index(ModelMap mm) {
@@ -44,17 +44,17 @@ public class AdminLoginController {
             mm.addAttribute("errMsg", "用户名和密码不能为空");
         }
         try {
-            QueryWrapper<AdminUser> queryWrapper = new QueryWrapper<AdminUser>()
-                    .eq("login_name", name)
-                    .eq("password", EncryptUtil.getSHA256Value(password));
-            AdminUser user = adminUserService.getOne(queryWrapper, false);
+            QueryWrapper<SysUser> queryWrapper = new QueryWrapper<SysUser>();
+                    queryWrapper.lambda().eq(SysUser::getSuLoginName, name)
+                    .eq(SysUser::getSuPassword, EncryptUtil.getSHA256Value(password));
+            SysUser user = userService.getOne(queryWrapper, false);
             if (user == null) {
                 mm.addAttribute("errMsg", "用户名或密码错误");
             }
             AdminUserModel userModel = new AdminUserModel();
-            userModel.setId(user.getId());
-            userModel.setName(user.getLoginName());
-            userModel.setShowName(user.getLoginName());
+            userModel.setId(user.getSuId());
+            userModel.setName(user.getSuLoginName());
+            userModel.setShowName(user.getSuName());
             HttpSession session = request.getSession(true);
             if (session.getAttribute(AdminUserUtil.ADMIN_USER_LOGIN_SESSION) != null) {
                 session.removeAttribute(AdminUserUtil.ADMIN_USER_LOGIN_SESSION);
