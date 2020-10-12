@@ -1,20 +1,29 @@
 <!DOCTYPE html>
-#@admin_layout()
+#@layout_admin()
 
 #define title()
-<title>五排六号-后台</title>
+<title>第五排第六号</title>
 #end
+#define css()
 
-
+<style type="text/css">
+    .web-font-desc {
+        font-size: 24px;
+        font-style: normal;
+        padding-left: 35%;
+        padding-top: 25%;
+        -webkit-font-smoothing: antialiased;
+    }
+</style>
+<link rel="stylesheet" href="libs/layui/css/modules/iconfont/iconfont.css"/>
+#end
 #define main()
-<div class="wrapper">
-    #include("header.html", navId="", subNavId="")
-    <div class="content-wrapper">
-        <section class="content-header">
-            <h1>
-                登录成功~~
-            </h1>
-        </section>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    #include("header.html")
+    <div class="layui-body" style="bottom: 0px">
+        <p class="web-font-desc">五排六号平台欢迎您</p>
     </div>
 </div>
+</body>
 #end

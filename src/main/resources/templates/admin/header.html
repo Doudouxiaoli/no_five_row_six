@@ -1,175 +1,187 @@
-<!-- Main Header -->
-<header class="main-header"> <!-- Logo -->
-    <a href="javascript:void(0);" class="logo">
-        <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini" style="margin-top:75%;"><i class="fa fa-cog"></i></span>
-        <span class="logo-lg"><b>五排六号</b></span>
-    </a>
-    <nav class="navbar navbar-static-top" role="navigation">
-        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-            <span class="sr-only">Toggle navigation</span>
-        </a>
+<!--    导航栏-->
 
-        <div class="navbar-custom-menu" style="border:0px solid red;">
-            <ul class="nav navbar-nav">
-                <li class="dropdown user user-menu">
-                    <a href="javascript:void(0)" style="color:#CFCFCF;">
-                        <span class="glyphicon glyphicon-user"></span>
-                        #(com.wx.no_five_row_six.common.security.AdminUserUtil::getShowName())
-                    </a>
-                </li>
-                <li class="dropdown user user-menu">
-                    <a href="admin/logout">
-                        <span class="hidden-xs">退出</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
-<aside class="main-sidebar">
-    <section class="sidebar">
-        <ul class="sidebar-menu tree" data-widget="tree">
-            <li id="nav_admin_user" class="treeview">
-                <a href="/admin/adminUser/list">
-                    <i class="fa fa-user"></i> <span>后台管理员</span>
+<div class="layui-header">
+    <ul class="layui-nav layui-layout-left">
+        <li class="layui-nav-item" lay-unselect="">
+            <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
+                <i class="layui-icon layui-icon-shrink-right" id="layout-admin-shrinkage"></i>
+            </a>
+        </li>
+
+        <li class="layui-nav-item layui-hide-xs" lay-unselect="">
+            <a href="/" target="_blank" title="前台">
+                <i class="layui-icon layui-icon-website"></i>
+            </a>
+        </li>
+        <li class="layui-nav-item" lay-unselect="">
+            <a href="admin/index" layadmin-event="refresh" title="刷新">
+                <i class="layui-icon layui-icon-refresh-3"></i>
+            </a>
+        </li>
+        <span class="layui-nav-bar" style="left: 38px; top: 48px; width: 0px; opacity: 0;"></span>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item layui-hide-xs" lay-unselect="">
+            <a href="javascript:;" layadmin-event="fullscreen" title="全屏">
+                <i class="layui-icon layui-icon-screen-full"></i>
+            </a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="admin/adminUser/edit?id=1">
+                <img src="http://t.cn/RCzsdCq" class="layui-nav-img">#(com.wx.no_five_row_six.common.security.AdminUserUtil::getShowName())
+            </a>
+        </li>
+        <li class="layui-nav-item"><a href="admin/logout">退出</a></li>
+        <span class="layui-nav-bar" style="left: 0px; top: 48px; width: 0px; opacity: 0;"></span>
+    </ul>
+</div>
+<!--侧边栏-->
+<div class="layui-layout-admin layui-logo" lay-href="http://localhost:8080" id="adminTitle"><span>五排六号</span></div>
+<div class="layui-side layui-side-menu layui-bg-black">
+    <div class="layui-side-scroll">
+        <ul class="layui-nav layui-nav-tree">
+            <li class="layui-nav-item" id="nav_dance">
+                <a href="javascript:;">
+                    <i class="iconfont layui-iconfont-dance"></i>
+                    <span>舞蹈</span>
                 </a>
             </li>
-
-            <li id="nav_user" class="treeview">
-                <a href="/admin/pcUser/list">
-                    <i class="fa fa-user-o"></i> <span>用户</span>
+            <li class="layui-nav-item" id="nav_album">
+                <a href="javascript:;">
+                    <i class="iconfont layui-iconfont-album"></i>
+                    <span>专辑</span>
                 </a>
+                <dl class="layui-nav-child">
+                    <dd id="nav_song"><a href="admin/project/song"><span>歌曲</span></a></dd>
+                </dl>
             </li>
-
-            <li id="nav_album" class="treeview">
-                <a href="/admin/album/list">
-                    <i class="fa fa-music"></i> <span>专辑</span>
+            <li class="layui-nav-item" id="nav_concert">
+                <a href="javascript:;">
+                    <i class="iconfont layui-iconfont-concert"></i>
+                    <span>演唱会</span>
                 </a>
+                <dl class="layui-nav-child">
+                    <dd id="nav_program"><a href="admin/adminUser/list"><span>节目单</span></a></dd>
+                </dl>
             </li>
-
-            <li id="nav_concert" class="treeview">
-                <a href="/admin/concert/list">
-                    <i class="fa fa-bullhorn"></i> <span>演唱会</span>
+            <li class="layui-nav-item" id="nav_endorsement">
+                <a href="javascript:;">
+                    <i class="iconfont layui-iconfont-endorsement"></i>
+                    <span>代言</span>
                 </a>
+                <dl class="layui-nav-child">
+                    <dd id="nav_endorsement_food"><a href="admin/adminUser/list"><span>食物</span></a></dd>
+                </dl>
+                <dl class="layui-nav-child">
+                    <dd id="nav_endorsement_makeup"><a href="admin/adminUser/list"><span>美妆</span></a></dd>
+                </dl>
+                <dl class="layui-nav-child">
+                    <dd id="nav_endorsement_clothes"><a href="admin/adminUser/list"><span>服装</span></a></dd>
+                </dl>
+                <dl class="layui-nav-child">
+                    <dd id="nav_endorsement_luxury"><a href="admin/adminUser/list"><span>轻奢品</span></a></dd>
+                </dl>
+                <dl class="layui-nav-child">
+                    <dd id="nav_endorsement_game"><a href="admin/adminUser/list"><span>游戏</span></a></dd>
+                </dl>
             </li>
-
-            <li id="nav_dance" class="treeview">
-                <a href="/admin/dance/list">
-                    <i class="fa fa-female"></i> <span>舞蹈</span>
+            <li class="layui-nav-item" id="nav_film">
+                <a href="javascript:;">
+                    <i class="iconfont layui-iconfont-film"></i>
+                    <span>影视作品</span>
                 </a>
+                <dl class="layui-nav-child">
+                    <dd id="nav_film_variety"><a href="admin/adminUser/list"><span>综艺</span></a></dd>
+                </dl>
+                <dl class="layui-nav-child">
+                    <dd id="nav_film_movie"><a href="admin/adminUser/list"><span>电影</span></a></dd>
+                </dl>
+                <dl class="layui-nav-child">
+                    <dd id="nav_film_tv"><a href="admin/adminUser/list"><span>电视剧</span></a></dd>
+                </dl>
             </li>
-
-            <li id="nav_molivideo" class="treeview">
-                <a href="#"><i class="fa fa-bars"></i> 影视作品
-                    <span></span>
-                    <span class="pull-right-container">
-				        <i class="fa fa-angle-left pull-right"></i>
-		            </span>
+            <li class="layui-nav-item" id="nav_data">
+                <a href="javascript:;">
+                    <i class="iconfont layui-iconfont-data"></i>
+                    <span>数据</span>
                 </a>
-                <ul class="treeview-menu">
-                    <li id="nav_movie" class="treeview">
-                        <a href="/admin/molivideo/list?type=1">
-                            <i class="fa fa-film"></i> <span>电影</span>
-                        </a>
-                    </li>
-                    <li id="nav_tv" class="treeview">
-                        <a href="/admin/molivideo/list?type=2">
-                            <i class="fa fa-television"></i> <span>电视剧</span>
-                        </a>
-                    </li>
-
-                    <li id="nav_variety" class="treeview">
-                        <a href="/admin/molivideo/list?type=3">
-                            <i class="fa fa-youtube-square"></i><span>综艺</span>
-                        </a>
-                    </li>
-                </ul>
+                <dl class="layui-nav-child">
+                    <dl class="layui-nav-child">
+                        <dd id="nav_down"><a href="admin/adminUser/list"><span>综艺</span></a></dd>
+                    </dl>
+                </dl>
             </li>
-
-            <li id="nav_endorsement" class="treeview">
-                <a href="#"><i class="fa fa-bars"></i> 代言
-                    <span></span>
-                    <span class="pull-right-container">
-				        <i class="fa fa-angle-left pull-right"></i>
-		            </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li id="nav_foot" class="treeview">
-                        <a href="/admin/endorsement/list?type=0">
-                            <i class="fa fa-cutlery"></i> <span>食物</span>
-                        </a>
-                    </li>
-
-                    <li id="nav_makeup" class="treeview">
-                        <a href="/admin/endorsement/list?type=1">
-                            <i class="fa fa-cc"></i><span>美妆</span>
-                        </a>
-                    </li>
-
-                    <li id="nav_clothes" class="treeview">
-                        <a href="/admin/endorsement/list?type=2">
-                            <i class="fa fa-female"></i><span>服饰</span>
-                        </a>
-                    </li>
-                    <li id="nav_luxury" class="treeview">
-                        <a href="/admin/endorsement/list?type=3">
-                            <i class="fa fa-diamond"></i><span>轻奢品</span>
-                        </a>
-                    </li>
-
-                    <li id="nav_game" class="treeview">
-                        <a href="/admin/endorsement/list?type=4">
-                            <i class="fa fa-steam"></i> <span>游戏</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-            <li id="nav_other" class="treeview">
-                <a href="#"><i class="fa fa-edit"></i>记录
-                    <span></span>
-                    <span class="pull-right-container">
-				        <i class="fa fa-angle-left pull-right"></i>
-		            </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li id="nav_favorite" class="treeview">
-                        <a href="/admin/favorite/list">
-                            <i class="fa fa-heart-o"></i> <span>收藏记录</span>
-                        </a>
-                    </li>
-                    <li id="nav_like" class="treeview">
-                        <a href="/admin/like/list">
-                            <i class="fa fa-thumbs-o-up"></i> <span>点赞记录</span>
-                        </a>
-                    </li>
-
-                    <li id="nav_view" class="treeview">
-                        <a href="/admin/visitLog/list">
-                            <i class="fa fa-eye"></i><span>浏览记录</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
         </ul>
-    </section>
-</aside>
+    </div>
+</div>
+
 #set(navId = navId??"")
 #set(subNavId = subNavId??"")
 <script>
+    //注意：导航 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function () {
+        var element = layui.element, $ = layui.jquery;
+    });
+
     //设置选中状态
     var navId = "#(navId)";
     var subNavId = "#(subNavId)";
-
     //选中状态
     if (navId) {
-        $("#" + navId).addClass("active");
-        $("#" + navId).parent().siblings().children().removeClass("active");
+        $("#" + navId).addClass("layui-nav-itemed");
+        $("#" + navId).parent().siblings().children().removeClass("layui-nav-itemed");
     }
     if (subNavId) {
-        $("#" + subNavId).addClass("active");
+        $("#" + subNavId).addClass("layui-this");
     }
+
+    //    收缩侧边栏
+    var bl = $("#layout-admin-shrinkage").hasClass("layui-icon-shrink-right");
+    if (bl) {
+        $("#layout-admin-shrinkage").click();
+    }
+    var shrinkage = true;  //定义一个标志位
+    $('#layout-admin-shrinkage').click(function () {
+        //选择出所有的span，并判断是不是hidden
+        $('.layui-nav-item span').each(function () {
+            if ($(this).is(':hidden')) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+        //状态判断
+        if (shrinkage) {
+            $('.layui-side.layui-bg-black').width(60);
+            $('.layui-layout-admin .layui-logo').width(60);
+            $('.layui-layout-left').css('left', 60 + 'px');
+            $('.layui-body').css('left', 60 + 'px');
+            $('#layout-admin-shrinkage').removeClass("layui-icon-shrink-right");
+            $('#layout-admin-shrinkage').addClass("layui-icon-spread-left");
+            document.getElementById("adminTitle").innerHTML = "<img src='images/frs.png' style='width:50px;height:50px;'>";
+            shrinkage = false;
+        } else {
+            $('.layui-side.layui-bg-black').width(200);
+            $('.layui-layout-admin .layui-logo').width(200);
+            $('.layui-layout-left').css('left', 200 + 'px');
+            $('.layui-body').css('left', 200 + 'px');
+            $('#layout-admin-shrinkage').removeClass("layui-icon-spread-left");
+            $('#layout-admin-shrinkage').addClass("layui-icon-shrink-right");
+            document.getElementById("adminTitle").innerHTML = "五排六号";
+
+            shrinkage = true;
+        }
+    });
+    // 全屏
+    $(document).on('click', "[layadmin-event='fullscreen']", function () {
+        var doc = document.documentElement;
+        if ($(document.body).hasClass("full-screen")) {
+            $(document.body).removeClass("full-screen");
+            document.exitFullscreen ? document.exitFullscreen() : document.mozCancelFullScreen ? document.mozCancelFullScreen() : document.webkitExitFullscreen && document.webkitExitFullscreen();
+        } else {
+            $(document.body).addClass("full-screen");
+            doc.requestFullscreen ? doc.requestFullscreen() : doc.mozRequestFullScreen ? doc.mozRequestFullScreen() : doc.webkitRequestFullscreen ? doc.webkitRequestFullscreen() : doc.msRequestFullscreen && doc.msRequestFullscreen();
+        }
+    })
 
 </script>

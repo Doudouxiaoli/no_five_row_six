@@ -48,9 +48,7 @@ public class AdminZyxNewsController {
                     .le(StringUtils.isNotEmpty(endDate), FrsZyxNews::getZnDate, TimeUtil.stringToLong(endDate, TimeUtil.FORMAT_DATE))
                     .eq(FrsZyxNews::getZnIsValid, state);
             page = newsService.page(page, queryWrapper);
-            if (ZyxNewsConst.ALBUM == moduleId) {
-                return ZyxNewsConst.getModelUrl(moduleId) + "/list";
-            }
+            return ZyxNewsConst.getModelUrl(moduleId) + "/list";
         }
         mm.addAttribute("page", page);
         mm.addAttribute("keyword", keyword);
