@@ -2,6 +2,7 @@ package com.wx.no_five_row_six.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 
 /**
@@ -14,7 +15,7 @@ import java.io.Serializable;
  */
 public class SysUser implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * 主键
@@ -46,7 +47,10 @@ public class SysUser implements Serializable {
      * 修改时间
      */
     private Long suUpdateTime;
-
+    /**
+     * 头像
+     */
+    private String suHeadImg;
 
     public Long getSuId() {
         return suId;
@@ -96,15 +100,24 @@ public class SysUser implements Serializable {
         this.suUpdateTime = suUpdateTime;
     }
 
+    public String getSuHeadImg() {
+        return suHeadImg;
+    }
+
+    public void setSuHeadImg(String suHeadImg) {
+        this.suHeadImg = suHeadImg;
+    }
+
     @Override
     public String toString() {
         return "SysUser{" +
-        "suId=" + suId +
-        ", suName=" + suName +
-        ", suLoginName=" + suLoginName +
-        ", suPassword=" + suPassword +
-        ", suCreateTime=" + suCreateTime +
-        ", suUpdateTime=" + suUpdateTime +
-        "}";
+                "suId=" + suId +
+                ", suName='" + suName + '\'' +
+                ", suLoginName='" + suLoginName + '\'' +
+                ", suPassword='" + suPassword + '\'' +
+                ", suCreateTime=" + suCreateTime +
+                ", suUpdateTime=" + suUpdateTime +
+                ", suHeadImg='" + suHeadImg + '\'' +
+                '}';
     }
 }

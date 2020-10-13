@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+#@layout_admin()
+
+#define title()
+<title>指南内容自助服务平台</title>
+#end
+
+#define css()
+#end
+#define main()
+<body class="layui-layout-body">
+
+<div class="layui-layout layui-layout-admin">
+    #include("../../header.html",navId="nav_dance")
+    <div class="layui-body" style="top:50px">
+        <table class="layui-hide" lay-filter="dataTale" id="item"></table>
+    </div>
+</div>
+
+<script type="text/html" id="toolbarDemo">
+    <form action="admin/zyx/dance/list" class="layui-form layui-col-md12 x-so" name="searchForm"
+          id="searchForm"
+          method="post">
+        <span class="page-title">舞蹈列表</span>
+        <div class="layui-input-inline">
+            <input type="text" id="keyword" name="keyword" value="#(keyword)" class="form-control page-search" placeholder="节目名称"/>
+        </div>
+        <button type="button" id="search" class="layui-btn layui-btn-sm" lay-submit lay-filter="search"><i
+                class="layui-icon">&#xe615;</i>
+        </button>
+        <button type="button" class="layui-btn layui-btn-sm"
+                onclick="javascript:window.location.href='admin/zyx/dance/edit'">添加
+        </button>
+    </form>
+</script>
+
+<script>
+    function onloadTool(data) {
+        let htmls = '';
+        if (data.znIsValid == 0) {
+            htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="rec">恢复</a>';
+        } else {
+            htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
+            htmls += '<a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>'
+        }
+        return htmls;
+    }
+</script>
+<script>
+    layui.use(['table', 'form', 'util'], function () {
+        var table = layui.table;
+        var form = layui.form;
+        var util = layui.util;
+        table.render({
+            id: "tableReload"
+            , elem: '#item'
+            , url: 'admin/zyx/dance/listAjax'
+            , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            , defaultToolbar: {}
+            , page: {
+                theme: '#5762A4'
+            }
+            , autoSort: false
+            , loading: false
+            , cols: [[
+                {
+                    title: '序号', width: 260, fixed: true, align: 'center', templet: function (d) {
+                        return d.LAY_INDEX;
+                    }
+                }
+                , {field: 'znTitle', width: 260, title: '舞蹈名称', align: 'center'}
+                , {field: 'znFrom', width: 260, title: '表演来源', align: 'center'}
+                , {
+                    field: 'znDate', width: 260, title: '表演日期', align: 'center',
+                    templet: function (d) {
+                        if (d.znDate) {
+                            return util.toDateString(d.znDate, 'yyyy-MM-dd');
+                        } else {
+                            return '';
+                        }
+                    }
+                }
+                , {fixed: 'right', title: '操作', templet: onloadTool, align: 'center'}
+            ]],
+        });
+        //查询
+        form.on('submit(search)', function (data) {
+            var formData = data.field;
+            var keyword = formData.keyword;
+            table.reload('tableReload', {
+                where: {
+                    keyword: keyword
+                },
+                method: 'get',
+                url: 'admin/zyx/dance/listAjax',
+            });
+            $("#keyword").val(keyword);
+            return false;
+        });
+        //监听行工具事件
+        table.on('tool(dataTale)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('真的删除这条记录么', function (index) {
+                    $.ajax({
+                        type: "get",
+                        url: "admin/zyx/dance/del",
+                        data: {
+                            id: data.znId,
+                        },
+                        success: function (ev) {
+                            if (ev.success) {
+                                obj.del();
+                                layer.close(index);
+                                window.location.reload();
+                            } else {
+                                layer.alert(ev.msg);
+                            }
+                        }
+
+                    });
+                });
+            } else if (obj.event === 'rec') {
+                layer.confirm('确定恢复主键为[' + data.znId + ']的记录么', function (index) {
+                    $.ajax({
+                        type: "get",
+                        url: "admin/zyx/dance/reBack",
+                        data: {
+                            id: data.znId,
+                        },
+                        success: function (ev) {
+                            if (ev.success) {
+                                obj.del();
+                                layer.close(index);
+                                layer.msg('恢复成功', {icon: 1}, {time: 2000});
+                                window.location.reload();
+                            } else {
+                                layer.msg('连接网络失败，请检查网络设置或联系管理员', {icon: 2}, {time: 2000});
+                            }
+                        }
+
+                    });
+                });
+            } else if (obj.event === 'edit') {
+                window.location.href = 'admin/zyx/dance/edit?id=' + data.znId;
+            }
+        });
+    });
+</script>
+</body>
+#end

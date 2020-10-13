@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+#@layout_admin()
+
+#define title()
+<title>第五排第六号</title>
+#end
+#define css()
+#end
+#define main()
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    #include("../include/header.html",navId="nav_project",subNavId="nav_project_list")
+    <div class="layui-body">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend  class="page-title">#(title??)</legend>
+        </fieldset>
+        <form class="layui-form" action="admin/project/save" method="post" style="width: 800px">
+            <input name="gpId" type="hidden" value="#(project.gpId??)"/>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red">*</span>项目名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="gpName" lay-verify="required" lay-reqtext="项目名称是必填项" autocomplete="off"
+                           class="layui-input" value="#(project.gpName??)">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red">*</span>项目编号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="gpCode" lay-verify="required" lay-reqtext="项目编号是必填项" autocomplete="off"
+                           class="layui-input" value="#(project.gpCode??)">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">项目Token</label>
+                <div class="layui-input-block" >
+                    <input type="text" class="layui-input" style="background-color: #e9e9eb;" name="gpTokenKey" autocomplete="off"  value="#(project.gpTokenKey??)" readonly>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">项目URL</label>
+                <div class="layui-input-block">
+                    <input type="text" name="gpUrl" autocomplete="off" class="layui-input" value="#(project.gpUrl??)">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">公众号或微网址名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="gpThirdName" autocomplete="off" class="layui-input" value="#(project.gpThirdName??)">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">跳转连接</label>
+                <div class="layui-input-block">
+                    <input type="text" name="gpMiddleUrl" autocomplete="off" class="layui-input" value="#(project.gpMiddleUrl??)">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">编码次数</label>
+                <div class="layui-input-block">
+                    <input type="text" name="gpEncode" autocomplete="off" class="layui-input" value="#(project.gpEncode??)">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">皮肤配置</label>
+                <div class="layui-input-block">
+                    <input type="text" name="gpSkin" autocomplete="off" class="layui-input" value="#(project.gpSkin??)">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span style="color: red">*</span>服务时间</label>
+                    <div class="layui-input-inline">
+                        <input type="hidden" name="gpStartDate" id="gpStartDate">
+                        <input type="text" class="layui-input" id="gpStartDateStr"
+                               lay-verify="required" lay-reqtext="开始时间是必填项" placeholder="yyyy-MM-dd HH:mm:ss"
+                               value='#(longToString(project.gpStartDate??,"yyyy-MM-dd HH:mm:ss"))' readonly>
+                    </div>
+                    <div class="layui-form-mid">-</div>
+                    <div class="layui-input-inline">
+                        <input type="hidden" name="gpEndDate" id="gpEndDate">
+                        <input type="text" class="layui-input" id="gpEndDateStr"
+                               lay-verify="required" lay-reqtext="结束时间是必填项" placeholder="yyyy-MM-dd HH:mm:ss"
+                               value='#(longToString(project.gpEndDate??,"yyyy-MM-dd HH:mm:ss"))' readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn layui-btn-checked" lay-submit="" lay-filter="layuiForm">提交</button>
+                </div>
+            </div>
+        </form>
+        <div class="layui-form-item" style="position: absolute;margin-left: 600px;margin-top: -40px">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal"
+                        onclick="javascript:window.location.href='admin/project/list'">取消
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    layui.use(['form', 'laydate'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            laydate = layui.laydate;
+        //服务时间选择器
+        initTimeRange(layui, "gpStartDateStr", "gpEndDateStr", "gpStartDate", "gpEndDate")
+    });
+
+</script>
+</body>
+#end

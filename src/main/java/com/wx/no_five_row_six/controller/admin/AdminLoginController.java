@@ -30,7 +30,7 @@ public class AdminLoginController {
 
     @RequestMapping(value = {"", "/index"})
     public String index(ModelMap mm) {
-        return "index";
+        return "admin/index";
     }
 
     @RequestMapping(value = {"", "/login"}, method = RequestMethod.GET)
@@ -55,6 +55,7 @@ public class AdminLoginController {
             userModel.setId(user.getSuId());
             userModel.setName(user.getSuLoginName());
             userModel.setShowName(user.getSuName());
+            userModel.setUserHead(user.getSuHeadImg());
             HttpSession session = request.getSession(true);
             if (session.getAttribute(AdminUserUtil.ADMIN_USER_LOGIN_SESSION) != null) {
                 session.removeAttribute(AdminUserUtil.ADMIN_USER_LOGIN_SESSION);

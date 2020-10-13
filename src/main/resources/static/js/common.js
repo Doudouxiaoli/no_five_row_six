@@ -10,7 +10,7 @@ function uploadImg(layui, btnId, imgType, tmpPath, dbPath) {
     var upload = layui.upload;
     var img = upload.render({
         elem: '#' + btnId + '' //绑定元素
-        , url: 'admin/upload/uploadPic'
+        , url: 'upPic/uploadPic'
         , data: {
             type: $("#" + imgType + "").val()
         }

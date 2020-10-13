@@ -42,7 +42,10 @@ public class UploadController {
     public JsonNode uploadPic(String base64img, MultipartFile file, String type) {
         String path = null;
         String folderPath = null;
-        if (type != null && type.equals(Const.PIC_TYPE_ALBUM)) {
+        if (type != null && type.equals(Const.PIC_TYPE_USER_SYSTEM)){
+            //系统用户头像
+            folderPath = Const.PIC_PATH_USER_SYSTEM;
+        }else if (type != null && type.equals(Const.PIC_TYPE_ALBUM)) {
             // 专辑图片存储路径
             folderPath = Const.PIC_PATH_ALBUM;
         } else if(type!=null&&type.equals(Const.PIC_TYPE_DANCE)){

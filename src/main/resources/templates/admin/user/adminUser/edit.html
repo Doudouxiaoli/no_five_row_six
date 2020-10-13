@@ -1,39 +1,147 @@
 <!DOCTYPE html>
-#@admin_layout()
+#@layout_admin()
 
 #define title()
-<title>五排六号-管理员>编辑</title>
+<title>第五排第六号</title>
 #end
-
+#define css()
+#end
 #define main()
-    <div class="wrapper">
-        #include("../../header.html", navId="nav_admin_user", subNavId="")
-        <div class="content-wrapper">
-        <section class="content-header">
-            <h1>
-                编辑用户
-            </h1>
-            <ol class="breadcrumb">
-                <li><a href="admin/adminUser/list"><i class="fa fa-user"></i>用户列表</a></li>
-                <li class="active">编辑用户</li>
-            </ol>
-        </section>
-
-        <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">用户内容</h3>
-                        </div>
-                        <form class="form-horizontal" role="form" id="userForm" name="userForm" method="post" action="admin/adminUser/userUpdate">
-                            #include("form.html")
-                        </form>
-                    </div>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    #include("../../header.html")
+    <div class="layui-body">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend class="page-title">用户编辑</legend>
+        </fieldset>
+        <form class="layui-form" action="admin/sysUser/save" method="post" style="width: 800px">
+            <input name="suId" type="hidden" value="#(user.suId??)"/>
+            <input name="suPassword" type="hidden" value="#(user.suPassword??)" id="suPassword"/>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red">*</span>登录名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="suLoginName" lay-verify="required" lay-reqtext="登录名是必填项" autocomplete="off"
+                           class="layui-input" value="#(user.suLoginName??)">
                 </div>
             </div>
-        </section>
+            <div class="layui-form-item">
+                <label class="layui-form-label">真实姓名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="suName" autocomplete="off" class="layui-input" value="#(user.suName??)">
+                </div>
+            </div>
+            <div class="layui-form-item initPasswordDiv">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-inline" style="width: 480px">
+                    <input type="password" name="password" lay-verify="required|psw" class="layui-input" placeholder="密码必须包含数字和字母,并且不低于8位" id="pwd"
+                           lay-reqtext="密码格式错误">
+                </div>
+                <div class="layui-input-inline">
+                    <img style="width: 20px;height: 20px;margin-top: 10px" src="images/closeEye.png" alt="" onclick="hideShowPsw()" id="pwdImg">
+                </div>
+            </div>
+            <div class="layui-form-item initPasswordDiv">
+                <label class="layui-form-label"><span style="color: red">*</span>确认密码</label>
+                <div class="layui-input-inline" style="width: 480px">
+                    <input type="password" lay-verify="required|samePsw" class="layui-input" id="pwd2" lay-reqtext="两次密码不一致">
+                </div>
+            </div>
+            <div class="layui-form-item" id="resetPasswordDiv">
+                <div class="layui-input-block">
+                    <button class="layui-btn layui-btn-danger" id="changePasswordDiv" type="button">重置密码</button>
+                </div>
+            </div>
+            <input hidden name="type" id="imgType" value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_USER_SYSTEM)">
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red">*</span>头像<span>692*142</span></label>
+                <div style="width: unset;">
+                    <button type="button" id="uploadImg" class="layui-btn layui-btn-primary">上传</button>
+                    <img style="max-width: 250px;" src="#(user.suHeadImg??)" id="tmpImgPath"/>
+                    <input type="hidden" name="suHeadImg" value="#(user.suHeadImg??)" id="suHeadImg" lay-verify="required"
+                           lay-reqtext="请上传用户头像">
+                    <p class="uploadImgMsg"></p>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn layui-btn-checked" lay-submit="" lay-filter="layuiForm">提交</button>
+                </div>
+            </div>
+        </form>
+        <div class="layui-form-item" style="position: absolute;margin-left: 600px;margin-top: -53px;">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal"
+                        onclick="javascript:window.location.href='admin'">取消
+                </button>
+            </div>
+        </div>
     </div>
-    </div>
-#end
+</div>
+<script type="text/javascript">
+    var pwdImd = document.getElementById("pwdImg");
+    var pwd = document.getElementById("pwd")
+    var pwd2 = document.getElementById("pwd2")
+    var noPassword = #(noPassword ??);
+    judgePassword();
 
+    function judgePassword() {
+        if (noPassword) {
+            $("#resetPasswordDiv").hide();
+            $(".initPasswordDiv").show();
+        } else {
+            $(".initPasswordDiv").hide();
+            $("#pwd").removeAttr("lay-verify");
+            $("#pwd2").removeAttr("lay-verify");
+            $("#resetPasswordDiv").show();
+        }
+    }
+
+    $("#changePasswordDiv").click(function () {
+        noPassword = true;
+        judgePassword();
+        $("#initPasswordDiv label").innerText = "重置密码";
+    });
+
+    //显示隐藏密码输入框文字
+    function hideShowPsw() {
+        if (pwd.type == "password") {
+            pwd.type = "text";
+            pwd2.type = "text";
+            pwdImd.src = "images/openEye.png";
+        } else {
+            pwd.type = "password";
+            pwd2.type = "password";
+            pwdImd.src = "images/closeEye.png";
+        }
+    }
+
+    layui.use(['form', 'upload'], function () {
+        var $ = layui.jquery,
+            form = layui.form;
+        form.verify({
+            samePsw: function (value) {
+                if ($('input[name=password]').val() !== value)
+                    return '两次密码输入不一致！';
+            },
+            psw: [/^(?=.*?[0-9])(?=.*?[a-z])[0-9a-z]{8,}$/]
+        });
+        //头图上传
+        uploadImg(layui, "uploadImg", "imgType", "tmpImgPath", "suHeadImg");
+        //监听提交
+        form.on('submit(layuiForm)', function (data) {
+            if (data.field.password != null) {
+                data.field.suPassword = data.field.password;
+            }
+        });
+        // form.on('submit(changePasswordDiv)', function () {
+        //     console.log("ahhahah")
+        //     noPassword = true;
+        //     $("#initPasswordDiv label").innerText = "重置密码";
+        //     return false;
+        // });
+    });
+
+
+</script>
+</body>
+#end

@@ -9,6 +9,7 @@ public class AdminUserModel implements Serializable {
 	private Long id;
 	private String name;
 	private String showName;
+	private String userHead;
 
 	public Long getId() {
 		return id;
@@ -25,4 +26,11 @@ public class AdminUserModel implements Serializable {
 	public String getShowName() { return showName; }
 	public void setShowName(String showName) { this.showName = showName; }
 
+	public String getUserHead() {
+		return userHead;
+	}
+
+	public void setUserHead(String userHead) {
+		this.userHead = userHead;
+	}
 }

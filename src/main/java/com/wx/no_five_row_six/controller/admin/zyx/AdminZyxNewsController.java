@@ -1,4 +1,4 @@
-package com.wx.no_five_row_six.controller.admin;
+package com.wx.no_five_row_six.controller.admin.zyx;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;

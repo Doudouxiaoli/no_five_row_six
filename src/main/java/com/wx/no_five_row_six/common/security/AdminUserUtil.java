@@ -49,6 +49,9 @@ public class AdminUserUtil {
 	public static String getShowName(){
 		return getLoginUser().getShowName();
 	}
+	public static String getUserHead(){
+		return getLoginUser().getUserHead();
+	}
 	
 	public static Long getUserId(){
 		return getLoginUser().getId();

@@ -69,6 +69,7 @@ public class Const {
     /**
      * web图片存储本地路径 start
      */
+    public static String PIC_PATH_USER_SYSTEM = "up/user/system/pic/"; //系统用户头像
     public static String PIC_PATH_ALBUM = "up/album/pic/";//专辑封面
     public static String PIC_PATH_DANCE = "up/dance/pic/";//舞蹈封面
     public static String PIC_PATH_CONCERT = "up/concert/pic/";//演唱会封面
@@ -93,6 +94,7 @@ public class Const {
     /**
      * web图片存储类型 start
      */
+    public static String PIC_TYPE_USER_SYSTEM = "user_system";//系统用户
     public static String PIC_TYPE_ALBUM = "album";// 专辑
     public static String PIC_TYPE_DANCE = "dance";//舞蹈
     public static String PIC_TYPE_CONCERT = "concert";//演唱会
