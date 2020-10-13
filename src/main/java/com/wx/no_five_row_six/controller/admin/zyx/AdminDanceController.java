@@ -31,7 +31,7 @@ public class AdminDanceController {
 
     @RequestMapping("list")
     public String list() {
-        return "admin/zyx/dance2/list";
+        return "admin/zyx/dance/list";
     }
 
     /**
@@ -92,7 +92,7 @@ public class AdminDanceController {
                 FrsZyxNews dance = danceService.getById(id);
                 mm.addAttribute("dance", dance);
             }
-            return "admin/zyx/dance2/edit";
+            return "admin/zyx/dance/edit";
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.error("后台管理-获取舞蹈异常。", e);

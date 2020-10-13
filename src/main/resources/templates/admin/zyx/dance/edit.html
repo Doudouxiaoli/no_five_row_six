@@ -1,41 +1,89 @@
 <!DOCTYPE html>
-#@admin_layout()
+#@layout_admin()
 
 #define title()
-<title>五排六号-舞蹈>编辑</title>
+<title>第五排第六号</title>
 #end
-#define js()
-<script type="text/javascript" src="../../../../static/lib/uploadPic.js"></script>
+#define css()
 #end
 #define main()
-    <div class="wrapper">
-        #include("../header.html", navId="nav_dance", subNavId="")
-        <div class="content-wrapper">
-        <section class="content-header">
-            <h1>
-                编辑舞蹈
-            </h1>
-            <ol class="breadcrumb">
-                <li><a href="admin/dance/list"><i class="fa fa-music"></i>舞蹈列表</a></li>
-                <li class="active">编辑舞蹈</li>
-            </ol>
-        </section>
-
-        <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">舞蹈内容</h3>
-                        </div>
-                        <form class="form-horizontal" role="form" id="danceForm" name="danceForm" method="post" action="/admin/dance/saveOrUpdate">
-                            #include("form.html")
-                        </form>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    #include("../../header.html",navId="nav_dance")
+    <div class="layui-body">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend class="page-title">#(title??)</legend>
+        </fieldset>
+        <form class="layui-form" action="admin/zyx/dance/save" method="post" style="width: 800px">
+            <input name="znId" type="hidden" value="#(dance.znId??)"/>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red">*</span>舞蹈名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="znTitle" lay-verify="required" lay-reqtext="舞蹈名称是必填项" autocomplete="off"
+                           class="layui-input" value="#(dance.znTitle??)">
+                </div>
+            </div>
+            <input type="text" id="znFromId" value="#(dance.znFromId??)">
+            <div class="layui-form-item">
+                <label class="layui-form-label">舞蹈来源</label>
+                <div class="layui-input-block">
+                    <input type="text" name="znFrom" autocomplete="off" class="layui-input" value="#(dance.znFrom??)">
+                </div>
+            </div>
+            <input hidden name="type" id="imgType" value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_DANCE)">
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red">*</span>封面<span>692*142</span></label>
+                <div style="width: unset;">
+                    <button type="button" id="uploadImg" class="layui-btn layui-btn-primary">上传</button>
+                    <img style="max-width: 250px;" src="#(dance.znThumbnailPath??)" id="tmpImgPath"/>
+                    <input type="hidden" name="znThumbnailPath" value="#(dance.znThumbnailPath??)" id="znThumbnailImg" lay-verify="required"
+                           lay-reqtext="请上传封面">
+                    <p class="uploadImgMsg"></p>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span style="color: red">*</span>时间</label>
+                    <div class="layui-input-inline">
+                        <input type="hidden" name="znDate" id="znDate">
+                        <input type="text" class="layui-input" id="znDateStr"
+                               lay-verify="required" lay-reqtext="演出时间是必填项" placeholder="yyyy-MM-dd"
+                               value='#(longToString(dance.znDate??,"yyyy-MM-dd"))' readonly>
                     </div>
                 </div>
             </div>
-        </section>
+            <div class="layui-form-item">
+                <label class="layui-form-label">视频id</label>
+                <div class="layui-input-block">
+                    <input type="text" name="znVideoPath" autocomplete="off" class="layui-input" value="#(dance.znVideoPath??)">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn layui-btn-checked" lay-submit="" lay-filter="layuiForm">提交</button>
+                </div>
+            </div>
+        </form>
+        <div class="layui-form-item" style="position: absolute;margin-left: 600px;margin-top: -40px">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal"
+                        onclick="javascript:window.location.href='admin/zyx/dance/list'">取消
+                </button>
+            </div>
+        </div>
     </div>
-    </div>
-#end
+</div>
+<script type="text/javascript">
+    layui.use(['form', 'laydate','upload'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            laydate = layui.laydate;
+        //服务时间选择器
+        initTime(layui, "znDateStr", "znDate");
+        //上传封面
+        uploadImg(layui, "uploadImg", "imgType", "tmpImgPath", "znThumbnailImg");
+    });
 
+</script>
+</body>
+#end
