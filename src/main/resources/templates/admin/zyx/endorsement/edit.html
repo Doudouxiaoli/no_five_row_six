@@ -5,11 +5,16 @@
 <title>第五排第六号</title>
 #end
 #define css()
+<style type="text/css">
+    .layui-table, .layui-table-view {
+        margin:0;
+    }
+</style>
 #end
 #define main()
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
-    #include("../../header.html",navId="nav_endorsement")
+    #include("../../header.html",navId="nav_endorsement #if(0==tagId) subNavId="nav_endorsement_clothes" #end ")
     <div class="layui-body">
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
             <legend class="page-title">#(title??)</legend>

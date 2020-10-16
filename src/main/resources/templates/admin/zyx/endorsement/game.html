@@ -15,12 +15,15 @@
         height: auto !important;
         white-space: normal;
     }
+    .layui-table, .layui-table-view {
+        margin:0;
+    }
 </style>
 #end
 #define main()
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
-    #include("../../header.html",navId="nav_endorsement")
+    #include("../../header.html",navId="nav_endorsement",subNavId="nav_endorsement_game")
     <div class="layui-body" style="top:50px">
         <table class="layui-hide" lay-filter="dataTale" id="item"></table>
     </div>

@@ -40,23 +40,29 @@
 <div class="layui-side layui-side-menu layui-bg-black">
     <div class="layui-side-scroll">
         <ul class="layui-nav layui-nav-tree">
-            <li class="layui-nav-item" id="nav_dance">
-                <a href="admin/zyx/dance/list">
-                    <i class="iconfont layui-iconfont-dance"></i>
-                    <span>舞蹈</span>
-                </a>
+            <li class="layui-nav-item">
+                <dd id="nav_dance">
+                    <a href="admin/zyx/dance/list">
+                        <i class="iconfont layui-iconfont-dance"></i>
+                        <span>舞蹈</span>
+                    </a>
+                </dd>
             </li>
-            <li class="layui-nav-item" id="nav_album">
-                <a href="/admin/zyx/album/list">
-                    <i class="iconfont layui-iconfont-album"></i>
-                    <span>专辑</span>
-                </a>
+            <li class="layui-nav-item">
+                <dd id="nav_album">
+                    <a href="/admin/zyx/album/list">
+                        <i class="iconfont layui-iconfont-album"></i>
+                        <span>专辑</span>
+                    </a>
+                </dd>
             </li>
-            <li class="layui-nav-item" id="nav_concert">
-                <a href="admin/zyx/concert/list">
-                    <i class="iconfont layui-iconfont-concert"></i>
-                    <span>演唱会</span>
-                </a>
+            <li class="layui-nav-item">
+                <dd  id="nav_concert">
+                    <a href="admin/zyx/concert/list">
+                        <i class="iconfont layui-iconfont-concert"></i>
+                        <span>演唱会</span>
+                    </a>
+                </dd>
             </li>
             <li class="layui-nav-item" id="nav_endorsement">
                 <a href="javascript:;">
@@ -65,17 +71,9 @@
                 </a>
                 <dl class="layui-nav-child">
                     <dd id="nav_endorsement_food"><a href="admin/zyx/endorsement/list?tagId=0"><span>食物</span></a></dd>
-                </dl>
-                <dl class="layui-nav-child">
                     <dd id="nav_endorsement_makeup"><a href="admin/zyx/endorsement/list?tagId=1"><span>美妆</span></a></dd>
-                </dl>
-                <dl class="layui-nav-child">
                     <dd id="nav_endorsement_clothes"><a href="admin/zyx/endorsement/list?tagId=2"><span>服装</span></a></dd>
-                </dl>
-                <dl class="layui-nav-child">
                     <dd id="nav_endorsement_luxury"><a href="admin/zyx/endorsement/list?tagId=3"><span>轻奢品</span></a></dd>
-                </dl>
-                <dl class="layui-nav-child">
                     <dd id="nav_endorsement_game"><a href="admin/zyx/endorsement/list?tagId=4"><span>游戏</span></a></dd>
                 </dl>
             </li>
@@ -86,11 +84,7 @@
                 </a>
                 <dl class="layui-nav-child">
                     <dd id="nav_film_variety"><a href="admin/adminUser/list"><span>综艺</span></a></dd>
-                </dl>
-                <dl class="layui-nav-child">
-                    <dd id="nav_film_movie"><a href="/admin/zyx/film/list?tagId="><span>电影</span></a></dd>
-                </dl>
-                <dl class="layui-nav-child">
+                    <dd id="nav_film_movie"><a href="/admin/zyx/film/list?tagId=1"><span>电影</span></a></dd>
                     <dd id="nav_film_tv"><a href="admin/adminUser/list"><span>电视剧</span></a></dd>
                 </dl>
             </li>
@@ -128,7 +122,6 @@
     if (subNavId) {
         $("#" + subNavId).addClass("layui-this");
     }
-
     //    收缩侧边栏
     var bl = $("#layout-admin-shrinkage").hasClass("layui-icon-shrink-right");
     if (bl) {

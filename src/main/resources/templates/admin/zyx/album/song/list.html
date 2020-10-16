@@ -7,17 +7,24 @@
 
 #define css()
 <style type="text/css">
-    .searchIpt{
+    .searchIpt {
         top: -6px;
     }
 
+    .layui-table-cell {
+        height: auto !important;
+        white-space: normal;
+    }
+    .layui-table, .layui-table-view {
+        margin:0;
+    }
 </style>
 #end
 #define main()
 <body class="layui-layout-body">
 
 <div class="layui-layout layui-layout-admin">
-    #include("../../../header.html",navId="nav_album")
+    #include("../../../header.html",navId="nav_album",subNavId="nav_song")
     <div class="layui-body" style="top:50px">
         <table class="layui-hide" lay-filter="dataTale" id="item"></table>
     </div>
