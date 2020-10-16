@@ -1,41 +1,102 @@
 <!DOCTYPE html>
-#@admin_layout()
+#@layout_admin()
 
 #define title()
-<title>五排六号-代言>食品编辑</title>
+<title>第五排第六号</title>
 #end
-#define js()
-<script type="text/javascript" src="../../../../static/lib/uploadPic.js"></script>
+#define css()
 #end
 #define main()
-<div class="wrapper">
-    #include("../header.html", navId="nav_endorsement",subNavId="")
-    <div class="content-wrapper">
-        <section class="content-header">
-            <h1>
-                编辑#(typeName)
-            </h1>
-            <ol class="breadcrumb">
-                <li><a href="admin/endorsement/list?type=#(type)"><i class="fa fa-cutlery"></i>食品列表</a></li>
-                <li class="active">编辑#(typeName)</li>
-            </ol>
-        </section>
-
-        <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">#(typeName)内容</h3>
-                        </div>
-                        <form class="form-horizontal" role="form" id="endorsementForm" name="endorsementForm" method="post" action="/admin/endorsement/saveOrUpdate">
-                            #include("form.html")
-                        </form>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    #include("../../header.html",navId="nav_endorsement")
+    <div class="layui-body">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend class="page-title">#(title??)</legend>
+        </fieldset>
+        <form class="layui-form" action="admin/zyx/endorsement/save" method="post" style="width: 800px">
+            <input name="znId" type="hidden" value="#(endorsement.znId??)"/>
+            <input name="ZnTagIds" type="hidden" value="#(tagId??)"/>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red">*</span>名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="znTitle" lay-verify="required" lay-reqtext="舞蹈名称是必填项" autocomplete="off"
+                           class="layui-input" value="#(endorsement.znTitle??)">
+                </div>
+            </div>
+            <input type="hidden" id="imgType"
+                   #if(type==0)
+                   value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_ENDORSEMENT_FOOD)"/>
+            #else if(type==1)
+            value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_ENDORSEMENT_MAKEUP)"/>
+            #else if(type==2)
+            value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_ENDORSEMENT_CLOTHES)"/>
+            #else if(type==3)
+            value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_ENDORSEMENT_LUXURY)"/>
+            #else
+            value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_ENDORSEMENT_GAME)"/>
+            #end
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red">*</span>封面<span>692*142</span></label>
+                <div style="width: unset;">
+                    <button type="button" id="uploadImg" class="layui-btn layui-btn-primary">上传</button>
+                    <img style="max-width: 250px;" src="#(endorsement.znThumbnailPath??)" id="tmpImgPath"/>
+                    <input type="hidden" name="znThumbnailPath" value="#(endorsement.znThumbnailPath??)" id="znThumbnailImg"
+                           lay-verify="required"
+                           lay-reqtext="请上传封面">
+                    <p class="uploadImgMsg"></p>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span style="color: red">*</span>代言时间</label>
+                    <div class="layui-input-inline">
+                        <input type="hidden" name="znStartTime" id="znStartTime">
+                        <input type="text" class="layui-input" id="znStartTimeStr"
+                               lay-verify="required" lay-reqtext="开始时间是必填项" placeholder="yyyy-MM-dd HH:mm:ss"
+                               value='#(longToString(news.znStartTime??,"yyyy-MM-dd HH:mm:ss"))' readonly>
+                    </div>
+                    <div class="layui-form-mid">-</div>
+                    <div class="layui-input-inline">
+                        <input type="hidden" name="znEndTime" id="znEndTime">
+                        <input type="text" class="layui-input" id="znEndTimeStr"
+                               lay-verify="required" lay-reqtext="报道结束时间是必填项" placeholder="yyyy-MM-dd HH:mm:ss"
+                               value="#(longToString(news.znEndTime??,'yyyy-MM-dd HH:mm:ss'))" readonly>
                     </div>
                 </div>
             </div>
-        </section>
+            <div class="layui-form-item">
+                <label class="layui-form-label">视频id</label>
+                <div class="layui-input-block">
+                    <input type="text" name="znVideoPath" autocomplete="off" class="layui-input" value="#(endorsement.znVideoPath??)">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="layuiForm">提交</button>
+                </div>
+            </div>
+        </form>
+        <div class="layui-form-item" style="position: absolute;margin-left: 600px;margin-top: -40px">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal"
+                        onclick="javascript:window.location.href='admin/zyx/endorsement/list?tagId=#(tagId??)'">取消
+                </button>
+            </div>
+        </div>
     </div>
 </div>
-#end
+<script type="text/javascript">
+    layui.use(['form', 'laydate', 'upload'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            laydate = layui.laydate;
+        //服务时间选择器
+        initTimeRange(layui, "znStartTimeStr", "znEndTimeStr", "znStartTime", "znEndTime");
+        //上传封面
+        uploadImg(layui, "uploadImg", "imgType", "tmpImgPath", "znThumbnailImg");
+    });
 
+</script>
+</body>
+#end

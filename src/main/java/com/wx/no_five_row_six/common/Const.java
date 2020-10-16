@@ -2,9 +2,6 @@ package com.wx.no_five_row_six.common;
 
 import org.springframework.mobile.device.LiteDeviceResolver;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author gx
  * @date 2018/11/15
@@ -75,9 +72,9 @@ public class Const {
     public static String PIC_PATH_CONCERT = "up/concert/pic/";//演唱会封面
     public static String PIC_PATH_CONCERT_PROGRAM = "up/concert/program/pic/";//演唱会节目封面
 
-    public static String PIC_PATH_MOLIVIDEO_MOVIE = "up/molivideo/movie/pic/";//影视作品中电影海报
-    public static String PIC_PATH_MOLIVIDEO_TV = "up/molivideo/tv/pic/";//影视作品中电视剧海报
-    public static String PIC_PATH_MOLIVIDEO_VARIETY = "up/molivideo/variety/pic/";//影视作品中综艺海报
+    public static String PIC_PATH_FILM_MOVIE = "up/FILM/movie/pic/";//影视作品中电影海报
+    public static String PIC_PATH_FILM_TV = "up/FILM/tv/pic/";//影视作品中电视剧海报
+    public static String PIC_PATH_FILM_VARIETY = "up/FILM/variety/pic/";//影视作品中综艺海报
 
     public static String PIC_PATH_ENDORSEMENT_FOOD = "up/endorsement/food/pic/";//代言食物宣传照
     public static String PIC_PATH_ENDORSEMENT_MAKEUP = "up/endorsement/makeup/pic/";//代言美妆宣传照
@@ -99,9 +96,9 @@ public class Const {
     public static String PIC_TYPE_DANCE = "dance";//舞蹈
     public static String PIC_TYPE_CONCERT = "concert";//演唱会
     public static String PIC_TYPE_CONCERT_PROGRAM = "program";//演唱会节目
-    public static String PIC_TYPE_MOLIVIDEO_MOVIE = "movie";//电影
-    public static String PIC_TYPE_MOLIVIDEO_TV = "tv";//电视剧
-    public static String PIC_TYPE_MOLIVIDEO_VARIETY = "variety";//综艺
+    public static String PIC_TYPE_FILM_MOVIE = "movie";//电影
+    public static String PIC_TYPE_FILM_TV = "tv";//电视剧
+    public static String PIC_TYPE_FILM_VARIETY = "variety";//综艺
     public static String PIC_TYPE_ENDORSEMENT_FOOD = "food";//食物
     public static String PIC_TYPE_ENDORSEMENT_MAKEUP = "makeup";//美妆
     public static String PIC_TYPE_ENDORSEMENT_CLOTHES = "clothes";//服饰
@@ -115,72 +112,5 @@ public class Const {
     public static String SYS_ENVIRONMENT;
 
     public static LiteDeviceResolver liteDeviceResolver = new LiteDeviceResolver();
-
-    /**
-     * 代言常量
-     */
-    public static Integer ENDORSEMENT_FOOT_ID = 0;
-    public static Integer ENDORSEMENT_MAKEUP_ID = 1;
-    public static Integer ENDORSEMENT_CLOTHES_ID = 2;
-    public static Integer ENDORSEMENT_LUXURY_ID = 3;
-    public static Integer ENDORSEMENT_GAME_ID = 4;
-    /**
-     * 影视作品常量
-     */
-    public static Integer MOLIVIDEO_MOVIE_ID = 1;
-    public static Integer MOLIVIDEO_TV_ID = 2;
-    public static Integer MOLIVIDEO_VARIETY_ID = 3;
-    public static Map<Integer, String> map = new HashMap<>();
-
-    static {
-        map.put(ENDORSEMENT_FOOT_ID, "食物");
-        map.put(ENDORSEMENT_MAKEUP_ID, "美妆");
-        map.put(ENDORSEMENT_CLOTHES_ID, "服饰");
-        map.put(ENDORSEMENT_LUXURY_ID, "轻奢品");
-        map.put(ENDORSEMENT_GAME_ID, "游戏");
-
-        map.put(MOLIVIDEO_MOVIE_ID, "电影");
-        map.put(MOLIVIDEO_TV_ID, "电视剧");
-        map.put(MOLIVIDEO_VARIETY_ID, "综艺");
-    }
-
-    /**
-     * 取值
-     *
-     * @param id
-     * @return
-     */
-    public static String getType(Integer id) {
-        if (map.containsKey(id)) {
-            return map.get(id);
-        }
-        return "";
-    }
-
-    public static Integer MODEL_TYPE_CONCERT = 11;
-    public static Integer MODEL_TYPE_DANCE = 12;
-    public static Integer MODEL_TYPE_SONG = 13;
-    public static Integer MODEL_TYPE_ENDORSEMENT = 14;
-    public static Integer MODEL_TYPE_MOVIE = 15;
-    public static Integer MODEL_TYPE_TV = 16;
-    public static Integer MODEL_TYPE_VARIETY = 17;
-    public static Map<Integer, String> model = new HashMap<>();
-
-    static {
-        map.put(MODEL_TYPE_CONCERT, "演唱会");
-        map.put(MODEL_TYPE_DANCE, "舞蹈");
-        map.put(MODEL_TYPE_SONG, "歌曲");
-        map.put(MODEL_TYPE_ENDORSEMENT, "代言");
-        map.put(MODEL_TYPE_MOVIE, "电影");
-        map.put(MODEL_TYPE_TV, "电视剧");
-        map.put(MODEL_TYPE_VARIETY, "综艺");
-    }
-
-    public static String getModelType(Integer id) {
-        if (map.containsKey(id)) {
-            return map.get(id);
-        }
-        return "";
-    }
 
 }

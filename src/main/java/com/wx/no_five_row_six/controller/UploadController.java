@@ -57,15 +57,15 @@ public class UploadController {
         }else if (type != null && type.equals(Const.PIC_TYPE_CONCERT_PROGRAM)) {
             //演唱会节目图片存储路径
             folderPath = Const.PIC_PATH_CONCERT_PROGRAM;
-        } else if (type != null && type.equals(Const.PIC_TYPE_MOLIVIDEO_MOVIE)) {
+        } else if (type != null && type.equals(Const.PIC_TYPE_FILM_MOVIE)) {
             //作品->电影图片存储路径
-            folderPath = Const.PIC_PATH_MOLIVIDEO_MOVIE;
-        }else if (type != null && type.equals(Const.PIC_TYPE_MOLIVIDEO_TV)) {
+            folderPath = Const.PIC_PATH_FILM_MOVIE;
+        }else if (type != null && type.equals(Const.PIC_TYPE_FILM_TV)) {
             //作品->电视剧图片存储路径
-            folderPath = Const.PIC_PATH_MOLIVIDEO_TV;
-        }else if (type != null && type.equals(Const.PIC_TYPE_MOLIVIDEO_VARIETY)) {
+            folderPath = Const.PIC_PATH_FILM_TV;
+        }else if (type != null && type.equals(Const.PIC_TYPE_FILM_VARIETY)) {
             //作品->综艺图片存储路径
-            folderPath = Const.PIC_PATH_MOLIVIDEO_VARIETY;
+            folderPath = Const.PIC_PATH_FILM_VARIETY;
         }else if (type != null && type.equals(Const.PIC_TYPE_ENDORSEMENT_FOOD)) {
             //代言->食物图片存储路径
             folderPath = Const.PIC_PATH_ENDORSEMENT_FOOD;

@@ -1,4 +1,4 @@
-package com.wx.no_five_row_six.controller.admin;
+package com.wx.no_five_row_six.controller.admin.zyx;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -22,25 +22,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author dxl
- * @version 2020/10/10 13:27
- * @desc 后台管理-舞蹈
+ * @version 2020/10/12 13:27
+ * @desc 后台管理-专辑
  */
 @Controller
-@RequestMapping("/admin/zyx/dance")
-public class AdminDanceController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AdminDanceController.class);
+@RequestMapping("/admin/zyx/album")
+public class AdminAlbumController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdminAlbumController.class);
 
     @Autowired
-    private IFrsZyxNewsService danceService;
-
+    private IFrsZyxNewsService albumService;
 
     @RequestMapping("list")
     public String list() {
-        return "admin/zyx/dance/list";
+        return "admin/zyx/album/list";
     }
 
     /**
-     * 舞蹈列表
+     * 专辑列表
      *
      * @param mm
      * @param keyword
@@ -62,23 +62,22 @@ public class AdminDanceController {
         try {
             // 查询条件
             queryWrapper.lambda().like(StringUtils.isNotEmpty(keyword), FrsZyxNews::getZnTitle, keyword)
-                    .or()
-                    .like(StringUtils.isNotEmpty(keyword), FrsZyxNews::getZnFrom, keyword)
-                    .eq(FrsZyxNews::getZnNcId, ZyxNewsConst.DANCE)
+                    .or().like(StringUtils.isNotEmpty(keyword), FrsZyxNews::getZnAddress, keyword)
+                    .eq(FrsZyxNews::getZnNcId, ZyxNewsConst.ALBUM)
                     .orderByDesc(FrsZyxNews::getZnDate);
-            page = danceService.page(page, queryWrapper);
+            page = albumService.page(page, queryWrapper);
             return JacksonMapper.newCountInstance(page);
         } catch (Exception e) {
             e.printStackTrace();
-            LOGGER.error("后台管理-舞蹈列表异常", e);
-            mm.addAttribute("errMsg", "舞蹈列表异常");
-            return JacksonMapper.newErrorInstance("后台管理-舞蹈列表异常");
+            LOGGER.error("后台管理-专辑列表异常", e);
+            mm.addAttribute("errMsg", "专辑列表异常");
+            return JacksonMapper.newErrorInstance("后台管理-专辑列表异常");
         }
 
     }
 
     /**
-     * 编辑舞蹈界面
+     * 编辑专辑界面
      *
      * @param id
      * @return
@@ -87,52 +86,52 @@ public class AdminDanceController {
     public String edit(ModelMap mm, Long id) {
         try {
             if (null == id) {
-                mm.addAttribute("title", "舞蹈添加");
+                mm.addAttribute("title", "专辑添加");
             } else {
-                mm.addAttribute("title", "舞蹈编辑");
-                FrsZyxNews dance = danceService.getById(id);
-                mm.addAttribute("dance", dance);
+                mm.addAttribute("title", "专辑编辑");
+                FrsZyxNews album = albumService.getById(id);
+                mm.addAttribute("album", album);
             }
-            return "admin/zyx/dance/edit";
+            return "admin/zyx/album/edit";
         } catch (Exception e) {
             e.printStackTrace();
-            LOGGER.error("后台管理-获取舞蹈异常。", e);
-            mm.addAttribute("errMsg", "获取舞蹈异常");
+            LOGGER.error("后台管理-获取专辑异常。", e);
+            mm.addAttribute("errMsg", "获取专辑异常");
             return "error/error";
         }
     }
 
     /**
-     * 保存舞蹈
+     * 保存专辑
      *
-     * @param dance
+     * @param album
      * @return
      */
     @RequestMapping("save")
-    public String save(ModelMap mm, FrsZyxNews dance) {
+    public String save(ModelMap mm, FrsZyxNews album) {
         try {
-            if (dance.getZnId() == null) {
-                dance.setZnNcId(ZyxNewsConst.DANCE);
-                dance.setZnCreateTime(TimeUtil.dateToLong());
-                dance.setZnIsValid(ZyxNewsConst.VALID);
-                danceService.save(dance);
+            if (album.getZnId() == null) {
+                album.setZnNcId(ZyxNewsConst.ALBUM);
+                album.setZnCreateTime(TimeUtil.dateToLong());
+                album.setZnIsValid(ZyxNewsConst.VALID);
+                albumService.save(album);
             } else {
-                dance.setZnUpdateTime(TimeUtil.dateTolong());
-                dance.setZnUpdateUserId(AdminUserUtil.getUserId());
-                dance.setZnUpdateUserName(AdminUserUtil.getShowName());
-                danceService.updateById(dance);
+                album.setZnUpdateTime(TimeUtil.dateTolong());
+                album.setZnUpdateUserId(AdminUserUtil.getUserId());
+                album.setZnUpdateUserName(AdminUserUtil.getShowName());
+                albumService.updateById(album);
             }
             return "redirect:list";
         } catch (Exception e) {
             e.printStackTrace();
-            LOGGER.error("后台管理-保存或修改舞蹈异常。", e);
-            mm.addAttribute("errMsg", "保存或修改舞蹈异常");
+            LOGGER.error("后台管理-保存或修改专辑异常。", e);
+            mm.addAttribute("errMsg", "保存或修改专辑异常");
             return "error/error";
         }
     }
 
     /**
-     * 删除舞蹈
+     * 删除专辑
      *
      * @param id
      * @return
@@ -141,14 +140,14 @@ public class AdminDanceController {
     @RequestMapping("del")
     public JsonNode del(Long id) {
         try {
-            FrsZyxNews dance = danceService.getById(id);
-            dance.setZnIsValid(ZyxNewsConst.NOT_VALID);
-            danceService.updateById(dance);
+            FrsZyxNews album = albumService.getById(id);
+            album.setZnIsValid(ZyxNewsConst.NOT_VALID);
+            albumService.updateById(album);
             return JacksonMapper.newSuccessInstance();
         } catch (Exception e) {
             e.printStackTrace();
-            LOGGER.error("后台管理-删除舞蹈异常。", e);
-            return JacksonMapper.newErrorInstance("删除舞蹈异常");
+            LOGGER.error("后台管理-删除专辑异常。", e);
+            return JacksonMapper.newErrorInstance("删除专辑异常");
         }
     }
 
@@ -162,14 +161,14 @@ public class AdminDanceController {
     @RequestMapping("reBack")
     public JsonNode reBack(Long id) {
         try {
-            FrsZyxNews dance = danceService.getById(id);
-            dance.setZnIsValid(ZyxNewsConst.VALID);
-            danceService.updateById(dance);
+            FrsZyxNews album = albumService.getById(id);
+            album.setZnIsValid(ZyxNewsConst.VALID);
+            albumService.updateById(album);
             return JacksonMapper.newSuccessInstance();
         } catch (Exception e) {
             e.printStackTrace();
-            LOGGER.error("后台管理-恢复舞蹈异常。", e);
-            return JacksonMapper.newErrorInstance("恢复舞蹈异常");
+            LOGGER.error("后台管理-恢复专辑异常。", e);
+            return JacksonMapper.newErrorInstance("恢复专辑异常");
         }
     }
 }

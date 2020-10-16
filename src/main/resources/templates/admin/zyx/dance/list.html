@@ -2,10 +2,16 @@
 #@layout_admin()
 
 #define title()
-<title>指南内容自助服务平台</title>
+<title>第五排第六号</title>
 #end
 
 #define css()
+<style type="text/css">
+    .searchIpt{
+        top: -6px;
+    }
+
+</style>
 #end
 #define main()
 <body class="layui-layout-body">
@@ -22,13 +28,13 @@
           id="searchForm"
           method="post">
         <span class="page-title">舞蹈列表</span>
-        <div class="layui-input-inline">
+        <div class="layui-input-inline searchIpt">
             <input type="text" id="keyword" name="keyword" value="#(keyword)" class="form-control page-search" placeholder="节目名称"/>
         </div>
-        <button type="button" id="search" class="layui-btn layui-btn-sm" lay-submit lay-filter="search"><i
+        <button type="button" id="search" class="layui-btn layui-btn-sm" lay-submit lay-filter="search" style="margin-top: -10px"><i
                 class="layui-icon">&#xe615;</i>
         </button>
-        <button type="button" class="layui-btn layui-btn-sm"
+        <button type="button" class="layui-btn layui-btn-sm" style="margin-top: -10px"
                 onclick="javascript:window.location.href='admin/zyx/dance/edit'">添加
         </button>
     </form>
@@ -41,7 +47,7 @@
             htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="rec">恢复</a>';
         } else {
             htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
-            htmls += '<a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>'
+            htmls += '<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>'
         }
         return htmls;
     }
@@ -58,13 +64,13 @@
             , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             , defaultToolbar: {}
             , page: {
-                theme: '#5762A4'
+                theme: ''
             }
             , autoSort: false
             , loading: false
             , cols: [[
                 {
-                    title: '序号', width: 260, fixed: true, align: 'center', templet: function (d) {
+                    title: '序号', width: 260, align: 'center', templet: function (d) {
                         return d.LAY_INDEX;
                     }
                 }

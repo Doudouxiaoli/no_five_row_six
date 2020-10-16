@@ -34,57 +34,59 @@ public class ZyxNewsConst {
      */
     public static final Long ENDORSEMENT = 5L;
     /**
-     * 电视剧
+     * 影视
      */
-    public static final Long TV = 6L;
-    /**
-     * 电影
-     */
-    public static final Long MOVIE = 7L;
-    /**
-     * 综艺
-     */
-    public static final Long VARIETY = 8L;
+    public static final Long FILM = 6L;
+    public static Map<Long, String> moduleNameMap = new HashMap<>();
+
+    static {
+        moduleNameMap.put(ALBUM, "专辑");
+        moduleNameMap.put(SONG, "歌曲");
+        moduleNameMap.put(DANCE, "舞蹈");
+        moduleNameMap.put(CONCERT, "演唱会");
+        moduleNameMap.put(PROGRAM, "节目单");
+        moduleNameMap.put(ENDORSEMENT, "代言");
+        moduleNameMap.put(FILM, "影视");
+    }
 
     /**
-     * web图片存储本地路径 start
+     * 取模块名称
+     *
+     * @param id
+     * @return
      */
-    public static String PIC_PATH_ALBUM = "up/zyx/album/pic/";//专辑封面
-    public static String PIC_PATH_DANCE = "up/zyx/dance/pic/";//舞蹈封面
-    public static String PIC_PATH_CONCERT = "up/zyx/concert/pic/";//演唱会封面
-    public static String PIC_PATH_CONCERT_PROGRAM = "up/zyx/concert/program/pic/";//演唱会节目封面
+    public static String getModelName(Long id) {
+        if (moduleNameMap.containsKey(id)) {
+            return moduleNameMap.get(id);
+        }
+        return "";
+    }
 
-    public static String PIC_PATH_MOVIE = "up/zyx/movie/pic/";//电影海报
-    public static String PIC_PATH_TV = "up/zyx/tv/pic/";//电视剧海报
-    public static String PIC_PATH_VARIETY = "up/zyx/variety/pic/";//综艺海报
+    public static Map<Long, String> moduleUrlMap = new HashMap<>();
 
-    public static String PIC_PATH_ENDORSEMENT_FOOD = "up/zyx/endorsement/food/pic/";//代言食物宣传照
-    public static String PIC_PATH_ENDORSEMENT_MAKEUP = "up/zyx/endorsement/makeup/pic/";//代言美妆宣传照
-    public static String PIC_PATH_ENDORSEMENT_CLOTHES = "up/zyx/endorsement/clothes/pic/";//代言服饰宣传照
-    public static String PIC_PATH_ENDORSEMENT_LUXURY = "up/zyx/endorsement/luxury/pic/";//代言轻奢品宣传照
-    public static String PIC_PATH_ENDORSEMENT_GAME = "up/zyx/endorsement/game/pic/";//代言游戏宣传照
-
-    /** web图片存储本地路径 end */
-
+    static {
+        moduleUrlMap.put(ALBUM, "admin/zyx/album");
+        moduleUrlMap.put(SONG, "admin/zyx/song");
+        moduleUrlMap.put(DANCE, "admin/zyx/dance");
+        moduleUrlMap.put(CONCERT, "admin/zyx/concert");
+        moduleUrlMap.put(PROGRAM, "admin/zyx/program");
+        moduleUrlMap.put(ENDORSEMENT, "admin/zyx/endorsement");
+        moduleUrlMap.put(FILM, "admin/zyx/film");
+    }
 
     /**
-     * web图片存储类型 start
+     * 取模块跳转路径
+     *
+     * @param id
+     * @return
      */
-    public static String PIC_TYPE_ALBUM = "album";// 专辑
-    public static String PIC_TYPE_DANCE = "dance";//舞蹈
-    public static String PIC_TYPE_CONCERT = "concert";//演唱会
-    public static String PIC_TYPE_CONCERT_PROGRAM = "program";//演唱会节目
-    public static String PIC_TYPE_MOVIE = "movie";//电影
-    public static String PIC_TYPE_TV = "tv";//电视剧
-    public static String PIC_TYPE_VARIETY = "variety";//综艺
-    public static String PIC_TYPE_ENDORSEMENT_FOOD = "food";//食物
-    public static String PIC_TYPE_ENDORSEMENT_MAKEUP = "makeup";//美妆
-    public static String PIC_TYPE_ENDORSEMENT_CLOTHES = "clothes";//服饰
-    public static String PIC_TYPE_ENDORSEMENT_LUXURY = "luxury";//轻奢品
-    public static String PIC_TYPE_ENDORSEMENT_GAME = "game";//游戏
-    /**
-     * web图片存储类型 end
-     */
+    public static String getModelUrl(Long id) {
+        if (moduleUrlMap.containsKey(id)) {
+            return moduleUrlMap.get(id);
+        }
+        return "";
+    }
+
     /**
      * 现场
      */
@@ -109,6 +111,7 @@ public class ZyxNewsConst {
      * 有效
      */
     public static Integer VALID = 1;
+
     /**
      * 代言常量 代言食物
      */
@@ -129,14 +132,15 @@ public class ZyxNewsConst {
      * 代言游戏
      */
     public static Integer ENDORSEMENT_GAME_ID = 4;
-    public static Map<Integer, String> endorsement = new HashMap<>();
+
+    public static Map<Integer, String> endorsementMap = new HashMap<>();
 
     static {
-        endorsement.put(ENDORSEMENT_FOOT_ID, "食物");
-        endorsement.put(ENDORSEMENT_MAKEUP_ID, "美妆");
-        endorsement.put(ENDORSEMENT_CLOTHES_ID, "服饰");
-        endorsement.put(ENDORSEMENT_LUXURY_ID, "轻奢品");
-        endorsement.put(ENDORSEMENT_GAME_ID, "游戏");
+        endorsementMap.put(ENDORSEMENT_FOOT_ID, "食物");
+        endorsementMap.put(ENDORSEMENT_MAKEUP_ID, "美妆");
+        endorsementMap.put(ENDORSEMENT_CLOTHES_ID, "服饰");
+        endorsementMap.put(ENDORSEMENT_LUXURY_ID, "轻奢品");
+        endorsementMap.put(ENDORSEMENT_GAME_ID, "游戏");
     }
 
     /**
@@ -146,62 +150,41 @@ public class ZyxNewsConst {
      * @return
      */
     public static String getEndorsementType(Integer id) {
-        if (endorsement.containsKey(id)) {
-            return endorsement.get(id);
+        if (endorsementMap.containsKey(id)) {
+            return endorsementMap.get(id);
         }
         return "";
     }
 
-    public static Map<Long, String> moduleNameMap = new HashMap<>();
+    /**
+     * 电视剧
+     */
+    public static final Integer FILM_TV_ID = 0;
+    /**
+     * 电影
+     */
+    public static final Integer FILM_MOVIE_ID = 1;
+    /**
+     * 综艺
+     */
+    public static final Integer FILM_VARIETY_ID = 2;
+    public static Map<Integer, String> filmMap = new HashMap<>();
 
     static {
-        moduleNameMap.put(ALBUM, "专辑");
-        moduleNameMap.put(SONG, "歌曲");
-        moduleNameMap.put(DANCE, "舞蹈");
-        moduleNameMap.put(CONCERT, "演唱会");
-        moduleNameMap.put(PROGRAM, "节目单");
-        moduleNameMap.put(ENDORSEMENT, "代言");
-        moduleNameMap.put(TV, "电视剧");
-        moduleNameMap.put(MOVIE, "电影");
-        moduleNameMap.put(VARIETY, "综艺");
+        filmMap.put(FILM_TV_ID, "电视剧");
+        filmMap.put(FILM_MOVIE_ID, "电影");
+        filmMap.put(FILM_VARIETY_ID, "综艺");
     }
 
     /**
-     * 取模块名称
+     * 取影视作品类型
      *
      * @param id
      * @return
      */
-    public static String getModelName(Long id) {
-        if (moduleNameMap.containsKey(id)) {
-            return moduleNameMap.get(id);
-        }
-        return "";
-    }
-
-    public static Map<Long, String> moduleUrlMap = new HashMap<>();
-
-    static {
-        moduleUrlMap.put(ALBUM, "admin/zyx/ablum");
-        moduleUrlMap.put(SONG, "admin/zyx/song");
-        moduleUrlMap.put(DANCE, "admin/zyx/dance");
-        moduleUrlMap.put(CONCERT, "admin/zyx/dance");
-        moduleUrlMap.put(PROGRAM, "admin/zyx/program");
-        moduleUrlMap.put(ENDORSEMENT, "admin/zyx/endorsement");
-        moduleUrlMap.put(TV, "admin/zyx/tv");
-        moduleUrlMap.put(MOVIE, "admin/zyx/movie");
-        moduleUrlMap.put(VARIETY, "admin/zyx/variety");
-    }
-
-    /**
-     * 取模块跳转路径
-     *
-     * @param id
-     * @return
-     */
-    public static String getModelUrl(Long id) {
-        if (moduleUrlMap.containsKey(id)) {
-            return moduleUrlMap.get(id);
+    public static String getFilmType(Integer id) {
+        if (filmMap.containsKey(id)) {
+            return filmMap.get(id);
         }
         return "";
     }

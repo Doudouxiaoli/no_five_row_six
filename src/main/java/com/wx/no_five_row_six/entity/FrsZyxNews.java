@@ -2,6 +2,7 @@ package com.wx.no_five_row_six.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 
 /**
@@ -14,7 +15,7 @@ import java.io.Serializable;
  */
 public class FrsZyxNews implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @TableId(value = "zn_id", type = IdType.AUTO)
     private Long znId;
@@ -175,9 +176,9 @@ public class FrsZyxNews implements Serializable {
     private String znNcIds;
 
     /**
-     * 内容标签（以逗号分隔）
+     * 标签
      */
-    private String znTagIds;
+    private Integer znTagIds;
 
 
     public Long getZnId() {
@@ -436,50 +437,50 @@ public class FrsZyxNews implements Serializable {
         this.znNcIds = znNcIds;
     }
 
-    public String getZnTagIds() {
+    public Integer getZnTagIds() {
         return znTagIds;
     }
 
-    public void setZnTagIds(String znTagIds) {
+    public void setZnTagIds(Integer znTagIds) {
         this.znTagIds = znTagIds;
     }
 
     @Override
     public String toString() {
         return "FrsZyxNews{" +
-        "znId=" + znId +
-        ", znNcId=" + znNcId +
-        ", znFromId=" + znFromId +
-        ", znFrom=" + znFrom +
-        ", znPace=" + znPace +
-        ", znTitle=" + znTitle +
-        ", znAddress=" + znAddress +
-        ", znTitleOne=" + znTitleOne +
-        ", znTitleTwo=" + znTitleTwo +
-        ", znThumbnailPath=" + znThumbnailPath +
-        ", znCarouselPath=" + znCarouselPath +
-        ", znIntro=" + znIntro +
-        ", znContent=" + znContent +
-        ", znVideoPath=" + znVideoPath +
-        ", znBannerPicPath=" + znBannerPicPath +
-        ", znLength=" + znLength +
-        ", znDate=" + znDate +
-        ", znStartTime=" + znStartTime +
-        ", znEndTime=" + znEndTime +
-        ", znHits=" + znHits +
-        ", znLikeNum=" + znLikeNum +
-        ", znBookNum=" + znBookNum +
-        ", znPublishUserId=" + znPublishUserId +
-        ", znPublishUserName=" + znPublishUserName +
-        ", znCreateTime=" + znCreateTime +
-        ", znUpdateUserId=" + znUpdateUserId +
-        ", znUpdateUserName=" + znUpdateUserName +
-        ", znUpdateTime=" + znUpdateTime +
-        ", znIsValid=" + znIsValid +
-        ", znIsCarousel=" + znIsCarousel +
-        ", znEndDate=" + znEndDate +
-        ", znNcIds=" + znNcIds +
-        ", znTagIds=" + znTagIds +
-        "}";
+                "znId=" + znId +
+                ", znNcId=" + znNcId +
+                ", znFromId=" + znFromId +
+                ", znFrom=" + znFrom +
+                ", znPace=" + znPace +
+                ", znTitle=" + znTitle +
+                ", znAddress=" + znAddress +
+                ", znTitleOne=" + znTitleOne +
+                ", znTitleTwo=" + znTitleTwo +
+                ", znThumbnailPath=" + znThumbnailPath +
+                ", znCarouselPath=" + znCarouselPath +
+                ", znIntro=" + znIntro +
+                ", znContent=" + znContent +
+                ", znVideoPath=" + znVideoPath +
+                ", znBannerPicPath=" + znBannerPicPath +
+                ", znLength=" + znLength +
+                ", znDate=" + znDate +
+                ", znStartTime=" + znStartTime +
+                ", znEndTime=" + znEndTime +
+                ", znHits=" + znHits +
+                ", znLikeNum=" + znLikeNum +
+                ", znBookNum=" + znBookNum +
+                ", znPublishUserId=" + znPublishUserId +
+                ", znPublishUserName=" + znPublishUserName +
+                ", znCreateTime=" + znCreateTime +
+                ", znUpdateUserId=" + znUpdateUserId +
+                ", znUpdateUserName=" + znUpdateUserName +
+                ", znUpdateTime=" + znUpdateTime +
+                ", znIsValid=" + znIsValid +
+                ", znIsCarousel=" + znIsCarousel +
+                ", znEndDate=" + znEndDate +
+                ", znNcIds=" + znNcIds +
+                ", znTagIds=" + znTagIds +
+                "}";
     }
 }

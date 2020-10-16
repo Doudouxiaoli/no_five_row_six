@@ -7,35 +7,40 @@
 
 #define css()
 <style type="text/css">
-    .searchIpt{
+    .searchIpt {
         top: -6px;
     }
 
+    .layui-table-cell {
+        height: auto !important;
+        white-space: normal;
+    }
 </style>
 #end
 #define main()
 <body class="layui-layout-body">
-
-<div class="layui-layout layui-layout-admin" id="programDiv">
-    #include("../../header.html",navId="nav_concert")
+<div class="layui-layout layui-layout-admin">
+    #include("../../header.html",navId="nav_endorsement")
     <div class="layui-body" style="top:50px">
         <table class="layui-hide" lay-filter="dataTale" id="item"></table>
     </div>
 </div>
 
 <script type="text/html" id="toolbarDemo">
-    <form action="admin/zyx/concert/list" class="layui-form layui-col-md12 x-so" name="searchForm"
+    <form action="admin/zyx/endorsement/list" class="layui-form layui-col-md12 x-so" name="searchForm"
           id="searchForm"
           method="post">
-        <span class="page-title">演唱会列表</span>
+        <input type="hidden" name="tagId" value="#(tagId??)">
+        <span class="page-title">游戏列表</span>
         <div class="layui-input-inline searchIpt">
-            <input type="text" id="keyword" name="keyword" value="#(keyword)" class="form-control page-search" placeholder="主题/地点"/>
+            <input type="text" id="keyword" name="keyword" value="#(keyword)" class="form-control page-search" placeholder="游戏名称"/>
         </div>
         <button type="button" id="search" class="layui-btn layui-btn-sm" lay-submit lay-filter="search" style="margin-top: -10px"><i
                 class="layui-icon">&#xe615;</i>
         </button>
         <button type="button" class="layui-btn layui-btn-sm" style="margin-top: -10px"
-                onclick="javascript:window.location.href='admin/zyx/concert/edit'">添加
+                onclick="javascript:window.location.href='admin/zyx/endorsement/edit?tagId=#(tagId??)'">
+            添加
         </button>
     </form>
 </script>
@@ -47,11 +52,13 @@
             htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="rec">恢复</a>';
         } else {
             htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
-            htmls += '<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">编辑</a>'
-            htmls += '<a class="layui-btn layui-btn-xs" lay-event="program">表演曲目</a>'
+            htmls += '<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>'
         }
         return htmls;
     }
+</script>
+<script type="text/html" id="img">
+    <img src="{{d.znThumbnailPath}}" style="width: 60px;height: 80px" alt="">
 </script>
 <script>
     layui.use(['table', 'form', 'util'], function () {
@@ -61,7 +68,7 @@
         table.render({
             id: "tableReload"
             , elem: '#item'
-            , url: 'admin/zyx/concert/listAjax'
+            , url: 'admin/zyx/endorsement/listAjax?tagId=#(tagId??)'
             , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             , defaultToolbar: {}
             , page: {
@@ -71,36 +78,41 @@
             , loading: false
             , cols: [[
                 {
-                    title: '序号', width: 140,align: 'center', templet: function (d) {
+                    title: '序号', width: 150, align: 'center', templet: function (d) {
                         return d.LAY_INDEX;
                     }
                 }
-                , {field: 'znTitle', title: '演唱会主题', align: 'center'}
-                , {field: 'znAddress', width: 200, title: '地点', align: 'center'}
-                , {field: 'znTitleOne', width: 200, title: '场馆', align: 'center'}
+                , {field: 'znTitle', width: 260, title: '服饰名称', align: 'center'}
+                , {field: 'znThumbnailPath', width: 260, title: '定妆海报', align: 'center', templet: "#img"}
                 , {
-                    field: 'znDate', width: 200, title: '时间', align: 'center',
+                    field: 'znStartTime', width: 260, title: '起止时间', align: 'center',
                     templet: function (d) {
-                        if (d.znDate) {
-                            return util.toDateString(d.znDate, 'yyyy-MM-dd HH:mm');
+                        if (d.znStartTime) {
+                            if (d.znEndTime) {
+                                return util.toDateString(d.znStartTime, 'yyyy-MM-dd') + "-" + util.toDateString(d.znEndTime, 'yyyy-MM-dd');
+                            } else {
+                                return util.toDateString(d.znStartTime, 'yyyy-MM-dd') + "-至今";
+                            }
                         } else {
                             return '';
                         }
                     }
                 }
-                , {fixed: 'right', title: '操作', width: 260, templet: onloadTool, align: 'center'}
+                , {fixed: 'right', title: '操作', templet: onloadTool, align: 'center'}
             ]],
         });
         //查询
         form.on('submit(search)', function (data) {
             var formData = data.field;
             var keyword = formData.keyword;
+            var tagId = formData.tagId;
             table.reload('tableReload', {
                 where: {
-                    keyword: keyword
+                    keyword: keyword,
+                    tagId: tagId
                 },
                 method: 'get',
-                url: 'admin/zyx/concert/listAjax',
+                url: 'admin/zyx/endorsement/listAjax',
             });
             $("#keyword").val(keyword);
             return false;
@@ -112,7 +124,7 @@
                 layer.confirm('真的删除这条记录么', function (index) {
                     $.ajax({
                         type: "get",
-                        url: "admin/zyx/concert/del",
+                        url: "admin/zyx/endorsement/del",
                         data: {
                             id: data.znId,
                         },
@@ -132,7 +144,7 @@
                 layer.confirm('确定恢复主键为[' + data.znId + ']的记录么', function (index) {
                     $.ajax({
                         type: "get",
-                        url: "admin/zyx/concert/reBack",
+                        url: "admin/zyx/endorsement/reBack",
                         data: {
                             id: data.znId,
                         },
@@ -150,19 +162,7 @@
                     });
                 });
             } else if (obj.event === 'edit') {
-                window.location.href = 'admin/zyx/concert/edit?id=' + data.znId;
-            } else if (obj.event === "program") {
-                window.location.href ='admin/zyx/program/list?fromId=' + data.znId;
-                // var url = 'admin/zyx/program/listAjax?fromId=' + data.znId;
-                // $.post(url, function (resData) {
-                //     layer.open({
-                //         type: 1,
-                //         title: '演出节目单',
-                //         skin: "layui-layer-molv",
-                //         area: ['86%', '90%'],
-                //         content: 'admin/zyx/concert2/program/list?'
-                //     })
-                // })
+                window.location.href = 'admin/zyx/endorsement/edit?id=' + data.znId;
             }
         });
     });

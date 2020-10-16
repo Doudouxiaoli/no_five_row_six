@@ -1,41 +1,101 @@
 <!DOCTYPE html>
-#@admin_layout()
+#@layout_admin()
 
 #define title()
-<title>五排六号-演唱会>编辑</title>
+<title>第五排第六号</title>
 #end
-#define js()
-<script type="text/javascript" src="../../../../static/lib/uploadPic.js"></script>
+#define css()
 #end
 #define main()
-    <div class="wrapper">
-        #include("../header.html", navId="nav_concert", subNavId="nav_program")
-        <div class="content-wrapper">
-        <section class="content-header">
-            <h1>
-                编辑演唱会
-            </h1>
-            <ol class="breadcrumb">
-                <li><a href="admin/concert/list"><i class="fa fa-music"></i>演唱会列表</a></li>
-                <li class="active">编辑演唱会</li>
-            </ol>
-        </section>
-
-        <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">演唱会内容</h3>
-                        </div>
-                        <form class="form-horizontal" role="form" id="concertForm" name="concertForm" method="post" action="/admin/concert/saveOrUpdate">
-                            #include("form.html")
-                        </form>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    #include("../../header.html",navId="nav_concert")
+    <div class="layui-body">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend class="page-title">#(title??)</legend>
+        </fieldset>
+        <form class="layui-form" action="admin/zyx/concert/save" method="post" style="width: 800px">
+            <input name="znId" type="hidden" value="#(concert.znId??)"/>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red">*</span>演唱会主题</label>
+                <div class="layui-input-block">
+                    <input type="text" name="znTitle" lay-verify="required" lay-reqtext="演唱会主题是必填项" autocomplete="off"
+                           class="layui-input" value="#(concert.znTitle??)">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red">*</span>地点</label>
+                <div class="layui-input-block">
+                    <input type="text" name="znAddress" lay-verify="required" lay-reqtext="演唱会地点是必填项"  autocomplete="off" class="layui-input" value="#(concert.znAddress??)">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">场馆</label>
+                <div class="layui-input-block">
+                    <input type="text" name="znTitleOne" autocomplete="off" class="layui-input" value="#(concert.znTitleOne??)">
+                </div>
+            </div>
+            <input hidden name="type" id="imgType" value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_CONCERT)">
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red">*</span>海报<span>692*142</span></label>
+                <div style="width: unset;">
+                    <button type="button" id="uploadImg" class="layui-btn layui-btn-primary">上传</button>
+                    <img style="max-width: 250px;" src="#(concert.znThumbnailPath??)" id="tmpImgPath"/>
+                    <input type="hidden" name="znThumbnailPath" value="#(concert.znThumbnailPath??)" id="znThumbnailImg" lay-verify="required"
+                           lay-reqtext="请上传海报">
+                    <p class="uploadImgMsg"></p>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span style="color: red">*</span>时间</label>
+                    <div class="layui-input-inline">
+                        <input type="hidden" name="znDate" id="znDate">
+                        <input type="text" class="layui-input" id="znDateStr"
+                               lay-verify="required" lay-reqtext="时间是必填项" placeholder="yyyy-MM-dd HH:mm"
+                               value='#(longToString(concert.znDate??,"yyyy-MM-dd HH:mm"))' readonly>
                     </div>
                 </div>
             </div>
-        </section>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">简介</label>
+                <div class="layui-input-block">
+                    <!-- 加载编辑器的容器 -->
+                    <script id="container" name="znContent" type="text/plain">#(concert.znContent??)</script>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="layuiForm">提交</button>
+                </div>
+            </div>
+        </form>
+        <div class="layui-form-item" style="position: absolute;margin-left: 600px;margin-top: -40px">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal"
+                        onclick="javascript:window.location.href='admin/zyx/concert/list'">取消
+                </button>
+            </div>
+        </div>
     </div>
-    </div>
-#end
+</div>
+<script type="text/javascript">
+    var ue;
+    $(document).ready(function () {
+        ue = UE.getEditor('container', {
+            initialFrameHeight: 200
+        });
+    });
+    layui.use(['form', 'laydate','upload'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            laydate = layui.laydate;
+        //服务时间选择器
+        initTime(layui, "znDateStr", "znDate");
+        //上传封面
+        uploadImg(layui, "uploadImg", "imgType", "tmpImgPath", "znThumbnailImg");
+    });
 
+</script>
+</body>
+#end
