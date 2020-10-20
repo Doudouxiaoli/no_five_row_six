@@ -7,14 +7,26 @@
 #define css()
 <style type="text/css">
     .layui-table, .layui-table-view {
-        margin:0;
+        margin: 0;
     }
 </style>
 #end
 #define main()
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
-    #include("../../header.html",navId="nav_endorsement #if(0==tagId) subNavId="nav_endorsement_clothes" #end ")
+    #if(tagId??==0)
+    #include("../../header.html",navId="nav_endorsement",subNavId="nav_endorsement_food")
+    #else if(tagId??==1)
+    #include("../../header.html",navId="nav_endorsement",subNavId="nav_endorsement_makeup")
+    #else if(tagId??==2)
+    #include("../../header.html",navId="nav_endorsement",subNavId="nav_endorsement_clothes")
+    #else if(tagId??==3)
+    #include("../../header.html",navId="nav_endorsement",subNavId="nav_endorsement_luxury")
+    #else if(tagId??==4)
+    #include("../../header.html",navId="nav_endorsement",subNavId="nav_endorsement_game")
+    #else
+    #include("../../header.html",navId="nav_endorsement")
+    #end
     <div class="layui-body">
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
             <legend class="page-title">#(title??)</legend>
@@ -30,13 +42,13 @@
                 </div>
             </div>
             <input type="hidden" id="imgType"
-                   #if(type==0)
+                   #if(tagId==0)
                    value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_ENDORSEMENT_FOOD)"/>
-            #else if(type==1)
+            #else if(tagId==1)
             value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_ENDORSEMENT_MAKEUP)"/>
-            #else if(type==2)
+            #else if(tagId==2)
             value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_ENDORSEMENT_CLOTHES)"/>
-            #else if(type==3)
+            #else if(tagId==3)
             value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_ENDORSEMENT_LUXURY)"/>
             #else
             value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_ENDORSEMENT_GAME)"/>
@@ -59,14 +71,13 @@
                         <input type="hidden" name="znStartTime" id="znStartTime">
                         <input type="text" class="layui-input" id="znStartTimeStr"
                                lay-verify="required" lay-reqtext="开始时间是必填项" placeholder="yyyy-MM-dd HH:mm:ss"
-                               value='#(longToString(news.znStartTime??,"yyyy-MM-dd HH:mm:ss"))' readonly>
+                               value='#(longToString(endorsement.znStartTime??,"yyyy-MM-dd HH:mm:ss"))' readonly>
                     </div>
                     <div class="layui-form-mid">-</div>
                     <div class="layui-input-inline">
                         <input type="hidden" name="znEndTime" id="znEndTime">
-                        <input type="text" class="layui-input" id="znEndTimeStr"
-                               lay-verify="required" lay-reqtext="报道结束时间是必填项" placeholder="yyyy-MM-dd HH:mm:ss"
-                               value="#(longToString(news.znEndTime??,'yyyy-MM-dd HH:mm:ss'))" readonly>
+                        <input type="text" class="layui-input" id="znEndTimeStr" placeholder="yyyy-MM-dd HH:mm:ss"
+                               value="#(longToString(endorsement.znEndTime??,'yyyy-MM-dd HH:mm:ss'))" readonly>
                     </div>
                 </div>
             </div>

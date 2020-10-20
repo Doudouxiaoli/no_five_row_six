@@ -11,6 +11,11 @@
         top: -6px;
     }
 
+    .layui-table-cell {
+        height: auto !important;
+        white-space: normal;
+    }
+
     .layui-table, .layui-table-view {
         margin: 0;
     }
@@ -20,29 +25,26 @@
 <body class="layui-layout-body">
 
 <div class="layui-layout layui-layout-admin">
-    #include("../../../header.html",navId="nav_concert",subNavId="nav_concert_program")
+    #include("../../../header.html",navId="nav_film",subNavId="nav_film_tv")
     <div class="layui-body" style="top:50px">
         <table class="layui-hide" lay-filter="dataTale" id="item"></table>
     </div>
 </div>
 
 <script type="text/html" id="toolbarDemo">
-    <form action="admin/zyx/program/list" class="layui-form layui-col-md12 x-so" name="searchForm"
+    <form action="admin/zyx/tv/moreList" class="layui-form layui-col-md12 x-so" name="searchForm"
           id="searchForm"
           method="post">
-        <input type="hidden" name="fromId" value="#(fromId??)">
-        <span class="page-title">演唱会节目单</span>
+        <span class="page-title">详情列表</span>
         <div class="layui-input-inline searchIpt">
-            <input type="text" id="keyword" name="keyword" value="#(keyword)" class="form-control page-search" placeholder="名称"/>
+            <input type="text" id="keyword" name="keyword" value="#(keyword)" class="form-control page-search" placeholder="集数"/>
         </div>
         <button type="button" id="search" class="layui-btn layui-btn-sm" lay-submit lay-filter="search" style="margin-top: -10px"><i
                 class="layui-icon">&#xe615;</i>
         </button>
-        <button type="button" class="layui-btn layui-btn-sm" style="margin-top: -10px"
-                onclick="javascript:window.location.href='admin/zyx/program/edit?fromId=#(fromId??)'">添加
-        </button>
+        <button type="button" class="layui-btn layui-btn-sm" style="margin-top: -10px" id="addTv">添加</button>
         <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" style="margin-top: -10px"
-                onclick="javascript:window.location.href='admin/zyx/concert/list'">返回演唱会列表
+                onclick="javascript:window.location.href='admin/zyx/tv/list'">返回电视剧列表
         </button>
     </form>
 </script>
@@ -67,7 +69,7 @@
         table.render({
             id: "tableReload"
             , elem: '#item'
-            , url: 'admin/zyx/program/listAjax?fromId=#(fromId??)'
+            , url: 'admin/zyx/tv/moreListAjax?fromId=#(fromId??)'
             , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             , defaultToolbar: {}
             , page: {
@@ -77,32 +79,34 @@
             , loading: false
             , cols: [[
                 {
-                    title: '序号', width: 260, align: 'center', templet: function (d) {
+                    title: '序号', width: 150, align: 'center', templet: function (d) {
                         return d.LAY_INDEX;
                     }
                 }
-                , {field: 'znTitle', width: 260, title: '名称', align: 'center'}
-                , {field: 'znFrom', width: 260, title: '场次', align: 'center'}
-                , {field: 'znVideoPath', width: 260, title: '视频地址', align: 'center'}
-                , {fixed: 'right', title: '操作', templet: onloadTool, align: 'center'}
+                , {field: 'znFrom', width: 260, title: '电视剧名称', align: 'center'}
+                , {field: 'znPace', width: 260, title: '当前集数', align: 'center'}
+                , {field: 'znVideoPath', title: '视频id', align: 'center'}
+                , {fixed: 'right', title: '操作', width: 260, templet: onloadTool, align: 'center'}
             ]],
         });
         //查询
         form.on('submit(search)', function (data) {
             var formData = data.field;
             var keyword = formData.keyword;
-            var fromId = formData.fromId;
             table.reload('tableReload', {
                 where: {
                     keyword: keyword,
-                    fromId: fromId
                 },
                 method: 'get',
-                url: 'admin/zyx/program/listAjax',
+                url: 'admin/zyx/tv/moreListAjax?fromId=#(fromId??)',
             });
             $("#keyword").val(keyword);
             return false;
         });
+        //监听添加
+        $("#addTv").click(function () {
+            openChildPage();
+        })
         //监听行工具事件
         table.on('tool(dataTale)', function (obj) {
             var data = obj.data;
@@ -110,7 +114,7 @@
                 layer.confirm('真的删除这条记录么', function (index) {
                     $.ajax({
                         type: "get",
-                        url: "admin/zyx/program/del",
+                        url: "admin/zyx/tv/moreDel",
                         data: {
                             id: data.znId,
                         },
@@ -130,7 +134,7 @@
                 layer.confirm('确定恢复主键为[' + data.znId + ']的记录么', function (index) {
                     $.ajax({
                         type: "get",
-                        url: "admin/zyx/program/reBack",
+                        url: "admin/zyx/tv/moreReBack",
                         data: {
                             id: data.znId,
                         },
@@ -148,10 +152,50 @@
                     });
                 });
             } else if (obj.event === 'edit') {
-                window.location.href = 'admin/zyx/program/edit?id=' + data.znId;
+                openChildPage(data.znId);
             }
         });
     });
+
+    //打开子窗口
+    function openChildPage(pk) {
+        var url = "";
+        if (null == pk) {
+            url = 'admin/zyx/tv/moreEdit?&fromId=#(fromId??)'
+        } else {
+            url = 'admin/zyx/tv/moreEdit?pk=' + pk + '&fromId=#(fromId??)'
+        }
+        layer.open({
+            type: 2,
+            shadeClose: true,
+            offset: '10%',
+            area: ['80%', '50%'],
+            content: url,
+            closeBtn: 0,
+            btn: ['确定', '取消'],
+            yes: function (index, layero) {
+                var childBody = layer.getChildFrame('body', index);
+                sureAction(childBody, index);
+                window.location.reload();
+            },
+            btn2: function (index, layero) {
+                layer.close(index)
+            }
+        })
+    }
+
+    //确定按钮调用函数
+    function sureAction(body, index) {
+        $.ajax({
+            type: 'post',
+            url: "admin/zyx/tv/moreSave",
+            dataType: "json",
+            data: body.find('form').serialize(),
+            success: function () {
+                layer.close(index);
+            }
+        })
+    }
 </script>
 </body>
 #end

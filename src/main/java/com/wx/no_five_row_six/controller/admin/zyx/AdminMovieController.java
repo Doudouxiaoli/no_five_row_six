@@ -19,28 +19,30 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 /**
  * @author dxl
- * @version 2020/10/12 13:27
- * @desc 后台管理-专辑
+ * @version 2020/10/16 17:27
+ * @desc 后台管理-影视作品-电影
  */
 @Controller
-@RequestMapping("/admin/zyx/album")
-public class AdminAlbumController {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(AdminAlbumController.class);
-
+@RequestMapping("/admin/zyx/movie")
+public class AdminMovieController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdminMovieController.class);
     @Autowired
-    private IFrsZyxNewsService albumService;
+    private IFrsZyxNewsService movieService;
 
+    /**
+     * 列表
+     *
+     * @return
+     */
     @RequestMapping("list")
     public String list() {
-        return "admin/zyx/album/list";
+        return "admin/zyx/movie/list";
     }
 
     /**
-     * 专辑列表
+     * 电影列表
      *
      * @param mm
      * @param keyword
@@ -50,7 +52,7 @@ public class AdminAlbumController {
      */
     @ResponseBody
     @RequestMapping("listAjax")
-    public JsonNode listAjax(ModelMap mm, String keyword, String startDate, String endDate, Integer current, Integer size) {
+    public JsonNode listAjax(ModelMap mm, String keyword, Integer current, Integer size) {
         if (current == null) {
             current = 1;
         }
@@ -63,76 +65,76 @@ public class AdminAlbumController {
             // 查询条件
             queryWrapper.lambda().like(StringUtils.isNotEmpty(keyword), FrsZyxNews::getZnTitle, keyword)
                     .or().like(StringUtils.isNotEmpty(keyword), FrsZyxNews::getZnAddress, keyword)
-                    .eq(FrsZyxNews::getZnNcId, ZyxNewsConst.ALBUM)
-                    .lt(StringUtils.isNotEmpty(endDate), FrsZyxNews::getZnDate, endDate)
-                    .gt(StringUtils.isNotEmpty(startDate), FrsZyxNews::getZnDate, startDate);
-            page = albumService.page(page, queryWrapper);
+                    .eq(FrsZyxNews::getZnNcId, ZyxNewsConst.FILM)
+                    .eq(FrsZyxNews::getZnTagIds, ZyxNewsConst.FILM_MOVIE_ID)
+                    .orderByDesc(FrsZyxNews::getZnDate);
+            page = movieService.page(page, queryWrapper);
             return JacksonMapper.newCountInstance(page);
         } catch (Exception e) {
             e.printStackTrace();
-            LOGGER.error("后台管理-专辑列表异常", e);
-            mm.addAttribute("errMsg", "专辑列表异常");
-            return JacksonMapper.newErrorInstance("后台管理-专辑列表异常");
+            LOGGER.error("后台管理-电影列表异常", e);
+            mm.addAttribute("errMsg", "电影列表异常");
+            return JacksonMapper.newErrorInstance("后台管理-电影列表异常");
         }
-
     }
 
     /**
-     * 编辑专辑界面
+     * 编辑电影界面
      *
-     * @param id
+     * @param id 电影id
      * @return
      */
     @RequestMapping("edit")
     public String edit(ModelMap mm, Long id) {
         try {
             if (null == id) {
-                mm.addAttribute("title", "专辑添加");
+                mm.addAttribute("title", "电影添加");
             } else {
-                mm.addAttribute("title", "专辑编辑");
-                FrsZyxNews album = albumService.getById(id);
-                mm.addAttribute("album", album);
+                mm.addAttribute("title", "电影编辑");
+                FrsZyxNews film = movieService.getById(id);
+                mm.addAttribute("film", film);
             }
-            return "admin/zyx/album/edit";
+            return "admin/zyx/movie/edit";
         } catch (Exception e) {
             e.printStackTrace();
-            LOGGER.error("后台管理-获取专辑异常。", e);
-            mm.addAttribute("errMsg", "获取专辑异常");
+            LOGGER.error("后台管理-获取电影异常。", e);
+            mm.addAttribute("errMsg", "获取电影异常");
             return "error/error";
         }
     }
 
     /**
-     * 保存专辑
+     * 保存电影
      *
-     * @param album
+     * @param movie
      * @return
      */
     @RequestMapping("save")
-    public String save(ModelMap mm, FrsZyxNews album) {
+    public String save(ModelMap mm, FrsZyxNews movie) {
         try {
-            if (album.getZnId() == null) {
-                album.setZnNcId(ZyxNewsConst.ALBUM);
-                album.setZnCreateTime(TimeUtil.dateToLong());
-                album.setZnIsValid(ZyxNewsConst.VALID);
-                albumService.save(album);
+            if (movie.getZnId() == null) {
+                movie.setZnNcId(ZyxNewsConst.FILM);
+                movie.setZnTagIds(ZyxNewsConst.FILM_MOVIE_ID);
+                movie.setZnCreateTime(TimeUtil.dateToLong());
+                movie.setZnIsValid(ZyxNewsConst.VALID);
+                movieService.save(movie);
             } else {
-                album.setZnUpdateTime(TimeUtil.dateTolong());
-                album.setZnUpdateUserId(AdminUserUtil.getUserId());
-                album.setZnUpdateUserName(AdminUserUtil.getShowName());
-                albumService.updateById(album);
+                movie.setZnUpdateTime(TimeUtil.dateTolong());
+                movie.setZnUpdateUserId(AdminUserUtil.getUserId());
+                movie.setZnUpdateUserName(AdminUserUtil.getShowName());
+                movieService.updateById(movie);
             }
             return "redirect:list";
         } catch (Exception e) {
             e.printStackTrace();
-            LOGGER.error("后台管理-保存或修改专辑异常。", e);
-            mm.addAttribute("errMsg", "保存或修改专辑异常");
+            LOGGER.error("后台管理-保存或修改电影异常。", e);
+            mm.addAttribute("errMsg", "保存或修改电影异常");
             return "error/error";
         }
     }
 
     /**
-     * 删除专辑
+     * 删除电影
      *
      * @param id
      * @return
@@ -141,14 +143,14 @@ public class AdminAlbumController {
     @RequestMapping("del")
     public JsonNode del(Long id) {
         try {
-            FrsZyxNews album = albumService.getById(id);
-            album.setZnIsValid(ZyxNewsConst.NOT_VALID);
-            albumService.updateById(album);
+            FrsZyxNews movie = movieService.getById(id);
+            movie.setZnIsValid(ZyxNewsConst.NOT_VALID);
+            movieService.updateById(movie);
             return JacksonMapper.newSuccessInstance();
         } catch (Exception e) {
             e.printStackTrace();
-            LOGGER.error("后台管理-删除专辑异常。", e);
-            return JacksonMapper.newErrorInstance("删除专辑异常");
+            LOGGER.error("后台管理-删除电影异常。", e);
+            return JacksonMapper.newErrorInstance("删除电影异常");
         }
     }
 
@@ -162,14 +164,16 @@ public class AdminAlbumController {
     @RequestMapping("reBack")
     public JsonNode reBack(Long id) {
         try {
-            FrsZyxNews album = albumService.getById(id);
-            album.setZnIsValid(ZyxNewsConst.VALID);
-            albumService.updateById(album);
+            FrsZyxNews movie = movieService.getById(id);
+            movie.setZnIsValid(ZyxNewsConst.VALID);
+            movieService.updateById(movie);
             return JacksonMapper.newSuccessInstance();
         } catch (Exception e) {
             e.printStackTrace();
-            LOGGER.error("后台管理-恢复专辑异常。", e);
-            return JacksonMapper.newErrorInstance("恢复专辑异常");
+            LOGGER.error("后台管理-恢复电影异常。", e);
+            return JacksonMapper.newErrorInstance("恢复电影异常");
         }
     }
+
+
 }

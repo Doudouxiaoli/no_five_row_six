@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+#@layout_admin()
+
+#define title()
+<title>第五排第六号</title>
+#end
+#define css()
+<style type="text/css">
+    .layui-field-title {
+        border-width: 0;
+        text-align: center;
+        margin-left: -200px;
+    }
+</style>
+#end
+#define main()
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-body">
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend class="page-title">#(title??)</legend>
+        </fieldset>
+        <form class="layui-form" style="width: 800px">
+            <input id="znId" name="znId" type="hidden" value="#(tvChild.znId??)"/>
+            <input id="znFromId" name="znFromId" type="hidden" value="#(fromId??)"/>
+            <input id="znFrom" name="znFrom" type="hidden" value="#(from??)"/>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red">*</span>当前集数</label>
+                <div class="layui-input-block">
+                    <input type="text" id="znPace" name="znPace" lay-verify="required" lay-reqtext="当前集数是必填项" autocomplete="off"
+                           class="layui-input" value="#(tvChild.znPace??)">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">视频id</label>
+                <div class="layui-input-block">
+                    <input type="text" id="znVideoPath" name="znVideoPath" autocomplete="off" class="layui-input" value="#(tvChild.znVideoPath??)">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    layui.use(['form'], function () {
+        var $ = layui.jquery, form = layui.form;
+        form.on('submit(closeBtn)',function (index) {
+            layer.close(index); //再执行关闭
+        })
+    });
+
+</script>
+</body>
+#end

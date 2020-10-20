@@ -2,78 +2,87 @@ package com.wx.no_five_row_six.controller.admin;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wx.common.util.EncryptUtil;
-import com.wx.no_five_row_six.common.security.AdminUserModel;
 import com.wx.no_five_row_six.common.security.AdminUserUtil;
 import com.wx.no_five_row_six.entity.SysUser;
-import com.wx.no_five_row_six.service.ISysUserService;
-import org.apache.commons.lang3.StringUtils;
+import com.wx.no_five_row_six.service.impl.SysUserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 
+/**
+ * @author dxl
+ * @version 2019年10月24日  13:57
+ */
 @Controller
 @RequestMapping(value = "/admin")
 public class AdminLoginController {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminLoginController.class);
 
     @Autowired
-    private ISysUserService userService;
-
-    @RequestMapping(value = {"", "/index"})
-    public String index(ModelMap mm) {
-        return "admin/index";
-    }
+    private SysUserServiceImpl sysUserService;
 
     @RequestMapping(value = {"", "/login"}, method = RequestMethod.GET)
-    public String LoginInit() {
+    public String loginInit() {
         return "/admin/login";
     }
+
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(ModelMap mm, String name, String password, HttpServletRequest request) {
         if (StringUtils.isEmpty(name) || StringUtils.isEmpty(password)) {
-            mm.addAttribute("errMsg", "用户名和密码不能为空");
+            mm.addAttribute("errMsg", "用户名或密码不能为空！");
+            return "/admin/login";
         }
         try {
-            QueryWrapper<SysUser> queryWrapper = new QueryWrapper<SysUser>();
-                    queryWrapper.lambda().eq(SysUser::getSuLoginName, name)
-                    .eq(SysUser::getSuPassword, EncryptUtil.getSHA256Value(password));
-            SysUser user = userService.getOne(queryWrapper, false);
+            QueryWrapper<SysUser> queryWrapper = new QueryWrapper<SysUser>()
+                    .eq("su_login_name", name)
+                    .eq("su_password", EncryptUtil.getSHA256Value(password));
+            SysUser user = sysUserService.getOne(queryWrapper, false);
             if (user == null) {
-                mm.addAttribute("errMsg", "用户名或密码错误");
+                mm.addAttribute("errMsg", "用户名或密码输入错误！");
+                return "/admin/login";
             }
-            AdminUserModel userModel = new AdminUserModel();
-            userModel.setId(user.getSuId());
-            userModel.setName(user.getSuLoginName());
-            userModel.setShowName(user.getSuName());
-            userModel.setUserHead(user.getSuHeadImg());
-            HttpSession session = request.getSession(true);
-            if (session.getAttribute(AdminUserUtil.ADMIN_USER_LOGIN_SESSION) != null) {
-                session.removeAttribute(AdminUserUtil.ADMIN_USER_LOGIN_SESSION);
-            }
-            session.setAttribute(AdminUserUtil.ADMIN_USER_LOGIN_SESSION, userModel);
-            return "/admin/index";
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            AdminUserUtil.login(user);
+
+            return "redirect:index";
+        } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
-            mm.addAttribute("errMsg", "出错了");
+            mm.addAttribute("errMsg", "出错了~");
             return "/admin/login";
         }
     }
 
+
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String index() {
+        return "/admin/index";
+    }
+
+
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout() {
-        AdminUserUtil.logout();
+    public String logout(HttpServletRequest request) {
+        try {
+            AdminUserUtil.logout();
+        } catch (Exception e) {
+            LOGGER.error("退出操作失败" ,e);
+            return "/error/error";
+        }
         return "/admin/login";
     }
 
+    public static void main(String[] args) {
+        try {
+            System.out.println(EncryptUtil.getSHA256Value("1"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
 }

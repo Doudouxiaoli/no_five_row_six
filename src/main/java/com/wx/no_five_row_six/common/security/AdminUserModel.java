@@ -1,5 +1,7 @@
 package com.wx.no_five_row_six.common.security;
 
+import com.wx.no_five_row_six.entity.SysUser;
+
 import java.io.Serializable;
 
 /**
@@ -10,7 +12,7 @@ public class AdminUserModel implements Serializable {
 	private String name;
 	private String showName;
 	private String userHead;
-
+	private SysUser user;
 	public Long getId() {
 		return id;
 	}
@@ -25,12 +27,18 @@ public class AdminUserModel implements Serializable {
 	}
 	public String getShowName() { return showName; }
 	public void setShowName(String showName) { this.showName = showName; }
-
 	public String getUserHead() {
 		return userHead;
 	}
-
 	public void setUserHead(String userHead) {
 		this.userHead = userHead;
+	}
+
+	public SysUser getUser() {
+		return user;
+	}
+
+	public void setUser(SysUser user) {
+		this.user = user;
 	}
 }

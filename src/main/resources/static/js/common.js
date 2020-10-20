@@ -46,9 +46,29 @@ function initTime(layui, timeStr, dbTime) {
         elem: '#' + timeStr + ''
         , trigger: 'click'
         , position: 'fixed'
-        , type: 'datetime'
         , done: function (value, date) {
-            $("#" + dbTime + "").val(new Date(date.year, date.month - 1, date.date, date.hours, date.minutes, date.seconds).getTime())
+            $("#" + dbTime + "").val(new Date(date.year, date.month - 1, date.date).getTime())
+        }
+    });
+}
+
+/**
+ * 格式转换（单个时间）
+ * @param layui
+ * @param timeStr 绑定元素：暂存时间input框对应的id
+ * @param dbTime 数据库对应的时间字段名
+ * @param type 控件选择类型（默认值date）
+ */
+function initFormatTime(layui, timeStr, dbTime, type) {
+    var laydate = layui.laydate;
+    laydate.render({
+        elem: '#' + timeStr + ''
+        , trigger: 'click'
+        , position: 'fixed'
+        , type: ''+type+''
+        , done: function (value, date) {
+            if(type=="datetime")
+                $("#" + dbTime + "").val(new Date(date.year, date.month - 1, date.date, date.hours, date.minutes, date.seconds).getTime())
         }
     });
 }

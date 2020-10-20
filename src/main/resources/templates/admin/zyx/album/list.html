@@ -15,8 +15,9 @@
         height: auto !important;
         white-space: normal;
     }
+
     .layui-table, .layui-table-view {
-        margin:0;
+        margin: 0;
     }
 </style>
 #end
@@ -39,11 +40,11 @@
             <input type="text" id="keyword" name="keyword" value="#(keyword)" class="form-control page-search" placeholder="专辑名称"/>
         </div>
         <div class="layui-input-inline searchIpt">
-            <input type="text" class="form-control page-search" id="startDate" placeholder="yyyy-MM-dd" readonly>
+            <input type="text" class="form-control page-search" id="startDate" name="startDate" placeholder="yyyy-MM-dd">
         </div>
         -
         <div class="layui-input-inline searchIpt">
-            <input type="text" class="form-control page-search" id="endDate" placeholder="yyyy-MM-dd" readonly>
+            <input type="text" class="form-control page-search" id="endDate" name="endDate" placeholder="yyyy-MM-dd">
         </div>
         <button type="button" id="search" class="layui-btn layui-btn-sm" lay-submit lay-filter="search" style="margin-top: -10px"><i
                 class="layui-icon">&#xe615;</i>
@@ -60,9 +61,9 @@
         if (data.znIsValid == 0) {
             htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="rec">恢复</a>';
         } else {
-            htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
-            htmls += '<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>'
             htmls += '<a class="layui-btn layui-btn-xs" lay-event="song">歌曲</a>'
+            htmls += '<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>'
+            htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
         }
         return htmls;
     }
@@ -73,11 +74,12 @@
 <script>
     layui.use(['table', 'form', 'util', 'laydate'], function () {
         var table = layui.table, form = layui.form, util = layui.util, laydate = layui.laydate;
+        //日期范围
         laydate.render({
             elem: '#startDate'
-            , type: 'datetime'
-            , done: function (value, date, endDate) {
-                alert(endDate)
+            , theme: '#9A85B7'
+            ,type:'datetime'
+            , done: function (value) {
                 var startDateValue = new Date(value).getTime();
                 var endDateValue = new Date($('#endDate').val()).getTime();
                 if (endDateValue < startDateValue) {
@@ -89,8 +91,9 @@
         });
         laydate.render({
             elem: '#endDate'
-            , type: 'datetime'
-            , done: function (value, date, endDate) {
+            ,type:'datetime'
+            , theme: '#9A85B7'
+            , done: function (value) {
                 var startDateValue = new Date($('#startDate').val()).getTime();
                 var endDateValue = new Date(value).getTime();
                 if (endDateValue < startDateValue) {
@@ -113,7 +116,7 @@
             , loading: false
             , cols: [[
                 {
-                   title: '序号', width: 150,  align: 'center', templet: function (d) {
+                    title: '序号', width: 150, align: 'center', templet: function (d) {
                         return d.LAY_INDEX;
                     }
                 }
@@ -136,14 +139,21 @@
         form.on('submit(search)', function (data) {
             var formData = data.field;
             var keyword = formData.keyword;
+            var startDate = formData.startDate;
+            var endDate = formData.endDate;
+
             table.reload('tableReload', {
                 where: {
-                    keyword: keyword
+                    keyword: keyword,
+                    startDate: startDate,
+                    endDate: endDate
                 },
                 method: 'get',
                 url: 'admin/zyx/album/listAjax',
             });
             $("#keyword").val(keyword);
+            $("#startDate").val(startDate);
+            $("#endDate").val(endDate);
             return false;
         });
         //监听行工具事件

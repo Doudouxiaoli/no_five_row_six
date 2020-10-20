@@ -10,9 +10,12 @@
     .searchIpt {
         top: -6px;
     }
-
+    .layui-table-cell {
+        height: auto !important;
+        white-space: normal;
+    }
     .layui-table, .layui-table-view {
-        margin: 0;
+        margin:0;
     }
 </style>
 #end
@@ -20,29 +23,26 @@
 <body class="layui-layout-body">
 
 <div class="layui-layout layui-layout-admin">
-    #include("../../../header.html",navId="nav_concert",subNavId="nav_concert_program")
+    #include("../../header.html",navId="nav_film",subNavId="nav_film_movie")
     <div class="layui-body" style="top:50px">
         <table class="layui-hide" lay-filter="dataTale" id="item"></table>
     </div>
 </div>
 
 <script type="text/html" id="toolbarDemo">
-    <form action="admin/zyx/program/list" class="layui-form layui-col-md12 x-so" name="searchForm"
+    <form action="admin/zyx/movie/list" class="layui-form layui-col-md12 x-so" name="searchForm"
           id="searchForm"
           method="post">
-        <input type="hidden" name="fromId" value="#(fromId??)">
-        <span class="page-title">演唱会节目单</span>
+        <span class="page-title">电影列表</span>
         <div class="layui-input-inline searchIpt">
-            <input type="text" id="keyword" name="keyword" value="#(keyword)" class="form-control page-search" placeholder="名称"/>
+            <input type="text" id="keyword" name="keyword" value="#(keyword)" class="form-control page-search" placeholder="电影名称"/>
         </div>
         <button type="button" id="search" class="layui-btn layui-btn-sm" lay-submit lay-filter="search" style="margin-top: -10px"><i
                 class="layui-icon">&#xe615;</i>
         </button>
         <button type="button" class="layui-btn layui-btn-sm" style="margin-top: -10px"
-                onclick="javascript:window.location.href='admin/zyx/program/edit?fromId=#(fromId??)'">添加
-        </button>
-        <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" style="margin-top: -10px"
-                onclick="javascript:window.location.href='admin/zyx/concert/list'">返回演唱会列表
+                onclick="javascript:window.location.href='admin/zyx/movie/edit'">
+            添加
         </button>
     </form>
 </script>
@@ -67,7 +67,7 @@
         table.render({
             id: "tableReload"
             , elem: '#item'
-            , url: 'admin/zyx/program/listAjax?fromId=#(fromId??)'
+            , url: 'admin/zyx/movie/listAjax'
             , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             , defaultToolbar: {}
             , page: {
@@ -77,13 +77,23 @@
             , loading: false
             , cols: [[
                 {
-                    title: '序号', width: 260, align: 'center', templet: function (d) {
+                    title: '序号', width: 150, align: 'center', templet: function (d) {
                         return d.LAY_INDEX;
                     }
                 }
-                , {field: 'znTitle', width: 260, title: '名称', align: 'center'}
-                , {field: 'znFrom', width: 260, title: '场次', align: 'center'}
-                , {field: 'znVideoPath', width: 260, title: '视频地址', align: 'center'}
+                , {field: 'znTitle', width: 260, title: '电影名称', align: 'center'}
+                , {field: 'znTitleOne', width: 260, title: '导演', align: 'center'}
+                , {field: 'znTitleTwo', width: 260, title: '主要演出人员', align: 'center'}
+                , {
+                    field: 'znDate', width: 200, title: '上线时间', align: 'center',
+                    templet: function (d) {
+                        if (d.znDate) {
+                            return util.toDateString(d.znDate, 'yyyy-MM-dd');
+                        } else {
+                            return '';
+                        }
+                    }
+                }
                 , {fixed: 'right', title: '操作', templet: onloadTool, align: 'center'}
             ]],
         });
@@ -91,14 +101,12 @@
         form.on('submit(search)', function (data) {
             var formData = data.field;
             var keyword = formData.keyword;
-            var fromId = formData.fromId;
             table.reload('tableReload', {
                 where: {
                     keyword: keyword,
-                    fromId: fromId
                 },
                 method: 'get',
-                url: 'admin/zyx/program/listAjax',
+                url: 'admin/zyx/movie/listAjax',
             });
             $("#keyword").val(keyword);
             return false;
@@ -110,7 +118,7 @@
                 layer.confirm('真的删除这条记录么', function (index) {
                     $.ajax({
                         type: "get",
-                        url: "admin/zyx/program/del",
+                        url: "admin/zyx/movie/del",
                         data: {
                             id: data.znId,
                         },
@@ -130,7 +138,7 @@
                 layer.confirm('确定恢复主键为[' + data.znId + ']的记录么', function (index) {
                     $.ajax({
                         type: "get",
-                        url: "admin/zyx/program/reBack",
+                        url: "admin/zyx/movie/reBack",
                         data: {
                             id: data.znId,
                         },
@@ -148,7 +156,7 @@
                     });
                 });
             } else if (obj.event === 'edit') {
-                window.location.href = 'admin/zyx/program/edit?id=' + data.znId;
+                window.location.href = 'admin/zyx/movie/edit?id=' + data.znId;
             }
         });
     });

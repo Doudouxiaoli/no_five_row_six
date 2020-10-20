@@ -10,11 +10,6 @@
     .searchIpt {
         top: -6px;
     }
-
-    .layui-table-cell {
-        height: auto !important;
-        white-space: normal;
-    }
     .layui-table, .layui-table-view {
         margin:0;
     }
@@ -53,8 +48,8 @@
         if (data.znIsValid == 0) {
             htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="rec">恢复</a>';
         } else {
-            htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
             htmls += '<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">编辑</a>'
+            htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
             htmls += '<a class="layui-btn layui-btn-xs" lay-event="program">表演曲目</a>'
         }
         return htmls;

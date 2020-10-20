@@ -1,6 +1,6 @@
 // ======================================
 // Project Name:ssm
-// Package Name:com.wx.no_five_row_six.common.security
+// Package Name:cn.meddb.core.starter.common.security
 // File Name:LoginInterceptor.java
 // Create Date:2019年10月24日  11:13
 // ======================================
@@ -11,21 +11,22 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
- * @author lym
- * @version 2019年11月8日  11:01
+ * @author fyq
+ * @version 2019年10月24日  11:13
  */
 @Component
-public class AdminLoginInterceptor extends HandlerInterceptorAdapter {
+public class AdminInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
         String requestUri = request.getRequestURI();
         String path = request.getContextPath();
-        requestUri = requestUri.replaceFirst(path, "");
-        if (!AdminUserUtil.hasLogin()) {
+        HttpSession session = request.getSession(true);
+        if (!AdminUserUtil.hasLogin()){
             response.sendRedirect(request.getContextPath() + "/admin/login");
             return false;
         }

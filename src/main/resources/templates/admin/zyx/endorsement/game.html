@@ -54,8 +54,8 @@
         if (data.znIsValid == 0) {
             htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="rec">恢复</a>';
         } else {
-            htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
             htmls += '<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>'
+            htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
         }
         return htmls;
     }
@@ -92,9 +92,9 @@
                     templet: function (d) {
                         if (d.znStartTime) {
                             if (d.znEndTime) {
-                                return util.toDateString(d.znStartTime, 'yyyy-MM-dd') + "-" + util.toDateString(d.znEndTime, 'yyyy-MM-dd');
+                                return util.toDateString(d.znStartTime, 'yyyy.MM.dd') + "-" + util.toDateString(d.znEndTime, 'yyyy.MM.dd');
                             } else {
-                                return util.toDateString(d.znStartTime, 'yyyy-MM-dd') + "-至今";
+                                return util.toDateString(d.znStartTime, 'yyyy.MM.dd') + "-至今";
                             }
                         } else {
                             return '';

@@ -10,11 +10,6 @@
     .searchIpt {
         top: -6px;
     }
-
-    .layui-table-cell {
-        height: auto !important;
-        white-space: normal;
-    }
     .layui-table, .layui-table-view {
         margin:0;
     }
@@ -36,7 +31,7 @@
           method="post">
         <!-- 搜索时携带专辑id参数过去-->
         <input type="hidden" name="fromId" value="#(fromId??)">
-        <span class="page-title">列表</span>
+        <span class="page-title">歌曲列表</span>
         <div class="layui-input-inline searchIpt">
             <input type="text" id="keyword" name="keyword" value="#(keyword)" class="form-control page-search" placeholder="名称"/>
         </div>
@@ -45,6 +40,9 @@
         </button>
         <button type="button" class="layui-btn layui-btn-sm" style="margin-top: -10px"
                 onclick="javascript:window.location.href='admin/zyx/song/edit?fromId=#(fromId??)'">添加
+        </button>
+        <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" style="margin-top: -10px"
+                onclick="javascript:window.location.href='admin/zyx/album/list'">返回专辑列表
         </button>
     </form>
 </script>
@@ -55,9 +53,10 @@
         if (data.znIsValid == 0) {
             htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="rec">恢复</a>';
         } else {
-            htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
             htmls += '<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>'
+            htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
         }
+
         return htmls;
     }
 </script>
@@ -79,15 +78,15 @@
             , loading: false
             , cols: [[
                 {
-                    title: '序号', width: 260,align: 'center', templet: function (d) {
+                    title: '序号', width: 150,align: 'center', templet: function (d) {
                         return d.LAY_INDEX;
                     }
                 }
-                , {field: 'znTitle', width: 260, title: '名称', align: 'center'}
-                , {field: 'znAddress', width: 260, title: '音乐链接', align: 'center'}
-                , {field: 'znVideoPath', width: 260, title: 'mv', align: 'center'}
+                , {field: 'znTitle', width: 200, title: '名称', align: 'center'}
+                , {field: 'znAddress', width: 200, title: '音乐链接', align: 'center'}
+                , {field: 'znVideoPath', width: 200, title: 'mv', align: 'center'}
                 , {
-                    field: 'znCreateTime', width: 260, title: '创建日期', align: 'center',
+                    field: 'znCreateTime', width: 200, title: '创建日期', align: 'center',
                     templet: function (d) {
                         if (d.znCreateTime) {
                             return util.toDateString(d.znCreateTime, 'yyyy-MM-dd');
@@ -97,7 +96,7 @@
                     }
                 }
                 , {
-                    field: 'znUpdateTime', width: 260, title: '更新日期', align: 'center',
+                    field: 'znUpdateTime', width: 200, title: '更新日期', align: 'center',
                     templet: function (d) {
                         if (d.znUpdateTime) {
                             return util.toDateString(d.znUpdateTime, 'yyyy-MM-dd');

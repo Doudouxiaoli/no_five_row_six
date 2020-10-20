@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+#@layout_admin()
+
+#define title()
+<title>第五排第六号</title>
+#end
+#define css()
+#end
+#define main()
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    #include("../../header.html",navId="nav_film",subNavId="nav_film_movie")
+    <div class="layui-body">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend class="page-title">#(title??)</legend>
+        </fieldset>
+        <form class="layui-form" action="admin/zyx/movie/save" method="post" style="width: 800px">
+            <input name="znId" type="hidden" value="#(movie.znId??)"/>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red">*</span>作品名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="znTitle" lay-verify="required" lay-reqtext="作品名称是必填项" autocomplete="off"
+                           class="layui-input" value="#(movie.znTitle??)">
+                </div>
+            </div>
+            <input type="hidden" id="imgType" value="#(com.wx.no_five_row_six.common.Const::PIC_TYPE_FILM_MOVIE)"/>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span style="color: red">*</span>封面<span>692*142</span></label>
+                <div style="width: unset;">
+                    <button type="button" id="uploadImg" class="layui-btn layui-btn-primary">上传</button>
+                    <img style="max-width: 250px;" src="#(movie.znThumbnailPath??)" id="tmpImgPath"/>
+                    <input type="hidden" name="znThumbnailPath" value="#(movie.znThumbnailPath??)" id="znThumbnailImg"
+                           lay-verify="required"
+                           lay-reqtext="请上传封面">
+                    <p class="uploadImgMsg"></p>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">导演</label>
+                <div class="layui-input-block">
+                    <input type="text" name="znTitleOne" class="layui-input" value="#(movie.znTitleOne??)">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">主演</label>
+                <div class="layui-input-block">
+                    <input type="text" name="znTitleTwo" class="layui-input" value="#(movie.znTitleTwo??)">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span style="color: red">*</span>上线时间</label>
+                    <div class="layui-input-inline">
+                        <input type="hidden" name="znDate" id="znDate">
+                        <input type="text" class="layui-input" id="znDateStr"
+                               lay-verify="required" lay-reqtext="时间是必填项" placeholder="yyyy-MM-dd HH:mm"
+                               value='#(longToString(concert.znDate??,"yyyy-MM-dd HH:mm"))' readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">视频id</label>
+                <div class="layui-input-block">
+                    <input type="text" name="znVideoPath" autocomplete="off" class="layui-input" value="#(movie.znVideoPath??)">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="layuiForm">提交</button>
+                </div>
+            </div>
+        </form>
+        <div class="layui-form-item" style="position: absolute;margin-left: 600px;margin-top: -40px">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal"
+                        onclick="javascript:window.location.href='admin/zyx/movie/list'">取消
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    layui.use(['form', 'laydate', 'upload'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            laydate = layui.laydate;
+        //服务时间选择器
+        initTime(layui, "znDateStr", "znDate");
+        //上传封面
+        uploadImg(layui, "uploadImg", "imgType", "tmpImgPath", "znThumbnailImg");
+    });
+
+</script>
+</body>
+#end

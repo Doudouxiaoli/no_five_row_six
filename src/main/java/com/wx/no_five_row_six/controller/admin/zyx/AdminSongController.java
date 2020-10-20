@@ -32,6 +32,8 @@ public class AdminSongController {
 
     @Autowired
     private IFrsZyxNewsService songService;
+    @Autowired
+    private IFrsZyxNewsService albumService;
 
     @RequestMapping("list")
     public String list(Long fromId, ModelMap mm) {
@@ -83,14 +85,21 @@ public class AdminSongController {
     @RequestMapping("edit")
     public String edit(ModelMap mm, Long id, Long fromId) {
         try {
+            String from = "";
+            if (null != fromId) {
+                FrsZyxNews album = albumService.getById(fromId);
+                from = album.getZnTitle();
+            }
             if (null == id) {
                 mm.addAttribute("title", "歌曲添加");
             } else {
                 mm.addAttribute("title", "歌曲编辑");
                 FrsZyxNews song = songService.getById(id);
                 fromId = song.getZnFromId();
+                from = song.getZnFrom();
                 mm.addAttribute("song", song);
             }
+            mm.addAttribute("from", from);
             mm.addAttribute("fromId", fromId);
             return "admin/zyx/album/song/edit";
         } catch (Exception e) {

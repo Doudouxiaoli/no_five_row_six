@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 /**
  * @author dxl
  * @version 2020/10/15 13:27
@@ -73,9 +74,8 @@ public class AdminEndorsementController {
             queryWrapper.lambda().like(StringUtils.isNotEmpty(keyword), FrsZyxNews::getZnTitle, keyword)
                     .or()
                     .like(StringUtils.isNotEmpty(keyword), FrsZyxNews::getZnFrom, keyword)
-                    .eq(FrsZyxNews::getZnNcId, ZyxNewsConst.ENDORSEMENT)
-                    .eq(FrsZyxNews::getZnTagIds, tagId)
-                    .orderByDesc(FrsZyxNews::getZnDate);
+                    .eq(null != tagId, FrsZyxNews::getZnTagIds, tagId)
+                    .eq(FrsZyxNews::getZnNcId, ZyxNewsConst.ENDORSEMENT);
             page = endorsementService.page(page, queryWrapper);
             return JacksonMapper.newCountInstance(page);
         } catch (Exception e) {
@@ -91,7 +91,7 @@ public class AdminEndorsementController {
      * 编辑代言界面
      *
      * @param mm
-     * @param id   代言产品id
+     * @param id    代言产品id
      * @param tagId 代言类型
      * @return
      */
@@ -106,7 +106,7 @@ public class AdminEndorsementController {
                 FrsZyxNews endorsement = endorsementService.getById(id);
                 typeName = ZyxNewsConst.getEndorsementType(endorsement.getZnTagIds());
                 mm.addAttribute("title", typeName + "编辑");
-
+                tagId = endorsement.getZnTagIds();
                 mm.addAttribute("endorsement", endorsement);
             }
             mm.addAttribute("tagId", tagId);
@@ -144,7 +144,7 @@ public class AdminEndorsementController {
                 endorsement.setZnUpdateUserName(AdminUserUtil.getShowName());
                 endorsementService.updateById(endorsement);
             }
-            return "redirect:list?type=" + endorsement.getZnTagIds();
+            return "redirect:list?tagId=" + endorsement.getZnTagIds();
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.error("后台管理-保存或修改异常。", e);
