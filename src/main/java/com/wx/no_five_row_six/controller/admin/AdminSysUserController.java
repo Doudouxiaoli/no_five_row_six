@@ -52,7 +52,7 @@ public class AdminSysUserController {
                 user.setSuUpdateTime(System.currentTimeMillis());
                 userService.updateById(user);
             }
-            return "forward:/admin";
+            return "redirect:/admin/index";
         } catch (Exception e) {
             e.printStackTrace();
             mm.addAttribute("errMsg", "用户保存异常");
