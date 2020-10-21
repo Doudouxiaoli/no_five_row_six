@@ -14,37 +14,27 @@ public class ZyxNewsConst {
      */
     public static final Long ALBUM = 0L;
     /**
-     * 歌曲
-     */
-    public static final Long SONG = 1L;
-    /**
      * 舞蹈
      */
-    public static final Long DANCE = 2L;
+    public static final Long DANCE = 1L;
     /**
      * 演唱会
      */
-    public static final Long CONCERT = 3L;
-    /**
-     * 节目单
-     */
-    public static final Long PROGRAM = 4L;
+    public static final Long CONCERT = 2L;
     /**
      * 代言
      */
-    public static final Long ENDORSEMENT = 5L;
+    public static final Long ENDORSEMENT = 3L;
     /**
      * 影视
      */
-    public static final Long FILM = 6L;
+    public static final Long FILM = 4L;
     public static Map<Long, String> moduleNameMap = new HashMap<>();
 
     static {
         moduleNameMap.put(ALBUM, "专辑");
-        moduleNameMap.put(SONG, "歌曲");
         moduleNameMap.put(DANCE, "舞蹈");
         moduleNameMap.put(CONCERT, "演唱会");
-        moduleNameMap.put(PROGRAM, "节目单");
         moduleNameMap.put(ENDORSEMENT, "代言");
         moduleNameMap.put(FILM, "影视");
     }
@@ -66,10 +56,8 @@ public class ZyxNewsConst {
 
     static {
         moduleUrlMap.put(ALBUM, "admin/zyx/album");
-        moduleUrlMap.put(SONG, "admin/zyx/song");
         moduleUrlMap.put(DANCE, "admin/zyx/dance");
         moduleUrlMap.put(CONCERT, "admin/zyx/concert");
-        moduleUrlMap.put(PROGRAM, "admin/zyx/program");
         moduleUrlMap.put(ENDORSEMENT, "admin/zyx/endorsement");
         moduleUrlMap.put(FILM, "admin/zyx/film");
     }

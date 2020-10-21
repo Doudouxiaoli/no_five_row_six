@@ -3,9 +3,11 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-    <changeSet id="V4.1.0" author="dxl">
-        <comment>删除字段</comment>
-        <dropColumn tableName="frs_zyx_news" columnName="zn_publish_user_id"/>
-        <dropColumn tableName="frs_zyx_news" columnName="zn_publish_user_name"/>
+    <changeSet id="V2.2.0" author="dxl">
+        <comment>增加字段</comment>
+        <addColumn tableName="frs_zyx_news">
+            <column name="zn_create_user_id" type="bigint(20)" remarks="创建人id"/>
+            <column name="zn_create_user_name" type="varchar(128)" remarks="创建人姓名"/>
+        </addColumn>
     </changeSet>
 </databaseChangeLog>

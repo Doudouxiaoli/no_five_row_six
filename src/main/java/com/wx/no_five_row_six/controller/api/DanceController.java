@@ -4,6 +4,8 @@
 //import com.fasterxml.jackson.databind.JsonNode;
 //import com.wx.common.jackson.JacksonMapper;
 //import com.wx.no_five_row_six.common.Const;
+//import com.wx.no_five_row_six.service.IFrsZyxNewsService;
+//import com.wx.no_five_row_six.service.IFrsZyxVisitLogService;
 //import org.apache.commons.lang3.StringUtils;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
@@ -27,9 +29,9 @@
 //public class DanceController {
 //    private static final Logger LOGGER = LoggerFactory.getLogger(DanceController.class);
 //    @Autowired
-//    private FrsDanceServiceImpl danceService;
+//    private IFrsZyxNewsService danceService;
 //    @Autowired
-//    private FrsViewRecordServiceImpl viewRecordService;
+//    private IFrsZyxVisitLogService visitLogService;
 //
 //    /**
 //     * 列表
@@ -41,7 +43,7 @@
 //    @ResponseBody
 //    @RequestMapping("/list")
 //    public JsonNode list(String keyword) {
-//        QueryWrapper<FrsDance> queryWrapper = new QueryWrapper<FrsDance>();
+//        QueryWrapper<> queryWrapper = new QueryWrapper<FrsDance>();
 //        try {
 //            queryWrapper.lambda()
 //                    .like(StringUtils.isNotEmpty(keyword), FrsDance::getFdTvName, keyword)
@@ -79,7 +81,7 @@
 //            queryWrapper.lambda().notLike(FrsDance::getFdId, id);
 //            List<FrsDance> waitingList = danceService.list(queryWrapper);
 //            //            保存访问记录
-//            viewRecordService.saveVisit(id, request, Const.MODEL_TYPE_DANCE, runningDance.getFdTvName());
+//            visitLogService.saveVisit(id, request, Const.MODEL_TYPE_DANCE, runningDance.getFdTvName());
 //            map.put(1, runningDance);
 //            map.put(2, waitingList);
 //            return JacksonMapper.newDataInstance(map);

@@ -48,9 +48,10 @@
         if (data.znIsValid == 0) {
             htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="rec">恢复</a>';
         } else {
-            htmls += '<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">编辑</a>'
+            htmls += '<a class="layui-btn layui-btn-xs" lay-event="program">表演曲目</a>';
+            htmls += '<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">编辑</a>';
             htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
-            htmls += '<a class="layui-btn layui-btn-xs" lay-event="program">表演曲目</a>'
+
         }
         return htmls;
     }
@@ -112,59 +113,16 @@
             var data = obj.data;
             if (obj.event === 'del') {
                 layer.confirm('真的删除这条记录么', function (index) {
-                    $.ajax({
-                        type: "get",
-                        url: "admin/zyx/concert/del",
-                        data: {
-                            id: data.znId,
-                        },
-                        success: function (ev) {
-                            if (ev.success) {
-                                obj.del();
-                                layer.close(index);
-                                window.location.reload();
-                            } else {
-                                layer.alert(ev.msg);
-                            }
-                        }
-
-                    });
+                    changeValid(data.znId, obj, index);
                 });
             } else if (obj.event === 'rec') {
                 layer.confirm('确定恢复主键为[' + data.znId + ']的记录么', function (index) {
-                    $.ajax({
-                        type: "get",
-                        url: "admin/zyx/concert/reBack",
-                        data: {
-                            id: data.znId,
-                        },
-                        success: function (ev) {
-                            if (ev.success) {
-                                obj.del();
-                                layer.close(index);
-                                layer.msg('恢复成功', {icon: 1}, {time: 2000});
-                                window.location.reload();
-                            } else {
-                                layer.msg('连接网络失败，请检查网络设置或联系管理员', {icon: 2}, {time: 2000});
-                            }
-                        }
-
-                    });
+                    changeValid(data.znId, obj, index);
                 });
             } else if (obj.event === 'edit') {
                 window.location.href = 'admin/zyx/concert/edit?id=' + data.znId;
             } else if (obj.event === "program") {
                 window.location.href ='admin/zyx/program/list?fromId=' + data.znId;
-                // var url = 'admin/zyx/program/listAjax?fromId=' + data.znId;
-                // $.post(url, function (resData) {
-                //     layer.open({
-                //         type: 1,
-                //         title: '演出节目单',
-                //         skin: "layui-layer-molv",
-                //         area: ['86%', '90%'],
-                //         content: 'admin/zyx/concert2/program/list?'
-                //     })
-                // })
             }
         });
     });

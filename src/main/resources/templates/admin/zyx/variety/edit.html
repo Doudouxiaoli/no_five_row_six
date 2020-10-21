@@ -17,9 +17,9 @@
         <form class="layui-form" action="admin/zyx/variety/save" method="post" style="width: 800px">
             <input name="znId" type="hidden" value="#(varietyParent.znId??)"/>
             <div class="layui-form-item">
-                <label class="layui-form-label"><span style="color: red">*</span>作品名称</label>
+                <label class="layui-form-label"><span style="color: red">*</span>名称</label>
                 <div class="layui-input-block">
-                    <input type="text" name="znTitle" lay-verify="required" lay-reqtext="作品名称是必填项" autocomplete="off"
+                    <input type="text" name="znTitle" lay-verify="required" lay-reqtext="名称是必填项" autocomplete="off"
                            class="layui-input" value="#(varietyParent.znTitle??)">
                 </div>
             </div>
@@ -36,15 +36,9 @@
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">导演</label>
+                <label class="layui-form-label">身份</label>
                 <div class="layui-input-block">
                     <input type="text" name="znTitleOne" class="layui-input" value="#(varietyParent.znTitleOne??)">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">主演</label>
-                <div class="layui-input-block">
-                    <input type="text" name="znTitleTwo" class="layui-input" value="#(varietyParent.znTitleTwo??)">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -58,12 +52,12 @@
                     </div>
                 </div>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">视频id</label>
-                <div class="layui-input-block">
-                    <input type="text" name="znVideoPath" autocomplete="off" class="layui-input" value="#(varietyParent.znVideoPath??)">
-                </div>
-            </div>
+<!--            <div class="layui-form-item">-->
+<!--                <label class="layui-form-label">视频id</label>-->
+<!--                <div class="layui-input-block">-->
+<!--                    <input type="text" name="znVideoPath" autocomplete="off" class="layui-input" value="#(varietyParent.znVideoPath??)">-->
+<!--                </div>-->
+<!--            </div>-->
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit="" lay-filter="layuiForm">提交</button>

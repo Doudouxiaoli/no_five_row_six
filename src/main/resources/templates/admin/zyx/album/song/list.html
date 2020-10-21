@@ -10,8 +10,9 @@
     .searchIpt {
         top: -6px;
     }
+
     .layui-table, .layui-table-view {
-        margin:0;
+        margin: 0;
     }
 </style>
 #end
@@ -78,7 +79,7 @@
             , loading: false
             , cols: [[
                 {
-                    title: '序号', width: 150,align: 'center', templet: function (d) {
+                    title: '序号', width: 150, align: 'center', templet: function (d) {
                         return d.LAY_INDEX;
                     }
                 }
@@ -129,44 +130,11 @@
             var data = obj.data;
             if (obj.event === 'del') {
                 layer.confirm('真的删除这条记录么', function (index) {
-                    $.ajax({
-                        type: "get",
-                        url: "admin/zyx/song/del",
-                        data: {
-                            id: data.znId,
-                        },
-                        success: function (ev) {
-                            if (ev.success) {
-                                obj.del();
-                                layer.close(index);
-                                window.location.reload();
-                            } else {
-                                layer.alert(ev.msg);
-                            }
-                        }
-
-                    });
+                    changeValid(data.znId, obj, index);
                 });
             } else if (obj.event === 'rec') {
                 layer.confirm('确定恢复主键为[' + data.znId + ']的记录么', function (index) {
-                    $.ajax({
-                        type: "get",
-                        url: "admin/zyx/song/reBack",
-                        data: {
-                            id: data.znId,
-                        },
-                        success: function (ev) {
-                            if (ev.success) {
-                                obj.del();
-                                layer.close(index);
-                                layer.msg('恢复成功', {icon: 1}, {time: 2000});
-                                window.location.reload();
-                            } else {
-                                layer.msg('连接网络失败，请检查网络设置或联系管理员', {icon: 2}, {time: 2000});
-                            }
-                        }
-
-                    });
+                    changeValid(data.znId, obj, index);
                 });
             } else if (obj.event === 'edit') {
                 window.location.href = 'admin/zyx/song/edit?id=' + data.znId;

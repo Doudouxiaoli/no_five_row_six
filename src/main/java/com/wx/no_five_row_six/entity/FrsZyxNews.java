@@ -126,17 +126,17 @@ public class FrsZyxNews implements Serializable {
     private Integer znBookNum;
 
     /**
-     * 发布人id
+     * 创建人id
      */
-    private Long znPublishUserId;
+    private Long znCreateUserId;
 
     /**
-     * 发布人姓名
+     * 创建人姓名
      */
-    private String znPublishUserName;
+    private String znCreateUserName;
 
     /**
-     * 发布时间
+     * 创建人时间
      */
     private Long znCreateTime;
 
@@ -357,20 +357,20 @@ public class FrsZyxNews implements Serializable {
         this.znBookNum = znBookNum;
     }
 
-    public Long getZnPublishUserId() {
-        return znPublishUserId;
+    public Long getZnCreateUserId() {
+        return znCreateUserId;
     }
 
-    public void setZnPublishUserId(Long znPublishUserId) {
-        this.znPublishUserId = znPublishUserId;
+    public void setZnCreateUserId(Long znCreateUserId) {
+        this.znCreateUserId = znCreateUserId;
     }
 
-    public String getZnPublishUserName() {
-        return znPublishUserName;
+    public String getZnCreateUserName() {
+        return znCreateUserName;
     }
 
-    public void setZnPublishUserName(String znPublishUserName) {
-        this.znPublishUserName = znPublishUserName;
+    public void setZnCreateUserName(String znCreateUserName) {
+        this.znCreateUserName = znCreateUserName;
     }
 
     public Long getZnCreateTime() {
@@ -451,36 +451,36 @@ public class FrsZyxNews implements Serializable {
                 "znId=" + znId +
                 ", znNcId=" + znNcId +
                 ", znFromId=" + znFromId +
-                ", znFrom=" + znFrom +
+                ", znFrom='" + znFrom + '\'' +
                 ", znPace=" + znPace +
-                ", znTitle=" + znTitle +
-                ", znAddress=" + znAddress +
-                ", znTitleOne=" + znTitleOne +
-                ", znTitleTwo=" + znTitleTwo +
-                ", znThumbnailPath=" + znThumbnailPath +
-                ", znCarouselPath=" + znCarouselPath +
-                ", znIntro=" + znIntro +
-                ", znContent=" + znContent +
-                ", znVideoPath=" + znVideoPath +
-                ", znBannerPicPath=" + znBannerPicPath +
-                ", znLength=" + znLength +
+                ", znTitle='" + znTitle + '\'' +
+                ", znAddress='" + znAddress + '\'' +
+                ", znTitleOne='" + znTitleOne + '\'' +
+                ", znTitleTwo='" + znTitleTwo + '\'' +
+                ", znThumbnailPath='" + znThumbnailPath + '\'' +
+                ", znCarouselPath='" + znCarouselPath + '\'' +
+                ", znIntro='" + znIntro + '\'' +
+                ", znContent='" + znContent + '\'' +
+                ", znVideoPath='" + znVideoPath + '\'' +
+                ", znBannerPicPath='" + znBannerPicPath + '\'' +
+                ", znLength='" + znLength + '\'' +
                 ", znDate=" + znDate +
                 ", znStartTime=" + znStartTime +
                 ", znEndTime=" + znEndTime +
                 ", znHits=" + znHits +
                 ", znLikeNum=" + znLikeNum +
                 ", znBookNum=" + znBookNum +
-                ", znPublishUserId=" + znPublishUserId +
-                ", znPublishUserName=" + znPublishUserName +
+                ", znCreateUserId=" + znCreateUserId +
+                ", znCreateUserName='" + znCreateUserName + '\'' +
                 ", znCreateTime=" + znCreateTime +
                 ", znUpdateUserId=" + znUpdateUserId +
-                ", znUpdateUserName=" + znUpdateUserName +
+                ", znUpdateUserName='" + znUpdateUserName + '\'' +
                 ", znUpdateTime=" + znUpdateTime +
                 ", znIsValid=" + znIsValid +
                 ", znIsCarousel=" + znIsCarousel +
                 ", znEndDate=" + znEndDate +
-                ", znNcIds=" + znNcIds +
+                ", znNcIds='" + znNcIds + '\'' +
                 ", znTagIds=" + znTagIds +
-                "}";
+                '}';
     }
 }

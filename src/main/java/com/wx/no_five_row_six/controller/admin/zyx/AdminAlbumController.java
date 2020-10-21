@@ -113,6 +113,8 @@ public class AdminAlbumController {
         try {
             if (album.getZnId() == null) {
                 album.setZnNcId(ZyxNewsConst.ALBUM);
+                album.setZnCreateUserId(AdminUserUtil.getUserId());
+                album.setZnCreateUserName(AdminUserUtil.getShowName());
                 album.setZnCreateTime(TimeUtil.dateToLong());
                 album.setZnIsValid(ZyxNewsConst.VALID);
                 albumService.save(album);
@@ -128,48 +130,6 @@ public class AdminAlbumController {
             LOGGER.error("后台管理-保存或修改专辑异常。", e);
             mm.addAttribute("errMsg", "保存或修改专辑异常");
             return "error/error";
-        }
-    }
-
-    /**
-     * 删除专辑
-     *
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("del")
-    public JsonNode del(Long id) {
-        try {
-            FrsZyxNews album = albumService.getById(id);
-            album.setZnIsValid(ZyxNewsConst.NOT_VALID);
-            albumService.updateById(album);
-            return JacksonMapper.newSuccessInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error("后台管理-删除专辑异常。", e);
-            return JacksonMapper.newErrorInstance("删除专辑异常");
-        }
-    }
-
-    /**
-     * 恢复
-     *
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("reBack")
-    public JsonNode reBack(Long id) {
-        try {
-            FrsZyxNews album = albumService.getById(id);
-            album.setZnIsValid(ZyxNewsConst.VALID);
-            albumService.updateById(album);
-            return JacksonMapper.newSuccessInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error("后台管理-恢复专辑异常。", e);
-            return JacksonMapper.newErrorInstance("恢复专辑异常");
         }
     }
 }

@@ -109,6 +109,8 @@ public class AdminConcertController {
         try {
             if (concert.getZnId() == null) {
                 concert.setZnNcId(ZyxNewsConst.CONCERT);
+                concert.setZnCreateUserId(AdminUserUtil.getUserId());
+                concert.setZnCreateUserName(AdminUserUtil.getShowName());
                 concert.setZnCreateTime(TimeUtil.dateToLong());
                 concert.setZnIsValid(ZyxNewsConst.VALID);
                 concertService.save(concert);
@@ -124,48 +126,6 @@ public class AdminConcertController {
             LOGGER.error("后台管理-保存或修改演唱会异常。", e);
             mm.addAttribute("errMsg", "保存或修改演唱会异常");
             return "error/error";
-        }
-    }
-
-    /**
-     * 删除演唱会
-     *
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("del")
-    public JsonNode del(Long id) {
-        try {
-            FrsZyxNews concert = concertService.getById(id);
-            concert.setZnIsValid(ZyxNewsConst.NOT_VALID);
-            concertService.updateById(concert);
-            return JacksonMapper.newSuccessInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error("后台管理-删除演唱会异常。", e);
-            return JacksonMapper.newErrorInstance("删除演唱会异常");
-        }
-    }
-
-    /**
-     * 恢复
-     *
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("reBack")
-    public JsonNode reBack(Long id) {
-        try {
-            FrsZyxNews concert = concertService.getById(id);
-            concert.setZnIsValid(ZyxNewsConst.VALID);
-            concertService.updateById(concert);
-            return JacksonMapper.newSuccessInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error("后台管理-恢复演唱会异常。", e);
-            return JacksonMapper.newErrorInstance("恢复演唱会异常");
         }
     }
 }

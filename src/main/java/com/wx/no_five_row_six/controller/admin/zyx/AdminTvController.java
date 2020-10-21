@@ -116,6 +116,8 @@ public class AdminTvController {
             if (movie.getZnId() == null) {
                 movie.setZnNcId(ZyxNewsConst.FILM);
                 movie.setZnTagIds(ZyxNewsConst.FILM_TV_ID);
+                movie.setZnCreateUserId(AdminUserUtil.getUserId());
+                movie.setZnCreateUserName(AdminUserUtil.getShowName());
                 movie.setZnCreateTime(TimeUtil.dateToLong());
                 movie.setZnIsValid(ZyxNewsConst.VALID);
                 tvService.save(movie);
@@ -133,49 +135,6 @@ public class AdminTvController {
             return "error/error";
         }
     }
-
-    /**
-     * 删除电视剧
-     *
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("del")
-    public JsonNode del(Long id) {
-        try {
-            FrsZyxNews movie = tvService.getById(id);
-            movie.setZnIsValid(ZyxNewsConst.NOT_VALID);
-            tvService.updateById(movie);
-            return JacksonMapper.newSuccessInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error("后台管理-删除电视剧异常。", e);
-            return JacksonMapper.newErrorInstance("删除电视剧异常");
-        }
-    }
-
-    /**
-     * 恢复电视剧
-     *
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("reBack")
-    public JsonNode reBack(Long id) {
-        try {
-            FrsZyxNews movie = tvService.getById(id);
-            movie.setZnIsValid(ZyxNewsConst.VALID);
-            tvService.updateById(movie);
-            return JacksonMapper.newSuccessInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error("后台管理-恢复电视剧异常。", e);
-            return JacksonMapper.newErrorInstance("恢复电视剧异常");
-        }
-    }
-
     /**
      * 单集电视剧详情列表
      *
@@ -260,6 +219,8 @@ public class AdminTvController {
     public JsonNode moreSave(FrsZyxNews tvChild) {
         try {
             if (tvChild.getZnId() == null) {
+                tvChild.setZnCreateUserId(AdminUserUtil.getUserId());
+                tvChild.setZnCreateUserName(AdminUserUtil.getShowName());
                 tvChild.setZnCreateTime(TimeUtil.dateToLong());
                 tvChild.setZnIsValid(ZyxNewsConst.VALID);
                 tvService.save(tvChild);

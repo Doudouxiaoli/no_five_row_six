@@ -116,6 +116,8 @@ public class AdminVarietyController {
             if (movie.getZnId() == null) {
                 movie.setZnNcId(ZyxNewsConst.FILM);
                 movie.setZnTagIds(ZyxNewsConst.FILM_VARIETY_ID);
+                movie.setZnCreateUserId(AdminUserUtil.getUserId());
+                movie.setZnCreateUserName(AdminUserUtil.getShowName());
                 movie.setZnCreateTime(TimeUtil.dateToLong());
                 movie.setZnIsValid(ZyxNewsConst.VALID);
                 varietyService.save(movie);
@@ -134,47 +136,6 @@ public class AdminVarietyController {
         }
     }
 
-    /**
-     * 删除综艺
-     *
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("del")
-    public JsonNode del(Long id) {
-        try {
-            FrsZyxNews movie = varietyService.getById(id);
-            movie.setZnIsValid(ZyxNewsConst.NOT_VALID);
-            varietyService.updateById(movie);
-            return JacksonMapper.newSuccessInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error("后台管理-删除综艺异常。", e);
-            return JacksonMapper.newErrorInstance("删除综艺异常");
-        }
-    }
-
-    /**
-     * 恢复综艺
-     *
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("reBack")
-    public JsonNode reBack(Long id) {
-        try {
-            FrsZyxNews movie = varietyService.getById(id);
-            movie.setZnIsValid(ZyxNewsConst.VALID);
-            varietyService.updateById(movie);
-            return JacksonMapper.newSuccessInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error("后台管理-恢复综艺异常。", e);
-            return JacksonMapper.newErrorInstance("恢复综艺异常");
-        }
-    }
 
     /**
      * 单期综艺详情列表
@@ -260,6 +221,8 @@ public class AdminVarietyController {
     public JsonNode moreSave(FrsZyxNews varietyChild) {
         try {
             if (null==varietyChild.getZnId()) {
+                varietyChild.setZnCreateUserId(AdminUserUtil.getUserId());
+                varietyChild.setZnCreateUserName(AdminUserUtil.getShowName());
                 varietyChild.setZnCreateTime(TimeUtil.dateToLong());
                 varietyChild.setZnIsValid(ZyxNewsConst.VALID);
                 varietyService.save(varietyChild);

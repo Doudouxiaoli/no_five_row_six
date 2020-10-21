@@ -27,8 +27,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/admin/zyx/song")
-public class AdminSongController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AdminSongController.class);
+public class AdminAlbumSongController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdminAlbumSongController.class);
 
     @Autowired
     private IFrsZyxNewsService songService;
@@ -47,6 +47,7 @@ public class AdminSongController {
      * @param keyword
      * @param current
      * @param size
+     * @param fromId  父集id(不能为空)
      * @return
      */
     @ResponseBody
@@ -62,10 +63,8 @@ public class AdminSongController {
         IPage<FrsZyxNews> page = new Page<>(current, size);
         try {
             // 查询条件
-            queryWrapper.lambda().like(StringUtils.isNotEmpty(keyword), FrsZyxNews::getZnTitle, keyword)
-                    .or().like(StringUtils.isNotEmpty(keyword), FrsZyxNews::getZnAddress, keyword)
-                    .eq(FrsZyxNews::getZnNcId, ZyxNewsConst.SONG)
-                    .eq(null != fromId, FrsZyxNews::getZnFromId, fromId);
+            queryWrapper.lambda().like(StringUtils.isNotEmpty(keyword), FrsZyxNews::getZnTitle, keyword).eq(FrsZyxNews::getZnFromId,
+                    fromId);
             page = songService.page(page, queryWrapper);
             return JacksonMapper.newCountInstance(page);
         } catch (Exception e) {
@@ -78,8 +77,8 @@ public class AdminSongController {
     /**
      * 编辑歌曲界面
      *
-     * @param id     节目id
-     * @param fromId 歌曲id
+     * @param id     歌曲id
+     * @param fromId 专辑id
      * @return
      */
     @RequestMapping("edit")
@@ -126,8 +125,10 @@ public class AdminSongController {
                     FrsZyxNews album = songService.getById(song.getZnFromId());
                     if (null != album) {
                         song.setZnFrom(album.getZnTitle());
+                        song.setZnFromId(album.getZnId());
                     }
-                    song.setZnNcId(ZyxNewsConst.SONG);
+                    song.setZnCreateUserId(AdminUserUtil.getUserId());
+                    song.setZnCreateUserName(AdminUserUtil.getShowName());
                     song.setZnCreateTime(TimeUtil.dateToLong());
                     song.setZnIsValid(ZyxNewsConst.VALID);
                     songService.save(song);
@@ -137,55 +138,13 @@ public class AdminSongController {
                     song.setZnUpdateUserName(AdminUserUtil.getShowName());
                     songService.updateById(song);
                 }
-                return "redirect:list";
+                return "redirect:list?fromId=" + song.getZnFromId();
             }
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.error("后台管理-保存或修改歌曲异常。", e);
             mm.addAttribute("errMsg", "保存或修改歌曲异常");
             return "error/error";
-        }
-    }
-
-    /**
-     * 删除歌曲
-     *
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("del")
-    public JsonNode del(Long id) {
-        try {
-            FrsZyxNews song = songService.getById(id);
-            song.setZnIsValid(ZyxNewsConst.NOT_VALID);
-            songService.updateById(song);
-            return JacksonMapper.newSuccessInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error("后台管理-删除歌曲异常。", e);
-            return JacksonMapper.newErrorInstance("删除歌曲异常");
-        }
-    }
-
-    /**
-     * 恢复
-     *
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("reBack")
-    public JsonNode reBack(Long id) {
-        try {
-            FrsZyxNews song = songService.getById(id);
-            song.setZnIsValid(ZyxNewsConst.VALID);
-            songService.updateById(song);
-            return JacksonMapper.newSuccessInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error("后台管理-恢复歌曲异常。", e);
-            return JacksonMapper.newErrorInstance("恢复歌曲异常");
         }
     }
 

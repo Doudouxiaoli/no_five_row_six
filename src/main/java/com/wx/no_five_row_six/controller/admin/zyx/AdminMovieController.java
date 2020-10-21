@@ -115,6 +115,8 @@ public class AdminMovieController {
             if (movie.getZnId() == null) {
                 movie.setZnNcId(ZyxNewsConst.FILM);
                 movie.setZnTagIds(ZyxNewsConst.FILM_MOVIE_ID);
+                movie.setZnCreateUserId(AdminUserUtil.getUserId());
+                movie.setZnCreateUserName(AdminUserUtil.getShowName());
                 movie.setZnCreateTime(TimeUtil.dateToLong());
                 movie.setZnIsValid(ZyxNewsConst.VALID);
                 movieService.save(movie);
@@ -132,48 +134,4 @@ public class AdminMovieController {
             return "error/error";
         }
     }
-
-    /**
-     * 删除电影
-     *
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("del")
-    public JsonNode del(Long id) {
-        try {
-            FrsZyxNews movie = movieService.getById(id);
-            movie.setZnIsValid(ZyxNewsConst.NOT_VALID);
-            movieService.updateById(movie);
-            return JacksonMapper.newSuccessInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error("后台管理-删除电影异常。", e);
-            return JacksonMapper.newErrorInstance("删除电影异常");
-        }
-    }
-
-    /**
-     * 恢复
-     *
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("reBack")
-    public JsonNode reBack(Long id) {
-        try {
-            FrsZyxNews movie = movieService.getById(id);
-            movie.setZnIsValid(ZyxNewsConst.VALID);
-            movieService.updateById(movie);
-            return JacksonMapper.newSuccessInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error("后台管理-恢复电影异常。", e);
-            return JacksonMapper.newErrorInstance("恢复电影异常");
-        }
-    }
-
-
 }

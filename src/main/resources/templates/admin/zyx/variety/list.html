@@ -53,9 +53,9 @@
         if (data.znIsValid == 0) {
             htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="rec">恢复</a>';
         } else {
+            htmls += '<a class="layui-btn layui-btn-xs" lay-event="more">更多</a>'
             htmls += '<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>'
             htmls += '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
-            htmls += '<a class="layui-btn layui-btn-xs" lay-event="more">更多</a>'
         }
         return htmls;
     }
@@ -83,8 +83,7 @@
                     }
                 }
                 , {field: 'znTitle', width: 260, title: '综艺名称', align: 'center'}
-                , {field: 'znTitleOne', width: 260, title: '导演', align: 'center'}
-                , {field: 'znTitleTwo', width: 260, title: '主要演出人员', align: 'center'}
+                , {field: 'znTitleOne', width: 260, title: '身份', align: 'center'}
                 , {
                     field: 'znDate', width: 200, title: '上线时间', align: 'center',
                     templet: function (d) {
@@ -117,44 +116,11 @@
             var data = obj.data;
             if (obj.event === 'del') {
                 layer.confirm('真的删除这条记录么', function (index) {
-                    $.ajax({
-                        type: "get",
-                        url: "admin/zyx/variety/del",
-                        data: {
-                            id: data.znId,
-                        },
-                        success: function (ev) {
-                            if (ev.success) {
-                                obj.del();
-                                layer.close(index);
-                                window.location.reload();
-                            } else {
-                                layer.alert(ev.msg);
-                            }
-                        }
-
-                    });
+                    changeValid(data.znId, obj, index);
                 });
             } else if (obj.event === 'rec') {
                 layer.confirm('确定恢复主键为[' + data.znId + ']的记录么', function (index) {
-                    $.ajax({
-                        type: "get",
-                        url: "admin/zyx/variety/reBack",
-                        data: {
-                            id: data.znId,
-                        },
-                        success: function (ev) {
-                            if (ev.success) {
-                                obj.del();
-                                layer.close(index);
-                                layer.msg('恢复成功', {icon: 1}, {time: 2000});
-                                window.location.reload();
-                            } else {
-                                layer.msg('连接网络失败，请检查网络设置或联系管理员', {icon: 2}, {time: 2000});
-                            }
-                        }
-
-                    });
+                    changeValid(data.znId, obj, index);
                 });
             } else if (obj.event === 'edit') {
                 window.location.href = 'admin/zyx/variety/edit?id=' + data.znId;

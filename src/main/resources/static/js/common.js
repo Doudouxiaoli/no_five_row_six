@@ -37,8 +37,9 @@ function uploadImg(layui, btnId, imgType, tmpPath, dbPath) {
 /**
  * 格式转换（单个时间）
  * @param layui
- * @param timeStr 暂存时间input框对应的id
+ * @param timeStr 绑定元素：暂存时间input框对应的id
  * @param dbTime 数据库对应的时间字段名
+ * @param type 控件选择类型（默认值date）
  */
 function initTime(layui, timeStr, dbTime) {
     var laydate = layui.laydate;
@@ -46,29 +47,9 @@ function initTime(layui, timeStr, dbTime) {
         elem: '#' + timeStr + ''
         , trigger: 'click'
         , position: 'fixed'
+        , type: 'datetime'
         , done: function (value, date) {
-            $("#" + dbTime + "").val(new Date(date.year, date.month - 1, date.date).getTime())
-        }
-    });
-}
-
-/**
- * 格式转换（单个时间）
- * @param layui
- * @param timeStr 绑定元素：暂存时间input框对应的id
- * @param dbTime 数据库对应的时间字段名
- * @param type 控件选择类型（默认值date）
- */
-function initFormatTime(layui, timeStr, dbTime, type) {
-    var laydate = layui.laydate;
-    laydate.render({
-        elem: '#' + timeStr + ''
-        , trigger: 'click'
-        , position: 'fixed'
-        , type: ''+type+''
-        , done: function (value, date) {
-            if(type=="datetime")
-                $("#" + dbTime + "").val(new Date(date.year, date.month - 1, date.date, date.hours, date.minutes, date.seconds).getTime())
+            $("#" + dbTime + "").val(new Date(date.year, date.month - 1, date.date, date.hours, date.minutes, date.seconds).getTime())
         }
     });
 }
@@ -112,71 +93,28 @@ function initTimeRange(layui, startTimeStr, endTimeStr, dbStartTime, dbEndTime) 
 }
 
 /**
- * 获取医生列表(多选树形结构)
- * @param layui
- * @param expertIds 专家的id串，用于回显数据
+ * 改变资讯状态
+ * @param newsId 资讯id
+ * @param obj table 对象
+ * @param index 弹出层
  */
-function getExperts(layui, expertIds) {
-    var expertSelect;
-    var expertsId = document.getElementById("wnExpertId");
-    var expertsName = document.getElementById("wnExpert");
+function changeValid(newsId, obj, index) {
     $.ajax({
-        url: 'admin/briefing/getExpertList',
-        type: 'get',
-        success: function (res) {
-            if (res.success) {
-                //渲染下拉框
-                var expertArrayArrayList = res.data;
-                //回显专家
-                var strArr = expertIds.split(",");
-                var initExpert = [];
-                strArr.forEach(function (data, index, arr) {
-                    initExpert.push(+data);
-                })
-                expertSelect = layui.xmSelect.render({
-                    el: '#expert',
-                    prop: {
-                        name: 'weName',
-                        value: 'weId',
-                    },
-                    filterable: 'true',//开启搜索
-                    tips: '请选择专家',
-                    empty: '暂无数据',
-                    max: 5,
-                    theme: {
-                        maxColor: 'orange',
-                    },
-                    height: '150px',
-                    language: 'zn',
-                    data: expertArrayArrayList,
-                    initValue: initExpert,
-                    model: {
-                        label: {
-                            type: 'text',
-                            text: {
-                                separator: ',',
-                            }
-                        }
-                    },
-                    on: function (data) {
-                        var array = data.arr;
-                        expertsId.value = '';
-                        expertsName.value = '';
-                        for (var i = 0; i < array.length; i++) {
-                            if (i == array.length - 1) {
-                                expertsId.value += array[i].weId;
-                                expertsName.value += array[i].weName;
-                            } else {
-                                expertsId.value += array[i].weId + ",";
-                                expertsName.value += array[i].weName + ",";
-                            }
-                        }
-                    },
-                })
-
+        type: "get",
+        url: "admin/zyx/news/changeValid",
+        data: {
+            id: newsId,
+        },
+        success: function (ev) {
+            if (ev.success) {
+                obj.del();
+                layer.close(index);
+                layer.msg('成功', {icon: 1}, {time: 2000});
+                window.location.reload();
             } else {
-                layer.msg(res.message);
+                layer.msg('连接网络失败，请检查网络设置或联系管理员', {icon: 2}, {time: 2000});
             }
         }
+
     });
 }

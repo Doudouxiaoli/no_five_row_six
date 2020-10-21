@@ -135,6 +135,8 @@ public class AdminEndorsementController {
             }
             if (endorsement.getZnId() == null) {
                 endorsement.setZnNcId(ZyxNewsConst.ENDORSEMENT);
+                endorsement.setZnCreateUserId(AdminUserUtil.getUserId());
+                endorsement.setZnCreateUserName(AdminUserUtil.getShowName());
                 endorsement.setZnCreateTime(TimeUtil.dateToLong());
                 endorsement.setZnIsValid(ZyxNewsConst.VALID);
                 endorsementService.save(endorsement);
@@ -150,48 +152,6 @@ public class AdminEndorsementController {
             LOGGER.error("后台管理-保存或修改异常。", e);
             mm.addAttribute("errMsg", "保存或修改异常");
             return "error/error";
-        }
-    }
-
-    /**
-     * 删除代言
-     *
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("del")
-    public JsonNode del(Long id) {
-        try {
-            FrsZyxNews endorsement = endorsementService.getById(id);
-            endorsement.setZnIsValid(ZyxNewsConst.NOT_VALID);
-            endorsementService.updateById(endorsement);
-            return JacksonMapper.newSuccessInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error("后台管理-删除代言异常。", e);
-            return JacksonMapper.newErrorInstance("删除代言异常");
-        }
-    }
-
-    /**
-     * 恢复
-     *
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("reBack")
-    public JsonNode reBack(Long id) {
-        try {
-            FrsZyxNews endorsement = endorsementService.getById(id);
-            endorsement.setZnIsValid(ZyxNewsConst.VALID);
-            endorsementService.updateById(endorsement);
-            return JacksonMapper.newSuccessInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error("后台管理-恢复代言异常。", e);
-            return JacksonMapper.newErrorInstance("恢复代言异常");
         }
     }
 }

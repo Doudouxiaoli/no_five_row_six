@@ -113,6 +113,8 @@ public class AdminDanceController {
         try {
             if (dance.getZnId() == null) {
                 dance.setZnNcId(ZyxNewsConst.DANCE);
+                dance.setZnCreateUserId(AdminUserUtil.getUserId());
+                dance.setZnCreateUserName(AdminUserUtil.getShowName());
                 dance.setZnCreateTime(TimeUtil.dateToLong());
                 dance.setZnIsValid(ZyxNewsConst.VALID);
                 danceService.save(dance);
@@ -128,48 +130,6 @@ public class AdminDanceController {
             LOGGER.error("后台管理-保存或修改舞蹈异常。", e);
             mm.addAttribute("errMsg", "保存或修改舞蹈异常");
             return "error/error";
-        }
-    }
-
-    /**
-     * 删除舞蹈
-     *
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("del")
-    public JsonNode del(Long id) {
-        try {
-            FrsZyxNews dance = danceService.getById(id);
-            dance.setZnIsValid(ZyxNewsConst.NOT_VALID);
-            danceService.updateById(dance);
-            return JacksonMapper.newSuccessInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error("后台管理-删除舞蹈异常。", e);
-            return JacksonMapper.newErrorInstance("删除舞蹈异常");
-        }
-    }
-
-    /**
-     * 恢复
-     *
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("reBack")
-    public JsonNode reBack(Long id) {
-        try {
-            FrsZyxNews dance = danceService.getById(id);
-            dance.setZnIsValid(ZyxNewsConst.VALID);
-            danceService.updateById(dance);
-            return JacksonMapper.newSuccessInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error("后台管理-恢复舞蹈异常。", e);
-            return JacksonMapper.newErrorInstance("恢复舞蹈异常");
         }
     }
 }

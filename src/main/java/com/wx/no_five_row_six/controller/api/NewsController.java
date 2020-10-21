@@ -14,43 +14,39 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * @author dxl
- * @date 2020/2/28
- * @desc 专辑
+ * @version 2020/10/21 10:43
  */
-@Controller
-@RequestMapping("api/album")
-public class AlbumController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AlbumController.class);
+public class NewsController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(NewsController.class);
 
     @Autowired
-    private IFrsZyxNewsService albumService;
+    private IFrsZyxNewsService fatherService;
     @Autowired
-    private IFrsZyxNewsService songService;
+    private IFrsZyxNewsService childService;
     @Autowired
     private IFrsZyxVisitLogService visitLogService;
 
     /**
-     * 专辑列表
+     * 父集列表
      *
      * @param current
      * @param size
      * @param keyword
+     * @param moduleId 0专辑 1舞蹈 2演唱会 3代言4影视
      * @return
      */
     @ResponseBody
     @RequestMapping("/list")
-    public JsonNode list(Integer current, Integer size, String keyword) {
+    public JsonNode list(Integer current, Integer size, String keyword, Long moduleId) {
         if (current == null) {
             current = 1;
         }
@@ -61,14 +57,14 @@ public class AlbumController {
         IPage<FrsZyxNews> page = new Page<>(current, size);
         try {
             queryWrapper.lambda().like(StringUtils.isNotEmpty(keyword), FrsZyxNews::getZnTitle, keyword)
-                    .eq(FrsZyxNews::getZnNcId, ZyxNewsConst.ALBUM)
+                    .eq(FrsZyxNews::getZnNcId, moduleId)
                     .eq(FrsZyxNews::getZnIsValid, ZyxNewsConst.VALID)
                     .orderByDesc(FrsZyxNews::getZnDate);
-            page = albumService.page(page, queryWrapper);
+            page = fatherService.page(page, queryWrapper);
             return JacksonMapper.newDataInstance(page);
         } catch (Exception e) {
             e.printStackTrace();
-            String err = "专辑列表查询异常";
+            String err = "父集列表查询异常";
             LOGGER.error(err, e);
             return JacksonMapper.newErrorInstance(err);
         }
@@ -77,21 +73,21 @@ public class AlbumController {
     /**
      * 详情
      *
-     * @param albumId 专辑id
+     * @param fatherId 父集id
      * @return
      */
     @RequestMapping("/detail")
     @ResponseBody
-    public JsonNode detail(Long albumId) {
+    public JsonNode detail(Long fatherId) {
         Map<Integer, Object> map = new HashMap<>();
         try {
-            FrsZyxNews album = albumService.getById(albumId);
+            FrsZyxNews father = fatherService.getById(fatherId);
             QueryWrapper<FrsZyxNews> queryWrapper = new QueryWrapper<FrsZyxNews>();
-            queryWrapper.lambda().eq(FrsZyxNews::getZnFromId, albumId)
+            queryWrapper.lambda().eq(FrsZyxNews::getZnFromId, fatherId)
                     .eq(FrsZyxNews::getZnIsValid, ZyxNewsConst.VALID);
-            List<FrsZyxNews> songList = songService.list(queryWrapper);
-            map.put(0, album);
-            map.put(1, songList);
+            //List<FrsZyxNews> songList = songService.list(queryWrapper);
+            map.put(0, father);
+            //map.put(1, songList);
         } catch (Exception e) {
             e.printStackTrace();
             return JacksonMapper.newErrorInstance("详情跳转出错");
@@ -109,10 +105,8 @@ public class AlbumController {
     @ResponseBody
     @RequestMapping("saveVisit")
     public JsonNode saveVisit(Long id, HttpServletRequest request) {
-        FrsZyxNews song = songService.getById(id);
-        visitLogService.saveVisit(id, request, ZyxNewsConst.ALBUM.toString(), song.getZnTitle());
+        FrsZyxNews child = childService.getById(id);
+        visitLogService.saveVisit(id, request, child.getZnFromId().toString(), child.getZnTitle());
         return JacksonMapper.newSuccessInstance();
     }
 }
-
-

@@ -23,7 +23,7 @@
                            class="layui-input" value="#(dance.znTitle??)">
                 </div>
             </div>
-            <input type="text" name="znFromId" value="#(dance.znFromId??)">
+            <input type="hidden" name="znFromId" value="#(dance.znFromId??)">
             <div class="layui-form-item">
                 <label class="layui-form-label">舞蹈来源</label>
                 <div class="layui-input-block">
@@ -74,7 +74,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    layui.use(['form', 'laydate','upload'], function () {
+    layui.use(['form', 'laydate', 'upload'], function () {
         var $ = layui.jquery,
             form = layui.form,
             laydate = layui.laydate;
