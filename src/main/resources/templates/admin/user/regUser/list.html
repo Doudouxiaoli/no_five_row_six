@@ -25,7 +25,7 @@
 <body class="layui-layout-body">
 
 <div class="layui-layout layui-layout-admin">
-    #include("../../header.html",navId="nav_user", subNavId="nav_user_wechat")
+    #include("../../header.html",navId="nav_user", subNavId="nav_user_regUser")
     <div class="layui-body" style="top:50px">
         <table class="layui-hide" lay-filter="dataTale" id="item"></table>
     </div>
@@ -35,9 +35,9 @@
     <form action="admin/zyx/album/list" class="layui-form layui-col-md12 x-so" name="searchForm"
           id="searchForm"
           method="post">
-        <span class="page-title">微信用户列表</span>
+        <span class="page-title">注册用户列表</span>
         <div class="layui-input-inline searchIpt">
-            <input type="text" id="keyword" name="keyword" value="#(keyword)" class="form-control page-search" placeholder="昵称"/>
+            <input type="text" id="keyword" name="keyword" value="#(keyword)" class="form-control page-search" placeholder="专辑名称"/>
         </div>
         <div class="layui-input-inline searchIpt">
             <input type="text" class="form-control page-search" id="startDate" name="startDate" placeholder="yyyy-MM-dd">
@@ -54,9 +54,7 @@
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs"
-       onclick="javascript:window.location.href='/admin/wechatUser/edit?id={{ d.wuId }}'">编辑</a>
-    <a class="layui-btn layui-btn-xs"
-       onclick="javascript:window.location.href='/admin/wechatUser/export'">导出</a>
+       onclick="javascript:window.location.href='/admin/regUser/edit?id={{ d.fuId }}'">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 <script>
@@ -94,7 +92,7 @@
         table.render({
             id: "tableReload"
             , elem: '#item'
-            , url: 'admin/wechatUser/listAjax'
+            , url: 'admin/regUser/listAjax'
             , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             , defaultToolbar: {}
             , page: {
@@ -104,21 +102,21 @@
             , loading: false
             , cols: [[
                 {
-                    title: '序号', width: 150, align: 'center', templet: function (d) {
+                    title: '序号', width: 120, align: 'center', templet: function (d) {
                         return d.LAY_INDEX;
                     }
                 }
-                , {field: 'wuNickname', width: 200, title: '昵称', align: 'center'}
-                , {field: 'wuSex', width: 100, title: '性别', align: 'center'}
-                , {field: 'wuCountry', width: 180, title: '国家', align: 'center'}
-                , {field: 'wuProvince', width: 180, title: '省份', align: 'center'}
-                , {field: 'wuCity', width: 180, title: '城市', align: 'center'}
+                , {field: 'fuName', width: 180, title: '登录名', align: 'center'}
+                , {field: 'fuPhone', width: 240, title: '手机号', align: 'center'}
+                , {field: 'fuProvince', width: 200, title: '省份', align: 'center'}
+                , {field: 'fuCity', width: 200, title: '城市', align: 'center'}
                 , {
-                    field: 'wuSubscribe', width: 100, title: '订阅', align: 'center', templet: function (d) {
-                        if (d.wuSubscribe == 0) {
-                            return "否";
+                    field: 'fuCreateTime', width: 220, title: '发布日期', align: 'center',
+                    templet: function (d) {
+                        if (d.fuCreateTime) {
+                            return util.toDateString(d.znDate, 'yyyy-MM-dd');
                         } else {
-                            return "是";
+                            return '';
                         }
                     }
                 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="V5.1.0" author="dxl">
+
+        <comment>增加收藏表,用户表,短信验证码表</comment>
+        <createTable tableName="frs_zyx_bookmark_record" remarks="收藏表">
+            <column name="zbr_id" type="bigint" autoIncrement="true" remarks="主键">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="zbr_user_id" type="bigint" remarks="用户主键"/>
+            <column name="zbr_news_id" type="int(11)" remarks="内容id"/>
+            <column name="zbr_news" type="varchar(128)" remarks="内容名称"/>
+            <column name="zbr_module_id" type="int(11)" remarks="模块id"/>
+            <column name="zbr_module" type="varchar(128)" remarks="模板名称"/>
+            <column name="zbr_from_id" type="int(11)" remarks="来源id(应用于子集)"/>
+            <column name="zbr_from" type="varchar(128)" remarks="来源名称"/>
+            <column name="zbr_time" type="bigint" remarks="点赞时间"/>
+            <column name="zbr_state" type="int" remarks="是否点赞(0:未点赞;1:点赞;2:取消点赞)"/>
+        </createTable>
+        <createTable tableName="frs_user" remarks="用户表">
+            <column name="fu_id" type="bigint" autoIncrement="true" remarks="主键">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="fu_name" type="varchar(128)" remarks="登录名"/>
+            <column name="fu_password" type="varchar(128)" remarks="密码"/>
+            <column name="fu_phone" type="varchar(128)" remarks="手机号"/>
+            <column name="fu_province_id" type="bigint" remarks="省份id"/>
+            <column name="fu_city_id" type="bigint" remarks="城市id"/>
+            <column name="fu_region_id" type="bigint" remarks="区县id"/>
+            <column name="fu_province" type="varchar(128)" remarks="省份"/>
+            <column name="fu_city" type="varchar(128)" remarks="城市"/>
+            <column name="fu_region" type="varchar(128)" remarks="区县"/>
+            <column name="fu_create_time" type="bigint(20)" remarks="创建时间"/>
+            <column name="fu_update_time" type="bigint(20)" remarks="修改时间"/>
+        </createTable>
+        <createTable tableName="frs_sms_code" remarks="短信验证码">
+            <column name="sc_id" type="bigint" autoIncrement="true" remarks="主键">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="sc_phone" type="varchar(64)" remarks="手机号"/>
+            <column name="sc_code" type="varchar(64)" remarks="激活码"/>
+            <column name="sc_type" type="varchar(64)" remarks="类型"/>
+            <column name="sc_invalid_date" type="bigint(20)" remarks="失效时间"/>
+            <column name="sc_create_date" type="bigint(20)" remarks="创建时间"/>
+            <column name="sc_is_used" type="int(11)" remarks="是否使用(0:否1:是)"/>
+            <column name="sc_user_id" type="bigint(20)" remarks="用户id"/>
+            <column name="sc_ip_address" type="varchar(64)" remarks="IP地址"/>
+            <column name="sc_send_prompt" type="varchar(255)" remarks="发送提示"/>
+            <column name="sc_send_flag" type="int(11)" remarks="发送标志（0：失败；1：成功）"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

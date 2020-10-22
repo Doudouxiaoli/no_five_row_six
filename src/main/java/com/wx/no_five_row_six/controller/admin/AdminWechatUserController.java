@@ -3,8 +3,10 @@ package com.wx.no_five_row_six.controller.admin;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.wx.common.excel.ExcelData;
 import com.wx.common.excel.ExcelUtils;
+import com.wx.common.jackson.JacksonMapper;
 import com.wx.common.util.TimeUtil;
 import com.wx.no_five_row_six.common.Const;
 import com.wx.no_five_row_six.entity.WechatUser;
@@ -14,8 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -28,6 +30,11 @@ public class AdminWechatUserController {
     @Autowired
     private IWechatUserService wechatUserService;
 
+    @RequestMapping("list")
+    public String list() {
+        return "admin/user/wechatUser/list";
+    }
+
     /**
      * 列表
      *
@@ -35,12 +42,11 @@ public class AdminWechatUserController {
      * @param keyword
      * @param current
      * @param size
-     * @param startDate
-     * @param endDate
      * @return
      */
-    @RequestMapping(value = {"/list"})
-    public String list(ModelMap mm, String keyword, Integer current, Integer size, String startDate, String endDate) {
+    @RequestMapping("listAjax")
+    @ResponseBody
+    public JsonNode listAjax(String keyword, Integer current, Integer size) {
         if (current == null) {
             current = 1;
         }
@@ -50,19 +56,14 @@ public class AdminWechatUserController {
         QueryWrapper<WechatUser> queryWrapper = new QueryWrapper<WechatUser>();
         IPage<WechatUser> page = new Page<>(current, size);
         try {
-            // 查询条件
             queryWrapper.lambda().like(StringUtils.isNotEmpty(keyword), WechatUser::getWuNickname, keyword);
             page = wechatUserService.page(page, queryWrapper);
+            return JacksonMapper.newCountInstance(page);
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.error("后台管理-微信列表异常", e);
-            mm.addAttribute("errMsg", "微信列表异常");
-            return "error/error";
+            return JacksonMapper.newErrorInstance("微信用户列表异常");
         }
-        mm.addAttribute("page", page);
-        mm.addAttribute("keyword", keyword);
-        mm.addAttribute("recordSize", page.getRecords().size());
-        return "admin/user/wechatUser/list";
     }
 
     /**

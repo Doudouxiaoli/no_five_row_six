@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/admin/zyx/news")
-public class AdminZyxNewsController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AdminZyxNewsController.class);
+public class AdminNewsController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdminNewsController.class);
     @Autowired
     private IFrsZyxNewsService newsService;
 

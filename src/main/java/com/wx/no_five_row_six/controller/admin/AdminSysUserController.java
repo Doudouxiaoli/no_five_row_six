@@ -23,12 +23,12 @@ public class AdminSysUserController {
      * @param userId
      * @return
      */
-    @RequestMapping(value = {"/edit"})
+    @RequestMapping("edit")
     public String edit(ModelMap mm, Long userId) {
         SysUser user = userService.getById(userId);
         if (user == null) {
             mm.addAttribute("noPassword", true);
-            return "redirect:admin/loginInit";
+            return "redirect:admin/login";
         }
         mm.addAttribute("noPassword", false);
         mm.addAttribute("user", user);

@@ -39,7 +39,6 @@ function uploadImg(layui, btnId, imgType, tmpPath, dbPath) {
  * @param layui
  * @param timeStr 绑定元素：暂存时间input框对应的id
  * @param dbTime 数据库对应的时间字段名
- * @param type 控件选择类型（默认值date）
  */
 function initTime(layui, timeStr, dbTime) {
     var laydate = layui.laydate;
@@ -72,7 +71,7 @@ function initTimeRange(layui, startTimeStr, endTimeStr, dbStartTime, dbEndTime) 
             var endTime = new Date($('#' + endTimeStr + '').val()).getTime();
             if (endTime < startDate) {
                 layer.msg('结束时间不能小于开始时间');
-                $('#' + startTimeStr + '').val($('#wnEndTimeStr').val());
+                $('#' + startTimeStr + '').val($('#' + endTimeStr + '').val());
             }
             $("#" + dbStartTime + "").val(startDate)
         }
@@ -85,7 +84,7 @@ function initTimeRange(layui, startTimeStr, endTimeStr, dbStartTime, dbEndTime) 
             var endTime = new Date(value).getTime();
             if (endTime < startDate) {
                 layer.msg('结束时间不能小于开始时间');
-                $('#' + endTimeStr + '').val($('#wnStartTimeStr').val());
+                $('#' + endTimeStr + '').val($('#' + startTimeStr + '').val());
             }
             $("#" + dbEndTime + "").val(endTime)
         }
