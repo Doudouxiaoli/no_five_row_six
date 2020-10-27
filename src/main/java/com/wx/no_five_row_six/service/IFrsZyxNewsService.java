@@ -25,16 +25,6 @@ public interface IFrsZyxNewsService extends IService<FrsZyxNews> {
     List<FrsZyxNews> getChildList(Long moduleId, Integer tagId);
 
     /**
-     * 获取父节点id列表
-     *
-     * @param moduleId 模块id 0专辑 1舞蹈 2演唱会 3代言4影视
-     * @param tagId    代言 0 食物 1美妆 2服装 3轻奢 4游戏
-     *                 影视类型 0电视剧 1电影 2综艺
-     * @return
-     */
-    List ids(Long moduleId, Integer tagId);
-
-    /**
      * 改变节点状态
      *
      * @param id 节点id

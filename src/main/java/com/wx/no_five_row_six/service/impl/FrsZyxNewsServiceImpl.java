@@ -33,19 +33,6 @@ public class FrsZyxNewsServiceImpl extends ServiceImpl<FrsZyxNewsMapper, FrsZyxN
 
     @Override
     public List<FrsZyxNews> getChildList(Long moduleId, Integer tagId) {
-        List idList = ids(moduleId, tagId);
-        QueryWrapper<FrsZyxNews> queryWrapper = new QueryWrapper<>();
-        if (null != idList) {
-            queryWrapper.lambda().in(FrsZyxNews::getZnFromId, idList);
-            List<FrsZyxNews> childList = newsService.list(queryWrapper);
-            return childList;
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public List ids(Long moduleId, Integer tagId) {
         QueryWrapper<FrsZyxNews> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(FrsZyxNews::getZnNcId, moduleId);
         if (null != tagId) {
@@ -56,9 +43,15 @@ public class FrsZyxNewsServiceImpl extends ServiceImpl<FrsZyxNewsMapper, FrsZyxN
         for (FrsZyxNews father : fatherList) {
             idList.add(father.getZnId());
         }
-        return idList;
+        QueryWrapper<FrsZyxNews> queryWrapper1 = new QueryWrapper<>();
+        if (null != idList) {
+            queryWrapper1.lambda().in(FrsZyxNews::getZnFromId, idList);
+            List<FrsZyxNews> childList = newsService.list(queryWrapper1);
+            return childList;
+        } else {
+            return fatherList;
+        }
     }
-
     @Override
     public void changeValid(Long id) {
         FrsZyxNews news = this.getById(id);

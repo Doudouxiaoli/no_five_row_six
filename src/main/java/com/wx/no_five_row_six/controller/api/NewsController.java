@@ -59,8 +59,8 @@ public class NewsController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("list")
-    public JsonNode fatherList(Integer current, Integer size, String keyword, Long moduleId) {
+    @RequestMapping("index")
+    public JsonNode index(Integer current, Integer size, String keyword, Long moduleId, Integer tagId, Integer limit) {
         if (current == null) {
             current = 1;
         }
@@ -73,7 +73,9 @@ public class NewsController {
             queryWrapper.lambda().like(StringUtils.isNotEmpty(keyword), FrsZyxNews::getZnTitle, keyword)
                     .eq(FrsZyxNews::getZnNcId, moduleId)
                     .eq(FrsZyxNews::getZnIsValid, ZyxNewsConst.VALID)
-                    .orderByDesc(FrsZyxNews::getZnDate);
+                    .eq(null != tagId, FrsZyxNews::getZnTagIds, tagId)
+                    .orderByDesc(FrsZyxNews::getZnDate)
+                    .last(null != limit, "limit " + limit);
             page = fatherService.page(page, queryWrapper);
             return JacksonMapper.newDataInstance(page);
         } catch (Exception e) {
@@ -87,30 +89,29 @@ public class NewsController {
     /**
      * 子集列表
      *
-     * @param moduleId 父id： 0专辑 1舞蹈 2演唱会 3代言 4影视
-     * @param tagId    代言 0 食物 1美妆 2服装 3轻奢 4游戏
-     *                 影视类型 0电视剧 1电影 2综艺
-     * @param runId    主要展示的一个子集，主要是用于单页面切换播放但不跳转页面
+     * @param id
      * @return
      */
-    @RequestMapping("childList")
+    @RequestMapping("list")
     @ResponseBody
-    public JsonNode childList(Long moduleId, Integer tagId, Long runId) {
-        Map<Integer, Object> map = new HashMap<>();
+    public JsonNode list(Long id) {
+        Map<Integer, List> map = new HashMap<>();
         try {
-            FrsZyxNews father = fatherService.getById(moduleId);
-            List<FrsZyxNews> childList = childService.getChildList(moduleId, tagId);
-            FrsZyxNews runningNews = null;
-            if (null != runId) {
-                runningNews = childService.getById(runId);
-                childList.remove(runningNews);
+            List<FrsZyxNews> fatherList = fatherService.list(new QueryWrapper<FrsZyxNews>().eq("zn_id", id));
+            FrsZyxNews father = fatherList.get(0);
+            QueryWrapper<FrsZyxNews> queryWrapper = new QueryWrapper<>();
+            queryWrapper.lambda().eq(FrsZyxNews::getZnFromId, id);
+            List<FrsZyxNews> childList = childService.list(queryWrapper);
+            if (ZyxNewsConst.ENDORSEMENT == father.getZnNcId() || ZyxNewsConst.FILM == father.getZnNcId()) {
+                Long moduleId = father.getZnNcId();
+                Integer tagId = father.getZnTagIds();
+                childList = childService.getChildList(moduleId, tagId);
             }
-            map.put(0, father);
+            map.put(0, fatherList);
             map.put(1, childList);
-            map.put(3, runningNews);
         } catch (Exception e) {
             e.printStackTrace();
-            return JacksonMapper.newErrorInstance("详情跳转出错");
+            return JacksonMapper.newErrorInstance("子集获取出错");
         }
         return JacksonMapper.newDataInstance(map);
     }
@@ -118,35 +119,56 @@ public class NewsController {
     /**
      * 详情展示
      *
-     * @param pk 资讯id
+     * @param pk     资讯id
+     * @param fromId 来源id
      * @return
      */
     @ResponseBody
     @RequestMapping("detail")
-    public JsonNode detail(Long pk) {
+    public JsonNode detail(Long pk, Long fromId, HttpServletRequest request) {
         try {
-            FrsZyxNews news = newsService.getById(pk);
-            return JacksonMapper.newDataInstance(news);
+            Map<Integer, Object> map = new HashMap<>();
+            Integer tagId = null;
+            FrsZyxNews running = null;
+            FrsZyxNews father = null;
+            Long moduleId = null;
+            List<FrsZyxNews> childList = null;
+            if (null != pk) {
+                running = newsService.getById(pk);
+                fromId = running.getZnFromId();
+                father = newsService.getById(fromId);
+                moduleId = father.getZnNcId();
+                if (null != father.getZnTagIds()) {
+                    tagId = father.getZnTagIds();
+                }
+                childList = childService.getChildList(moduleId, tagId);
+            } else if (null != fromId) {
+                //默认选择子节点的第一个展示
+                father = newsService.getById(fromId);
+                moduleId = father.getZnNcId();
+                if (null != father.getZnTagIds()) {
+                    tagId = father.getZnTagIds();
+                }
+                childList = childService.getChildList(moduleId, tagId);
+                if (childList.size() > 0) {
+                    running = childList.get(0);
+                } else {
+                    running = father;
+                }
+                pk = running.getZnId();
+            }
+            visitLogService.saveVisit(pk, request,father.getZnTitle(), running.getZnTitle());
+            childList.remove(running);
+            map.put(0, father);
+            map.put(1, running);
+            map.put(2, childList);
+            return JacksonMapper.newDataInstance(map);
         } catch (Exception e) {
             e.printStackTrace();
             return JacksonMapper.newErrorInstance("详情列表展示出错");
         }
     }
 
-    /**
-     * 保存一条访问记录
-     *
-     * @param id
-     * @param request
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("saveVisit")
-    public JsonNode saveVisit(Long id, HttpServletRequest request) {
-        FrsZyxNews news = newsService.getById(id);
-        visitLogService.saveVisit(id, request, news.getZnFromId().toString(), news.getZnTitle());
-        return JacksonMapper.newSuccessInstance();
-    }
     /**
      * 修改点赞状态
      *
